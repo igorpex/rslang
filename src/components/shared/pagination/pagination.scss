@@ -1,0 +1,14 @@
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  .pagination__title {
+    margin-right: 10px;
+  }
+  .btn {
+    padding: 8px 20px;
+  }
+  .btn-prev {
+    margin: 0 10px;
+  }
+}

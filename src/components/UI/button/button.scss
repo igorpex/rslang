@@ -1,0 +1,37 @@
+.btn {
+  font-family: "Roboto", sans-serif;
+  display: inline-block;
+  color: #333;
+  background-color: #baedff;
+  font-weight: bold;
+  padding: 12px 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 4px 1px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  &:active {
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  &:disabled {
+    opacity: 0.5;
+    transform: translateY(4px);
+    box-shadow: none;
+  }
+  &-small {
+    height: 25px;
+    padding: 2px 8px;
+    font-size: 12px;
+    box-shadow: 0 3px 1px rgba(255, 255, 255, 0.5);
+    &:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+    &:disabled {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+  }
+}

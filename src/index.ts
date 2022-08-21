@@ -1,6 +1,9 @@
-import './style.scss';
+import App from './app';
+import './index.scss';
 
-const $root = document.getElementById('root')!;
-const $hello = document.createElement('h1');
-$hello.innerText = 'Hello RS Lang!';
-$root.append($hello);
+window.addEventListener('DOMContentLoaded', () => {
+  const rootElement = document.body;
+  const app = new App(rootElement);
+
+  app.init();
+});
