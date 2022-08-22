@@ -3,7 +3,7 @@ import {
 } from '../interfaces';
 
 // const baseUrl = 'http://localhost:3000';
-const baseUrl = 'https://rslang-be-igorpex.herokuapp.com/';
+const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
 const words = `${baseUrl}/words`;
 const users = `${baseUrl}/users`;
 const signin = `${baseUrl}/signin`;
