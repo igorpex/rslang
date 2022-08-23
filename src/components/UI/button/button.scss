@@ -2,13 +2,12 @@
   font-family: "Roboto", sans-serif;
   display: inline-block;
   color: #333;
-  background-color: #baedff;
   font-weight: bold;
+  font-size: 1.4rem;
   padding: 12px 15px;
   text-transform: uppercase;
   font-weight: bold;
   border: none;
-  box-shadow: 0 4px 1px rgba(255, 255, 255, 0.5);
   cursor: pointer;
   transition: transform 0.1s ease-in-out;
   &:active {
