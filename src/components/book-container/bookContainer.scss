@@ -1,0 +1,80 @@
+
+.book__title{
+    font-size: 3.2rem;
+    margin-bottom: 2rem;
+}
+.book__setting{
+    background-color: grey;
+}
+.book__content{
+    display: flex;
+    flex-direction: column;
+}
+.book-item{
+    margin-bottom: 1.5rem;
+    width: 85%;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    background-color: antiquewhite;
+    border: 3px solid yellow
+}
+.book-item__left{
+    min-width: 30rem;
+    max-width: 30rem;
+    min-height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+// .item__image{
+//     max-width: 30rem;
+// }
+.book-item__right{
+    padding: 1rem;
+}
+.item__name{
+    font-size: 2.0rem;
+}
+.item__transcription{
+    font-size: 1.8rem;
+}
+.item__translate{
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+}
+.item__audio-button{
+    margin-bottom: 1rem;
+    display: block;
+    width: 3rem;
+    height: 3rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 0 0;
+}
+.item__text-meaning-translate{
+    margin-bottom: 1rem;
+}
+.item__remove-button,
+.item__add-button{
+    box-shadow: 0 0 0.5rem rgb(141, 141, 216);
+    border-radius: 2rem;
+    &:hover{
+        box-shadow: none;
+        transition: all 0.3s;
+        transform: translateY(2px);
+    }
+}
+.item__buttons{
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+.item__remove-button{
+    background-color:rgba(251, 107, 91, 0.927);
+}
+.item__add-button{
+    background-color: rgba(86, 249, 214, 0.678);
+}
