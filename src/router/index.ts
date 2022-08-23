@@ -2,6 +2,7 @@ import { IRoute } from '../interfaces';
 import Component from '../utils/component';
 import Main from '../pages/main/main';
 import Team from '../pages/team/team';
+import Book from '../pages/book/book';
 import Login from '../pages/login/login';
 import AuthTestContainer from '../components/auth/auth-test-container/auth-test-container';
 import SignupContainer from '../components/auth/signup-container/signup-container';
@@ -22,6 +23,8 @@ class Router {
 
   testPage: Component | undefined;
 
+  bookPage: Component | undefined;
+
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
 
@@ -37,6 +40,13 @@ class Router {
         component: () => {
           this.teamPage = new Team(this.rootElement);
           this.rootElement.append(this.teamPage.element);
+        },
+      },
+      {
+        name: '/ebook',
+        component: () => {
+          this.bookPage = new Book(this.rootElement);
+          this.rootElement.append(this.bookPage.element);
         },
       },
       {
@@ -73,6 +83,7 @@ class Router {
   updateRouter(): void {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
+    console.log(currentRouteName);
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
     );
