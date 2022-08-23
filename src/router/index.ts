@@ -2,6 +2,7 @@ import { IRoute } from '../interfaces';
 import Component from '../utils/component';
 import Main from '../pages/main/main';
 import Team from '../pages/team/team';
+import Book from '../pages/book/book';
 
 class Router {
   private readonly routes: Array<IRoute>;
@@ -12,6 +13,8 @@ class Router {
   mainPage: Component;
 
   teamPage: Component | undefined;
+
+  bookPage: Component | undefined;
 
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
@@ -30,6 +33,13 @@ class Router {
           this.rootElement.append(this.teamPage.element);
         },
       },
+      {
+        name: '/ebook',
+        component: () => {
+          this.bookPage = new Book(this.rootElement);
+          this.rootElement.append(this.bookPage.element);
+        },
+      },
     ];
 
     this.defaultRoute = {
@@ -43,6 +53,7 @@ class Router {
   updateRouter(): void {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
+    console.log(currentRouteName);
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
     );
