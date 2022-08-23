@@ -1,4 +1,4 @@
-import IRoute from '../interfaces';
+import { IRoute } from '../interfaces';
 import Component from '../utils/component';
 import Main from '../pages/main/main';
 import Team from '../pages/team/team';
