@@ -3,7 +3,7 @@ import {
 } from '../interfaces';
 
 // const baseUrl = 'http://localhost:3000';
-const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
+export const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
 const words = `${baseUrl}/words`;
 const users = `${baseUrl}/users`;
 const signin = `${baseUrl}/signin`;
@@ -14,7 +14,7 @@ const signin = `${baseUrl}/signin`;
  * @param {string} page - page in the group;
  */
 export const getWords = async ({ group, page }: { group: number, page: number }) => {
-  const response = await fetch(`${words}?_group=${group}&_page=${page}`);
+  const response = await fetch(`${words}?group=${group}&page=${page}`);
   return {
     items: await response.json(),
   };
