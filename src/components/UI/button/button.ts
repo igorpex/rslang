@@ -11,7 +11,7 @@ class UIButton extends Component {
     content: string,
     disabled = false,
   ) {
-    super(parentNode, 'button', ['btn'], content);
+    super(parentNode, 'div', ['btn'], content);
 
     this.element.classList.add(...styles);
     this.element.addEventListener('click', () => this.onClickButton());
