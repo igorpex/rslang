@@ -43,12 +43,12 @@ class BookItem extends Component{
         this.removeButton = new UIButton(buttonContainer.element, ['item__remove-button'], 'Удалить');
         this.addToDifficultButton = new UIButton(buttonContainer.element, ['item__add-button'], 'Добавить в сложные')
     
+        const groupIcon = new Component(rightItem.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`)
     }
 
     playAudio() {
         const audio = new Audio();
         audio.src = `${baseUrl}/${this.card.audio}`;
-        console.log(audio);
         audio.play();
     }
 }
