@@ -7,6 +7,7 @@ import BookItem from "./bookItem";
 class BookContainer extends Component{
     updatePage: (page: number) => void = () => {};
     updateGroup: (group: number) => void = () => {};
+    startSprintGame: (cards: Word[]) => void = () => {};
 
     private title: Component;
     private mainContent: Component;
@@ -15,14 +16,15 @@ class BookContainer extends Component{
 
     constructor(parentNode: HTMLElement) {
         super(parentNode, 'div', ['book-container']);
-        this.cards = [];
 
+        this.cards = [];
         this.title = new Component(this.element, 'h2', ['book__title'], 'Book');
         this.bookOptions = new BookOptions(this.element, 'div', ['book__setting']);
         this.mainContent = new Component(this.element, 'div', ['book__content']);
 
         this.bookOptions.updatePage = (page) => this.updatePage(page);
         this.bookOptions.updateGroup = (group) => this.updateGroup(group);
+ 
     }
 
     private clear() {
@@ -30,11 +32,12 @@ class BookContainer extends Component{
         this.cards = [];
     }
 
-    addWords(cards: Word[]): void {
+    addWords(cards: Word[], group: number): void {
         this.clear();
 
         this.cards = cards.map((card: Word) => {
-            const item = new BookItem(this.mainContent.element, card);
+            const item = new BookItem(this.mainContent.element, card)
+            item.element.id = `group-${group + 1}`;
             return item;
         })
     }
