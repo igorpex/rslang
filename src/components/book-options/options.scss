@@ -1,0 +1,36 @@
+$color-options: rgba(255, 166, 0, 0.6);
+
+.book-options{
+    width: 100%;
+    margin-bottom: 3rem;
+    padding: 1rem 2.5rem;
+    background-color: $color-options;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.book-input{
+    padding: 1rem;
+    border-radius: 2rem;
+    font-size: 1.8rem;
+}
+.boook-options__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.option-button{
+    display: block;
+    width: 5rem;
+    height: 5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+    background-color: $color-options;
+    // border-radius: 100%;
+    box-shadow: none;
+}
+
