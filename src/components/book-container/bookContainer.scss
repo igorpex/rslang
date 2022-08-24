@@ -1,3 +1,11 @@
+$color-group-1: white;
+$color-group-2: green;
+$color-group-3: yellow;
+$color-group-4: blue;
+$color-group-5: violet;
+$color-group-6: red;
+$color-group-7: grey;
+
 .book-container{
     width: 100%;
 }
@@ -83,4 +91,56 @@
 }
 .item__add-button{
     background-color: rgba(86, 249, 214, 0.678);
+}
+
+#group-1{
+    border: 5px solid $color-group-1;
+}
+#group-2{
+    border: 5px solid $color-group-2;
+}
+#group-3{
+    border: 5px solid $color-group-3;
+}
+#group-4{
+    border: 5px solid $color-group-4;
+}
+#group-5{
+    border: 5px solid $color-group-5;
+}
+#group-6{
+    border: 5px solid $color-group-6;
+}
+
+.item__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 2rem 0rem;
+    border-radius: 100%;
+}
+.group-1{
+    background-color: $color-group-1;
+}
+.group-2{
+    background-color: $color-group-2;
+}
+.group-3{
+    background-color: $color-group-3;
+}
+.group-4{
+    background-color: $color-group-4;
+}
+.group-5{
+    background-color: $color-group-5;
+}
+.group-6{
+    background-color: $color-group-6;
+}
+.group-7{
+    background-color: $color-group-7;
 }
