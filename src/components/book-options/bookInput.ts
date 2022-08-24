@@ -12,11 +12,11 @@ class BookInput extends Component{
         styles: string[] = [],
     ) {
         super(parentNode, 'div', ['wrapper-input']);
-        this.input = new UIInput(this.element, 'select', 'text', ['book-input']);
+        this.input = new UIInput(this.element, 'select', ['book-input']);
         const select = this.input.element as HTMLInputElement;
 
         for( let i = 1; i <= 6; i++) {
-          const option = new Component(select, 'option', ['ui-input__option'], `Section ${i}`);
+          const option = new Component(select, 'option', ['input__option'], `Section ${i}`);
           const item = option.element as HTMLInputElement;
           item.value = `${i}`;
         }
