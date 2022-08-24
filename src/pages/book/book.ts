@@ -28,7 +28,7 @@ class Book extends Component{
         const data = await getWords({group, page});
         if (data) {
             const cardsArr: Word[] = data.items;
-            this.bookContainer.addWords(cardsArr);
+            this.bookContainer.addWords(cardsArr, group);
 
             // this.bookContainer.pagination.updateNextButton(
             //     this.page,
