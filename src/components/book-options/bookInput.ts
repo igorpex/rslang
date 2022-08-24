@@ -21,8 +21,7 @@ class BookInput extends Component{
           item.value = `${i}`;
         }
         select.addEventListener('change', () => {
-            this.updateGroup(Number(select.value));
-            console.log(select.value);
+            this.updateGroup(Number(select.value) - 1);
           });
     }
 } 
