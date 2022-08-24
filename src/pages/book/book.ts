@@ -16,12 +16,11 @@ class Book extends Component{
         this.bookContainer = new BookContainer(this.element);
         this.bookContainer.updatePage = (page) => {
             this.page = page;
-            this.getCards(this.group - 1, this.page);
+            this.getCards(this.group, this.page);
         }
         this.bookContainer.updateGroup = (group) => {
             this.group = group;
-            console.log(this.group);
-            this.getCards(this.group - 1, this.page);
+            this.getCards(this.group, this.page);
         }
     }
 
