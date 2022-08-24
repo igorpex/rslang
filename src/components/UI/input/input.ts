@@ -6,12 +6,13 @@ class UIInput extends Component {
 
   constructor(
     parentNode: HTMLElement,
+    tagName: keyof HTMLElementTagNameMap = 'input',
     type: string,
     styles: string[] = [],
 
     initValue?: string,
   ) {
-    super(parentNode, 'input', ['ui-input']);
+    super(parentNode, tagName, ['ui-input']);
     this.element.setAttribute('type', type);
     this.element.classList.add(...styles);
 
