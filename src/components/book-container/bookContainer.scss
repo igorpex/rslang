@@ -1,4 +1,6 @@
-
+.book-container{
+    width: 100%;
+}
 .book__title{
     font-size: 3.2rem;
     margin-bottom: 2rem;
@@ -12,8 +14,11 @@
 }
 .book-item{
     margin-bottom: 1.5rem;
-    width: 85%;
+    max-width: 80rem;
+    width: 80%;
     display: flex;
+    border-top-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
     flex-direction: row;
     gap: 1.5rem;
     background-color: antiquewhite;
@@ -24,6 +29,7 @@
     max-width: 30rem;
     min-height: 100%;
     background-repeat: no-repeat;
+    border-top-left-radius: 2rem;
     background-size: cover;
     background-position: center center;
 }
