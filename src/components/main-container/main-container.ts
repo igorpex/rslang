@@ -1,11 +1,14 @@
 import Component from '../../utils/component';
 
 import './index.scss';
+import Footer from '../footer/footer';
 
 class MainContainer extends Component {
   private content: Component;
 
   private title: Component;
+
+  private footer: Component;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['main-container']);
@@ -18,6 +21,8 @@ class MainContainer extends Component {
     img.classList.add('main-picture');
     img.src = './main-picture.jpg';
     this.element.append(img);
+
+    this.footer = new Footer(this.element);
   }
 
   private clear() {
