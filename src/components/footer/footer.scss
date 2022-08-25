@@ -1,3 +1,12 @@
-.footer-gh-logo {max-width: 100px;}
 .footer-rs-logo {max-width: 100px;}
 .footer {height: 60px}
+.footer {
+  display:flex;
+  justify-content: space-between;
+}
+.footer__team-gh-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+}
