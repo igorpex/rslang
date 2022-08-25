@@ -56,3 +56,7 @@ export interface UserSettings {
   wordsPerDay: number;
   optional: {}
 }
+
+export interface ITeam {
+  [key: string]: string;
+}
