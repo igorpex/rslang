@@ -2,7 +2,6 @@ import {
   UpdateUser, User, UserAggregatedWordsParams, UserSettings, UserStatistics, UserWord,
 } from '../interfaces';
 
-// const baseUrl = 'http://localhost:3000';
 export const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
 const words = `${baseUrl}/words`;
 const users = `${baseUrl}/users`;
@@ -45,20 +44,30 @@ export const getAllWords = async () => {
  * Creates a new user.
  * @param {object} user - user object {name?: string, email: string, password: string}
  */
-export const createUser = async (user: User) => (await fetch(users, {
-  method: 'POST',
-  body: JSON.stringify(user),
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})).json();
+export const createUser = async (user: User) => {
+  const res = await fetch(users, {
+    method: 'POST',
+    body: JSON.stringify(user),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).catch();
+  return res.status !== 200 ? { statusCode: res.status } : { ...(await res.json()) };
+};
 
 /**
  * Gets user.
  * returns user object {name?: string,  email: string, password: string}
  * @param {string} id - userId
  */
-export const getUser = async (id: string) => (await fetch(`${users}/${id}`)).json();
+export const getUser = async (id: string, token: string) => (await fetch(`${users}/${id}`, {
+  method: 'GET',
+  // credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+})).json();
 
 /**
  * Updates a user.
@@ -68,7 +77,7 @@ export const getUser = async (id: string) => (await fetch(`${users}/${id}`)).jso
  */
 export const updateUser = async (id: string, token: string, user: UpdateUser) => (await fetch(`${users}/${id}`, {
   method: 'PUT',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(user),
   headers: {
     'Content-Type': 'application/json',
@@ -92,9 +101,9 @@ export const deleteUser = async (id: string) => (await fetch(`${users}${id}`, { 
  * @param {string} id - userId.
  * @param {object} user - user object: {"email": "string","password": "string"};
  */
-export const signinUser = async (id: string, user: User) => (await fetch(`${signin}`, {
+export const signinUser = async (user: User) => (await fetch(`${signin}`, {
   method: 'POST',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(user),
   headers: {
     'Content-Type': 'application/json',
@@ -111,7 +120,7 @@ export const signinUser = async (id: string, user: User) => (await fetch(`${sign
  */
 export const refreshUserTokens = async (id: string, refreshToken: string) => (await fetch(`${users}/${id}/tokens`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${refreshToken}`,
@@ -126,7 +135,7 @@ export const refreshUserTokens = async (id: string, refreshToken: string) => (aw
  */
 export const getUserWords = async (id: string, refreshToken: string) => (await fetch(`${users}/${id}/words`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${refreshToken}`,
@@ -142,7 +151,7 @@ export const getUserWords = async (id: string, refreshToken: string) => (await f
  */
 export const createUserWord = async (id: string, wordId: string, token: string, userWord: UserWord) => (await fetch(`${users}/${id}/words/${wordId}`, {
   method: 'POST',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(userWord),
   headers: {
     'Content-Type': 'application/json',
@@ -156,9 +165,9 @@ export const createUserWord = async (id: string, wordId: string, token: string, 
  * @param {string} wordId - wordId.
  * @param {string} token - user token.
  */
-const getUserWordById = async (id: string, wordId: string, token: string) => (await fetch(`${users}/${id}/words/${wordId}`, {
+export const getUserWordById = async (id: string, wordId: string, token: string) => (await fetch(`${users}/${id}/words/${wordId}`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -173,7 +182,7 @@ const getUserWordById = async (id: string, wordId: string, token: string) => (aw
  */
 export const updateUserWord = async (id: string, wordId: string, token: string, body: UserWord) => (await fetch(`${users}/${id}/words/${wordId}`, {
   method: 'PUT',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(body),
   headers: {
     'Content-Type': 'application/json',
@@ -189,7 +198,7 @@ export const updateUserWord = async (id: string, wordId: string, token: string, 
  */
 export const deleteUserWord = async (id: string, wordId: string, token: string) => (await fetch(`${users}/${id}/words/${wordId}`, {
   method: 'DELETE',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -223,7 +232,7 @@ export const getUserAggregatedWords = async ({
   id, group, page, wordsPerPage, filter, token,
 }: UserAggregatedWordsParams) => (await fetch(`${users}/${id}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter=${encodeURIComponent(JSON.stringify(filter))}`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -239,7 +248,7 @@ export const getUserAllAggregatedWords = async ({
   id, token,
 }: { id: string, token: string }) => (await fetch(`${users}/${id}/aggregatedWords`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -256,7 +265,7 @@ export const getUserAggregatedWordById = async ({
   id, wordId, token,
 }: { id: string, wordId: string, token: string }) => (await fetch(`${users}/${id}/aggregatedWords/${wordId}`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -275,7 +284,7 @@ export const getUserStatistics = async ({
   id, token,
 }: { id: string, token: string }) => (await fetch(`${users}/${id}/statistics`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -298,7 +307,7 @@ export const setUserStatistics = async ({
   id, statistics, token,
 }: { id: string, statistics: UserStatistics, token: string }) => (await fetch(`${users}/${id}/statistics`, {
   method: 'PUT',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(statistics),
   headers: {
     'Content-Type': 'application/json',
@@ -321,7 +330,7 @@ export const getUserSettings = async ({
   id, token,
 }: { id: string, token: string }) => (await fetch(`${users}/${id}/settings`, {
   method: 'GET',
-  credentials: 'include',
+  // credentials: 'include',
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
@@ -341,7 +350,7 @@ export const setUserSettings = async ({
   id, settings, token,
 }: { id: string, settings: UserSettings, token: string }) => (await fetch(`${users}/${id}/settings`, {
   method: 'PUT',
-  credentials: 'include',
+  // credentials: 'include',
   body: JSON.stringify(settings),
   headers: {
     'Content-Type': 'application/json',

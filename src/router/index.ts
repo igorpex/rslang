@@ -2,6 +2,9 @@ import { IRoute } from '../interfaces';
 import Component from '../utils/component';
 import Main from '../pages/main/main';
 import Team from '../pages/team/team';
+import Login from '../pages/login/login';
+import AuthTestContainer from '../components/auth/auth-test-container/auth-test-container';
+import SignupContainer from '../components/auth/signup-container/signup-container';
 
 class Router {
   private readonly routes: Array<IRoute>;
@@ -12,6 +15,12 @@ class Router {
   mainPage: Component;
 
   teamPage: Component | undefined;
+
+  loginPage: Component | undefined;
+
+  signupPage: Component | undefined;
+
+  testPage: Component | undefined;
 
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
@@ -28,6 +37,27 @@ class Router {
         component: () => {
           this.teamPage = new Team(this.rootElement);
           this.rootElement.append(this.teamPage.element);
+        },
+      },
+      {
+        name: '/login',
+        component: () => {
+          this.loginPage = new Login(this.rootElement);
+          this.rootElement.append(this.loginPage.element);
+        },
+      },
+      {
+        name: '/signup',
+        component: () => {
+          this.signupPage = new SignupContainer(this.rootElement);
+          this.rootElement.append(this.signupPage.element);
+        },
+      },
+      {
+        name: '/test',
+        component: () => {
+          this.testPage = new AuthTestContainer(this.rootElement);
+          this.rootElement.append(this.testPage.element);
         },
       },
     ];

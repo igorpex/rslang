@@ -56,3 +56,17 @@ export interface UserSettings {
   wordsPerDay: number;
   optional: {}
 }
+
+export interface UserAuthData {
+  message: string;
+  name?: string;
+  refreshToken: string;
+  token: string;
+  userId: string;
+}
+
+export interface UserSignUpResponse {
+  id: string;
+  name?: string;
+  email: string;
+}
