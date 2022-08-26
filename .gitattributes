@@ -110,10 +110,10 @@ TODO              text eol=lf
 .htaccess         text eol=lf
 *.lock            text -diff
 package.json      text eol=lf
-package-lock.json text eol=lf -diff eol=lf
-pnpm-lock.yaml    text eol=lf -diff eol=lf
+package-lock.json text eol=lf -diff
+pnpm-lock.yaml    text eol=lf -diff
 .prettierrc       text eol=lf
-yarn.lock         text -diff eol=lf
+yarn.lock         text eol=lf -diff
 *.toml            text eol=lf
 *.yaml            text eol=lf
 *.yml             text eol=lf
