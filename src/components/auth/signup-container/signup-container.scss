@@ -1,0 +1,23 @@
+.signup {
+  display: flex;
+  justify-content: center;
+}
+.signup__container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 25px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.signup__form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.signup__title {
+  margin-left: auto;
+  margin-right: auto;
+}

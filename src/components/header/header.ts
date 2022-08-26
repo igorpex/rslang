@@ -1,5 +1,6 @@
 import Component from '../../utils/component';
 import './header.scss';
+import Auth from '../auth/auth/auth';
 
 class Header extends Component {
   private navItems: Component[] = [];
@@ -16,8 +17,11 @@ class Header extends Component {
 
   private readonly loginButton: Component;
 
+  private readonly logoutButton: Component;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['header']);
+
     const img = document.createElement('img');
     img.classList.add('header-logo');
     img.src = './logo.png';
@@ -59,6 +63,12 @@ class Header extends Component {
       'Team',
     );
 
+    this.linkToMain.element.setAttribute('href', '#/');
+    this.linkToEbook.element.setAttribute('href', '#/ebook');
+    this.linkToMiniGames.element.setAttribute('href', '#/games');
+    this.linkToStatistics.element.setAttribute('href', '#/statistics');
+    this.linkToTeam.element.setAttribute('href', '#/team');
+
     this.loginButton = new Component(
       this.element,
       'a',
@@ -66,18 +76,45 @@ class Header extends Component {
       'Login',
     );
 
-    this.linkToMain.element.setAttribute('href', '#/');
-    this.linkToEbook.element.setAttribute('href', '#/ebook');
-    this.linkToMiniGames.element.setAttribute('href', '#/games');
-    this.linkToStatistics.element.setAttribute('href', '#/statistics');
-    this.linkToTeam.element.setAttribute('href', '#/team');
+    this.logoutButton = new Component(
+      this.element,
+      'a',
+      ['nav__item', 'header__logout'],
+      'LogOut',
+    );
+
     this.loginButton.element.setAttribute('href', '#/login');
+    this.loginButton.element.setAttribute('display', 'inline');
+    this.loginButton.element.style.display = 'inline-block';
+
+    this.logoutButton.element.setAttribute('href', '#/logout');
+    this.logoutButton.element.style.display = 'none';
+    this.logoutButton.element.addEventListener('click', (e) => {
+      e.preventDefault();
+      const auth = new Auth();
+      auth.logOut();
+      window.location.reload();
+    });
 
     this.navItems = [this.linkToMain, this.linkToEbook, this.linkToMiniGames,
-      this.linkToStatistics, this.linkToTeam, this.loginButton];
+      this.linkToStatistics, this.linkToTeam, this.loginButton, this.logoutButton];
 
     window.addEventListener('hashchange', () => this.updateActive(this.navItems));
     window.addEventListener('load', () => this.updateActive(this.navItems));
+
+    this.updateLogin();
+  }
+
+  public async updateLogin() {
+    const auth = new Auth();
+    const isLoggedIn = await auth.isLoggedIn();
+    if (isLoggedIn) {
+      this.loginButton.element.style.display = 'none';
+      this.logoutButton.element.style.display = 'inline-block';
+    } else {
+      this.loginButton.element.style.display = 'inline-block';
+      this.logoutButton.element.style.display = 'none';
+    }
   }
 
   private updateActive(navItems: Component[]): void {

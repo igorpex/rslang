@@ -1,0 +1,21 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+.login__container {
+  margin-top: 25px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.login__form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login__title {
+  margin-left: auto;
+  margin-right: auto;
+}
