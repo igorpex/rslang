@@ -17,13 +17,14 @@ class Router {
 
   teamPage: Component | undefined;
 
+  bookPage: Component | undefined;
+
   loginPage: Component | undefined;
 
   signupPage: Component | undefined;
 
   testPage: Component | undefined;
 
-  bookPage: Component | undefined;
 
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
@@ -40,6 +41,13 @@ class Router {
         component: () => {
           this.teamPage = new Team(this.rootElement);
           this.rootElement.append(this.teamPage.element);
+        },
+      },
+      {
+        name: '/ebook',
+        component: () => {
+          this.bookPage = new Book(this.rootElement);
+          this.rootElement.append(this.bookPage.element);
         },
       },
       {
@@ -83,6 +91,7 @@ class Router {
   updateRouter(): void {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
+    console.log(currentRouteName);
     console.log(currentRouteName);
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
