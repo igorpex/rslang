@@ -1,6 +1,7 @@
 import Component from '../../utils/component';
 import './header.scss';
 import Auth from '../auth/auth/auth';
+import logoImg from '../../assets/images/logo.png';
 
 class Header extends Component {
   private navItems: Component[] = [];
@@ -24,7 +25,7 @@ class Header extends Component {
 
     const img = document.createElement('img');
     img.classList.add('header-logo');
-    img.src = './logo.png';
+    img.src = logoImg;
 
     this.element.append(img);
 

@@ -1,4 +1,5 @@
 import Component from '../../utils/component';
+import mainImage from '../../assets/images/main-picture.jpg';
 
 import './index.scss';
 import Footer from '../footer/footer';
@@ -19,7 +20,7 @@ class MainContainer extends Component {
 
     const img = document.createElement('img');
     img.classList.add('main-picture');
-    img.src = './main-picture.jpg';
+    img.src = mainImage;
     this.element.append(img);
 
     this.footer = new Footer(this.element);
