@@ -1,0 +1,20 @@
+.games-container {
+  margin-top: 25px;
+  min-height: 500px;
+  background-color: #FFE39C;
+}
+.games__box {
+  width: 50%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.games__box_audio-challenge {
+  //background-image: url('./audio-challenge-box.jpg)');
+  //background-image: url('../../../public/audio-challenge-box.jpg');
+}
+.games__box_audio-sprint {
+  //background-image: url('./sprint-box.jpg)');
+  //background-image: url('../../../public/sprint-box.jpg');
+}
