@@ -18,7 +18,7 @@ class BookContainer extends Component{
         super(parentNode, 'div', ['book-container']);
 
         this.cards = [];
-        this.title = new Component(this.element, 'h2', ['book__title'], 'Book');
+        this.title = new Component(this.element, 'h2', ['book__title'], 'Электронный учебник');
         this.bookOptions = new BookOptions(this.element, 'div', ['book__setting']);
         this.mainContent = new Component(this.element, 'div', ['book__content']);
 

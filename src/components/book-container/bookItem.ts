@@ -11,6 +11,7 @@ class BookItem extends Component{
     private card: Word;
     private learnButton: UIButton;
     private addToDifficultButton: UIButton;
+    private statisticsButton: UIButton;
     lernedWords: Word[];
     difficultWords: Word[];
     isDifficult: boolean;
@@ -22,19 +23,21 @@ class BookItem extends Component{
         this.difficultWords = [];
         this.isDifficult = false;
 
-        const leftItem = new Component(this.element, 'div', ['book-item__left']);
-        const rightItem = new Component(this.element, 'div', ['book-item__right']);
+        const mainBlock = new Component(this.element, 'div', ['main-block'])
+        const leftItem = new Component(mainBlock.element, 'div', ['book-item__left']);
+        const rightItem = new Component(mainBlock.element, 'div', ['book-item__right']);
         leftItem.element.style.backgroundImage = `url(${baseUrl}/${this.card.image})`;
 
-        const cardName = new Component(rightItem.element, 'h3', ['item__name'], `${this.card.word[0].toLocaleUpperCase() + this.card.word.slice(1)}`);
-        const cardTranscription = new Component(rightItem.element, 'p', ['item__transcription'], `${this.card.transcription}`);
-        const cardTranslate = new Component(rightItem.element, 'p', ['item__translate'], `${this.card.wordTranslate}`);
-
-        const audioButton = new UIButton(rightItem.element, ['item__audio-button'], '');
+        const leftItemHeader = new Component(rightItem.element, 'div', ['left__header']);
+        const cardName = new Component(leftItemHeader.element, 'p', ['item__name'], `${this.card.word} - ${this.card.transcription}`);
+        const audioButton = new UIButton(leftItemHeader.element, ['item__audio-button'], '', false);
         audioButton.element.style.backgroundImage = 'url(./play-button.svg)';
         audioButton.onClickButton = ()=> { this.playAudio()};
 
+        const cardTranslate = new Component(rightItem.element, 'p', ['item__translate'], `${this.card.wordTranslate}`);
+
         const textMeaning = document.createElement('p');
+        textMeaning.className = 'item__text-meaning';
         textMeaning.innerHTML = this.card.textMeaning;
         rightItem.element.appendChild(textMeaning);
 
@@ -42,12 +45,14 @@ class BookItem extends Component{
         
         const textExample = document.createElement('p');
         textExample.innerHTML = this.card.textExample;
+        textExample.className = 'item__text-example';
         rightItem.element.appendChild(textExample);
         
         const textExampleTranslate = new Component(rightItem.element, 'p', ['item__text-example-translate'], `${this.card.textExampleTranslate}`);
-        const buttonContainer = new Component(rightItem.element, 'div', ['item__buttons']);
+        const buttonContainer = new Component(this.element, 'div', ['item__buttons']);
         this.learnButton = new UIButton(buttonContainer.element, ['item__remove-button'], 'Изучено');
-        this.addToDifficultButton = new UIButton(buttonContainer.element, ['item__add-button'], 'Добавить в сложные')
+        this.addToDifficultButton = new UIButton(buttonContainer.element, ['item__add-button'], 'Добавить в сложные');
+        this.statisticsButton = new UIButton(buttonContainer.element, ['item__statistics-button'], 'Статистика');
     
         const groupIcon = new Component(rightItem.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`);
 
@@ -60,12 +65,10 @@ class BookItem extends Component{
         this.addToDifficultButton.onClickButton = () => {
             if(this.isDifficult === false) {
                 this.addToDifficultButton.element.innerHTML = 'Удалить из сложных'
-                this.addToDifficultButton.element.style.background = 'grey';
                 this.isDifficult = true;
                 this.addToDifficult(this.card, this.difficultWords);
             } else if (this.isDifficult === true) {
-                this.addToDifficultButton.element.innerHTML = 'Добавить в сложные'
-                this.addToDifficultButton.element.style.background = 'rgba(86, 249, 214, 0.678)';
+                this.addToDifficultButton.element.innerHTML = 'Добавить в сложные';
                 this.isDifficult = false;
                 this.removeFromDifficult(this.card);
             }

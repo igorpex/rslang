@@ -2,7 +2,7 @@ import Component from "../../utils/component";
 import Pagination from "../shared/pagination/pagination";
 import UIButton from "../UI/button/button";
 import BookInput from "./bookInput";
-import OptionButtons from "./optionButtons";
+import GameOptions from "./gameOptions";
 import './options.scss';
 
 class BookOptions extends Component{
@@ -11,7 +11,7 @@ class BookOptions extends Component{
     
     private input: BookInput;
     private pagination: Pagination;
-    private optionButtons: OptionButtons;
+    private gameOptions: GameOptions;
 
     group = 0;
 
@@ -23,7 +23,7 @@ class BookOptions extends Component{
         super(parentNode, 'div', ['book-options']);
         this.input = new BookInput(this.element, 'text', ['book-input']);
         this.pagination = new Pagination(this.element);
-        this.optionButtons = new OptionButtons(this.element);
+        this.gameOptions = new GameOptions(this.element);
 
         this.pagination.updatePage = (page) => this.updatePage(page);
         this.input.updateGroup = (group) => this.updateGroup(group);

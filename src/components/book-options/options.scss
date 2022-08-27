@@ -1,36 +1,95 @@
-$color-options: rgba(255, 166, 0, 0.6);
+$color-options: rgba(255, 244, 217, 1);
+$color-border-btn: rgba(255, 198, 156, 1);
+$color-header-bg: rgba(255, 198, 156, 1);
 
 .book-options{
-    width: 100%;
-    margin-bottom: 3rem;
-    padding: 1rem 2.5rem;
-    background-color: $color-options;
+    max-width: 97.7rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    justify-content: start;
+    gap: 4rem;
 }
-
+.wrapper-input{
+    position: relative;
+    background-color: $color-options;
+    width: 20rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+// .wrapper-input::after{
+//         content: '\25BC';
+//         position: absolute;
+//         top: 0;
+//         right: 0;
+//         padding: 1em;
+//         transition: .25s all ease;
+//         pointer-events: none;
+    
+// }
+// .ui-input::-ms-expand{
+//     display: none;
+// }
 .book-input{
     padding: 1rem;
-    border-radius: 2rem;
+    width: 20rem;
+    padding-left: 2rem;
+    outline: none;
+    border: none;
     font-size: 1.8rem;
+    line-height: 2.663rem;
+    text-transform: uppercase;
 }
-.boook-options__buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
+.book-input::-ms-expand {
+    display: none;
 }
-.option-button{
-    display: block;
-    width: 5rem;
-    height: 5rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
+.input__option{
+   
+}
+.book-options__game {
+    position: relative;
+    width: 17rem;
+    padding: 1rem;
     background-color: $color-options;
-    // border-radius: 100%;
-    box-shadow: none;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    line-height: 2.663rem;
+}
+.book-options__game::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+.book-options__game:hover::after {
+    color: rgba(128, 128, 128, 0.591);
+}
+.book-options__game:active::after {
+    transform: rotate(90deg);
+    transition: all 0.3s ease;
+}
+.game__list.hidden{
+    display: none;
+    background-color: $color-header-bg;
+}
+.game__list{
+    list-style: none;
+    padding: 1rem;
+    z-index: 10;
+    border: 3px solid $color-border-btn;
+    background-color: $color-header-bg;
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 17rem;
+    background-color: $color-options;
+}
+.list__item{
+    margin-bottom: 1rem;
+    border-bottom: 1px solid black;
 }
 
