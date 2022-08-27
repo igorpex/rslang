@@ -5,16 +5,15 @@
 }
 .games__box {
   width: 50%;
+  height: 100px;
   display: flex;
   align-content: center;
   justify-content: center;
 }
 
 .games__box_audio-challenge {
-  //background-image: url('./audio-challenge-box.jpg)');
-  //background-image: url('../../../public/audio-challenge-box.jpg');
+  background-image: url('../../assets/images/audio-challenge-box.jpg');
 }
-.games__box_audio-sprint {
-  //background-image: url('./sprint-box.jpg)');
-  //background-image: url('../../../public/sprint-box.jpg');
+.games__box_sprint {
+  background-image: url('../../assets/images/sprint-box.jpg');
 }
