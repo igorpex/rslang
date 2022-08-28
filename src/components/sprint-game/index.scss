@@ -6,3 +6,63 @@
 .sprint-entrance {
   background-image: url('../../assets/images/sprint-entrance.jpg');
 }
+
+.sprint {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sprint-prepare {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sprint-game {
+  margin-left: auto;
+  margin-right: auto;
+ }
+
+.sprint__card_right-answer{
+  border: #2fe928 1px solid;
+}
+.sprint__card_wrong-answer {
+  border: #d34160 1px solid;
+}
+
+.sprint__card-dot {
+  width: 20px;
+  height: 20px;
+  border: #63e795 2px solid;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #bbb;
+}
+.sprint__card-dot_active {
+  background-color: #63e795;
+}
+
+.sprint__card-birds-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sprint__card-bird{
+  width: 70px;
+  height: 70px;
+  background-repeat: no-repeat;
+  //background-size: auto;
+  background-size: 70px 70px;
+
+}
+.sprint__card-bird-1{
+  background-image: url('../../assets/images/bird1.png');
+}
+.sprint__card-bird-2{
+  background-image: url('../../assets/images/bird2.png');
+}
+.sprint__card-bird-3{
+  background-image: url('../../assets/images/bird3.png');
+}
+.sprint__card-bird-4{
+  background-image: url('../../assets/images/bird4.png');
+}
