@@ -87,13 +87,13 @@
 
 .sprint__card-audio-btn {
   font-size: 2rem;
-  //width: 2rem;
-  //height: 2rem;
+  width: 2rem;
+  height: 2rem;
   color: #bbbbbb;
   fill: #bbbbbb;
   stroke: #bbbbbb;
   cursor: pointer;
-  @apply h-8 w-8
+  //@apply h-8 w-8
 }
 
 .sprint__card_right-answer{
