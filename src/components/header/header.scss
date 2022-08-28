@@ -18,7 +18,7 @@
   &__logo {
     width: 50px;
     height: 50px;
-    background-image: url('../../../public/logo.svg');
+    background-image: url('../../assets/svg/logo.svg');
   }
 
   &__login-burger-container {
@@ -32,13 +32,13 @@
     .header__login {
       width: 50px;
       height: 50px;
-      background-image: url('../../../public/user.svg');
+      background-image: url('../../assets/svg/user.svg');
     }
 
     .header__logout {
       width: 50px;
       height: 50px;
-      background-image: url('../../../public/exit-svgrepo-com.svg');
+      background-image: url('../../assets/svg/exit-svgrepo-com.svg');
     }
 
     .header__burger {
@@ -117,5 +117,19 @@
 
   &__burger-panel.active {
     top: -1px;
+  }
+
+  .nav__item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 22px;
+    color: black;
+    text-decoration: none;
+
+    &-img {
+      width: 50px;
+      height: 50px;
+    }
   }
 }

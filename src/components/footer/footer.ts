@@ -1,5 +1,6 @@
 import Component from '../../utils/component';
 import './footer.scss';
+import rsLogo from '../../assets/svg/rs_school_js.svg';
 
 class Footer extends Component {
   private rsLogoBox: Component;
@@ -19,7 +20,7 @@ class Footer extends Component {
 
     // Using this.rsLogoBox.ELEMENT as parent, we insert rsLogoImg to rsLogoBox
     this.rsLogoImg = new Component(this.rsLogoBox.element, 'img', ['footer__rs-logo-img']);
-    this.rsLogoImg.element.setAttribute('src', './rs_school_js.svg');
+    this.rsLogoImg.element.setAttribute('src', rsLogo);
 
     this.teamGhLinks = new Component(this.element, 'div', ['footer__team-gh-links']);
 

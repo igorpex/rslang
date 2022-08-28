@@ -1,8 +1,13 @@
 import Component from '../../utils/component';
 import './header.scss';
 import Auth from '../auth/auth/auth';
+import logoImg from '../../assets/svg/logo.svg';
+import ebookImg from '../../assets/svg/book.svg';
+import gameImg from '../../assets/svg/game.svg';
+import statisticsImg from '../../assets/svg/statistics.svg';
+import teamImg from '../../assets/svg/team.svg';
 
-class Header extends Component {
+class Header extends Component {;
   private navItems: Component[] = [];
 
   private readonly logo: Component;
@@ -49,26 +54,26 @@ class Header extends Component {
     );
 
     this.loginButton = new Component(
-      document.querySelector('.header__login-burger-container') as HTMLElement,
+      this.loginBurgerContainer.element,
       'a',
       ['header__login'],
     );
 
     this.logoutButton = new Component(
-      document.querySelector('.header__login-burger-container') as HTMLElement,
+      this.loginBurgerContainer.element,
       'a',
       ['header__logout'],
     );
 
     this.burger = new Component(
-      document.querySelector('.header__login-burger-container') as HTMLElement,
+      this.loginBurgerContainer.element,
       'div',
       ['header__burger'],
     );
 
     //middle line of burger, added without "before" and "after" features
     this.burgerSpan = new Component(
-      document.querySelector('.header__burger') as HTMLElement,
+      this.burger.element,
       'span',
       ['header__burger-span'],
     );
@@ -80,54 +85,105 @@ class Header extends Component {
       ['header__burger-panel'],
     )
 
-    //links in the burger panel
+    //containers for menu with links
     this.nav = new Component(
-      document.querySelector('.header__burger-panel') as HTMLElement,
+      this.burgerPanel.element,
       'nav',
       ['header__burger-panel__nav'],
     )
 
+    //link to main page 
     this.linkToMain = new Component(
-      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      this.nav.element,
       'a',
       ['nav__item'],
-      'Главная',
     );
 
+    const linkToMainImg = document.createElement('div');
+    linkToMainImg.classList.add('nav__item-img');
+    linkToMainImg.style.backgroundImage = `url(${logoImg})`;
+    this.linkToMain.element.appendChild(linkToMainImg);
+
+    const linkToMainText = document.createElement('p');
+    linkToMainText.classList.add('nav__item-text');
+    linkToMainText.innerHTML = 'Главная';
+    this.linkToMain.element.appendChild(linkToMainText);
+
+    //link to ebook page 
     this.linkToEbook = new Component(
-      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      this.nav.element,
       'a',
       ['nav__item'],
-      'Электронный учебник',
     );
 
+    const linkToEbookImg = document.createElement('div');
+    linkToEbookImg.classList.add('nav__item-img');
+    linkToEbookImg.style.backgroundImage = `url(${ebookImg})`;
+    this.linkToEbook.element.appendChild(linkToEbookImg);
+
+    const linkToEbookText = document.createElement('p');
+    linkToEbookText.classList.add('nav__item-text');
+    linkToEbookText.innerHTML = 'Электронный учебник';
+    linkToEbookText.style.width = '146px';
+    this.linkToEbook.element.appendChild(linkToEbookText);
+
+    //link to game page
     this.linkToMiniGames = new Component(
-      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      this.nav.element,
       'a',
       ['nav__item'],
-      'Мини-игры',
     );
 
+    const linkToMiniGamesImg = document.createElement('div');
+    linkToMiniGamesImg.classList.add('nav__item-img');
+    linkToMiniGamesImg.style.backgroundImage = `url(${gameImg})`;
+    this.linkToMiniGames.element.appendChild(linkToMiniGamesImg);
+
+    const linkToMiniGamesText = document.createElement('p');
+    linkToMiniGamesText.classList.add('nav__item-text');
+    linkToMiniGamesText.innerHTML = 'Мини-игры';
+    this.linkToMiniGames.element.appendChild(linkToMiniGamesText);
+
+    //link to statistics page
     this.linkToStatistics = new Component(
-      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      this.nav.element,
       'a',
       ['nav__item'],
-      'Статистика',
     );
 
+    const linkToStatisticsImg = document.createElement('div');
+    linkToStatisticsImg.classList.add('nav__item-img');
+    linkToStatisticsImg.style.backgroundImage = `url(${statisticsImg})`;
+    this.linkToStatistics.element.appendChild(linkToStatisticsImg);
+
+    const linkToStatisticsText = document.createElement('p');
+    linkToStatisticsText.classList.add('nav__item-text');
+    linkToStatisticsText.innerHTML = 'Статистика';
+    this.linkToStatistics.element.appendChild(linkToStatisticsText);
+
+    //link to team page
     this.linkToTeam = new Component(
-      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      this.nav.element,
       'a',
       ['nav__item'],
-      'О команде',
     );
+
+    const linkToTeamImg = document.createElement('div');
+    linkToTeamImg.classList.add('nav__item-img');
+    linkToTeamImg.style.backgroundImage = `url(${teamImg})`;
+    this.linkToTeam.element.appendChild(linkToTeamImg);
+
+    const linkToTeamText = document.createElement('p');
+    linkToTeamText.classList.add('nav__item-text');
+    linkToTeamText.innerHTML = 'О команде';
+    this.linkToTeam.element.appendChild(linkToTeamText);
 
     this.burger.element.addEventListener('click', () => {
       this.openBurger();
     });
 
     this.nav.element.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).className === 'nav__item') {
+      if ((e.target as HTMLElement).className.includes('nav__item')) {
         this.openBurger();
       }
     });
