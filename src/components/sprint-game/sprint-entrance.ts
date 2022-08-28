@@ -33,7 +33,7 @@ class SprintEntrance extends Component {
     callback(); // leads to sprint.prepareGame()
   }
 
-  form2 = new Component(this.element, 'form', ['difficulty__form']);
+  // form2 = new Component(this.element, 'form', ['difficulty__form']);
 
   private form = `<form id="sprint__difficulty-form">
             <select name="difficulty" id="sprint__difficulty-input">
