@@ -1,7 +1,7 @@
 import Component from '../../utils/component';
 import './header.scss';
 import Auth from '../auth/auth/auth';
-import logoImg from '../../assets/images/logo.png';
+import logoImg from '../../assets/img/logo.png';
 
 class Header extends Component {
   private navItems: Component[] = [];
