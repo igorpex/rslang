@@ -96,3 +96,11 @@ export interface ShortWord {
   textMeaningTranslate?: string,
   textExampleTranslate?: string
 }
+
+export interface SprintCounts {
+  totalPoints: number;
+  pointsPerCorrectAnswer: number;
+  rightInTheRow: number
+  dots: number;
+  birds: number;
+}
