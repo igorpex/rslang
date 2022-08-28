@@ -32,6 +32,10 @@ const baseConfig = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(png|jpg|jpeg|svg|ico)$/,
+        use: 'file-loader',
+      },
     ],
   },
   resolve: {

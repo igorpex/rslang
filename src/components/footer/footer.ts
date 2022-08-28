@@ -13,7 +13,7 @@ class Footer extends Component {
   private year: Component | undefined;
 
   constructor(parentNode: HTMLElement) {
-    super(parentNode, 'div', ['footer']);
+    super(parentNode, 'div', ['footer', 'container']);
 
     this.rsLogoBox = new Component(this.element, 'div', ['footer__rs-logo-box']);
 

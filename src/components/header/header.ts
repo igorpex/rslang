@@ -5,6 +5,22 @@ import Auth from '../auth/auth/auth';
 class Header extends Component {
   private navItems: Component[] = [];
 
+  private readonly logo: Component;
+
+  private readonly loginBurgerContainer: Component;
+
+  private readonly loginButton: Component;
+
+  private readonly logoutButton: Component;
+
+  private readonly burger: Component;
+
+  private readonly burgerSpan: Component;
+
+  private readonly burgerPanel: Component;
+
+  private readonly nav: Component;
+
   private readonly linkToMain: Component;
 
   private readonly linkToEbook: Component;
@@ -15,73 +31,113 @@ class Header extends Component {
 
   private readonly linkToMiniGames: Component;
 
-  private readonly loginButton: Component;
-
-  private readonly logoutButton: Component;
-
   constructor(parentNode: HTMLElement) {
-    super(parentNode, 'div', ['header']);
+    super(parentNode, 'div', ['header', 'container']);
 
-    const img = document.createElement('img');
-    img.classList.add('header-logo');
-    img.src = './logo.png';
-
-    this.element.append(img);
-
-    this.linkToMain = new Component(
+    //logo in the left corner of header
+    this.logo = new Component(
       this.element,
       'a',
+      ['header__logo'],
+    )
+
+    //container for login/logout buttons AND burger in the right corner of header
+    this.loginBurgerContainer = new Component(
+      this.element,
+      'div',
+      ['header__login-burger-container']
+    );
+
+    this.loginButton = new Component(
+      document.querySelector('.header__login-burger-container') as HTMLElement,
+      'a',
+      ['header__login'],
+    );
+
+    this.logoutButton = new Component(
+      document.querySelector('.header__login-burger-container') as HTMLElement,
+      'a',
+      ['header__logout'],
+    );
+
+    this.burger = new Component(
+      document.querySelector('.header__login-burger-container') as HTMLElement,
+      'div',
+      ['header__burger'],
+    );
+
+    //middle line of burger, added without "before" and "after" features
+    this.burgerSpan = new Component(
+      document.querySelector('.header__burger') as HTMLElement,
+      'span',
+      ['header__burger-span'],
+    );
+
+    //side burger panel
+    this.burgerPanel = new Component(
+      this.element,
+      'div',
+      ['header__burger-panel'],
+    )
+
+    //links in the burger panel
+    this.nav = new Component(
+      document.querySelector('.header__burger-panel') as HTMLElement,
+      'nav',
+      ['header__burger-panel__nav'],
+    )
+
+    this.linkToMain = new Component(
+      document.querySelector('.header__burger-panel__nav') as HTMLElement,
+      'a',
       ['nav__item'],
-      'Main',
+      'Главная',
     );
 
     this.linkToEbook = new Component(
-      this.element,
+      document.querySelector('.header__burger-panel__nav') as HTMLElement,
       'a',
       ['nav__item'],
-      'E-Book',
+      'Электронный учебник',
     );
 
     this.linkToMiniGames = new Component(
-      this.element,
+      document.querySelector('.header__burger-panel__nav') as HTMLElement,
       'a',
       ['nav__item'],
-      'MiniGames',
+      'Мини-игры',
     );
 
     this.linkToStatistics = new Component(
-      this.element,
+      document.querySelector('.header__burger-panel__nav') as HTMLElement,
       'a',
       ['nav__item'],
-      'Statistics',
+      'Статистика',
     );
 
     this.linkToTeam = new Component(
-      this.element,
+      document.querySelector('.header__burger-panel__nav') as HTMLElement,
       'a',
       ['nav__item'],
-      'Team',
+      'О команде',
     );
 
+    this.burger.element.addEventListener('click', () => {
+      this.openBurger();
+    });
+
+    this.nav.element.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).className === 'nav__item') {
+        this.openBurger();
+      }
+    });
+
+    this.logo.element.setAttribute('href', '#/');
     this.linkToMain.element.setAttribute('href', '#/');
     this.linkToEbook.element.setAttribute('href', '#/ebook');
     this.linkToMiniGames.element.setAttribute('href', '#/games');
     this.linkToStatistics.element.setAttribute('href', '#/statistics');
     this.linkToTeam.element.setAttribute('href', '#/team');
-
-    this.loginButton = new Component(
-      this.element,
-      'a',
-      ['nav__item', 'header__login'],
-      'Login',
-    );
-
-    this.logoutButton = new Component(
-      this.element,
-      'a',
-      ['nav__item', 'header__logout'],
-      'LogOut',
-    );
 
     this.loginButton.element.setAttribute('href', '#/login');
     this.loginButton.element.setAttribute('display', 'inline');
@@ -103,6 +159,12 @@ class Header extends Component {
     window.addEventListener('load', () => this.updateActive(this.navItems));
 
     this.updateLogin();
+  }
+
+  public openBurger() {
+    this.burgerPanel.element.classList.toggle('active');
+    this.burger.element.classList.toggle('active');
+    this.burgerSpan.element.classList.toggle('active');
   }
 
   public async updateLogin() {
