@@ -1,15 +1,27 @@
+.sprint {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .sprint-container {
   margin-top: 25px;
   min-height: 500px;
   background-color: #FFE39C;
 }
 .sprint-entrance {
-  background-image: url('../../assets/images/sprint-entrance.jpg');
+  width: 100vw;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-image: url('../../assets/img/sprint-entrance.jpg');
+  background-size: 100%, 100%;
 }
 
-.sprint {
-  margin-left: auto;
-  margin-right: auto;
+.sprint-entrance__content {
+  width: 100%;
+  height: 100%;
+}
+
+.sprint__difficulty-btn {
 }
 
 .sprint-prepare {
@@ -18,15 +30,83 @@
 }
 
 .sprint-game {
-  margin-left: auto;
-  margin-right: auto;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //margin-left: auto;
+  //margin-right: auto;
  }
 
+.sprint-game__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.sprint-game__content {
+
+}
+
+.sprint-game__beep-sound-icon {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  //background-color: #57e6e6;
+  margin-left: auto;
+  fill: #d34160;
+  stroke: #57e6e6;
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  background-size: 19px 24px;
+  cursor: pointer;
+  background-image: url('../../assets/svg/note-muted.svg');
+}
+
+.sprint-game__beep-sound-icon.sprint-game__beep-sound_active {
+  background-image: url('../../assets/svg/note-active.svg');
+}
+
+.sprint-game__beep-sound-icon_disabled {
+
+}
+
+.sprint__card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  border: #bbbbbb 2px solid;
+  margin-top: 100px;
+}
+
+.sprint__card-total-points {
+  margin-top: -2rem;
+}
+
+.sprint__card-audio-btn {
+  font-size: 2rem;
+  //width: 2rem;
+  //height: 2rem;
+  color: #bbbbbb;
+  fill: #bbbbbb;
+  stroke: #bbbbbb;
+  cursor: pointer;
+  @apply h-8 w-8
+}
+
 .sprint__card_right-answer{
-  border: #2fe928 1px solid;
+  border: #2fe928 2px solid;
 }
 .sprint__card_wrong-answer {
-  border: #d34160 1px solid;
+  border: #d34160 2px solid;
+}
+
+.sprint__card-dots-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
 }
 
 .sprint__card-dot {
@@ -41,28 +121,95 @@
   background-color: #63e795;
 }
 
+.sprint__card-per-answer-count{
+  height: 1rem;
+}
+
 .sprint__card-birds-container {
   display: flex;
   justify-content: flex-start;
+  align-items: flex-end;
+  background-image: url('../../assets/img/branch.svg');
+  background-repeat: no-repeat;
+  background-position: bottom;
+  width: 80%;
+
 }
 
 .sprint__card-bird{
-  width: 70px;
+  width: 45px;
   height: 70px;
+  background-position: bottom;
   background-repeat: no-repeat;
   //background-size: auto;
-  background-size: 70px 70px;
+  //background-size: 70px 70px;
+  background-size: 40px auto;
+}
 
-}
 .sprint__card-bird-1{
-  background-image: url('../../assets/images/bird1.png');
+  background-image: url('../../assets/img/bird1.png');
 }
+
 .sprint__card-bird-2{
-  background-image: url('../../assets/images/bird2.png');
+  background-image: url('../../assets/img/bird2.png');
 }
 .sprint__card-bird-3{
-  background-image: url('../../assets/images/bird3.png');
+  background-image: url('../../assets/img/bird3.png');
 }
 .sprint__card-bird-4{
-  background-image: url('../../assets/images/bird4.png');
+  background-image: url('../../assets/img/bird4.png');
+}
+
+.sprint__card-word{
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.sprint__card-translation {
+  font-size: 1.5rem;
+  font-weight: normal;
+}
+
+.sprint__right-btn {
+  background-color: #63e795;
+  border: #63e795 1px;
+  width: 7rem;
+  height: 2rem;
+}
+
+.sprint__wrong-btn {
+  background-color: #d34160;
+  border: #d34160 1px;
+  width: 7rem;
+  height: 2rem;
+}
+
+.sprint-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.sprint-results__answers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sprint-results__title {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.sprint__results-word-box {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100px;
+}
+
+.sprint__results-word {
+  min-width: 7rem;
 }

@@ -3,6 +3,7 @@ import Component from '../../utils/component';
 import './index.scss';
 import { ShortWord, SprintCounts, SprintWord } from '../../interfaces';
 import SprintCard from './card';
+import Timer from './timer';
 
 class SprintGame extends Component {
   private content:Component;
@@ -35,12 +36,19 @@ class SprintGame extends Component {
 
   private maxPointsPerCorrectAnswer: number;
 
-  private sprintCounts: SprintCounts;
+  public sprintCounts: SprintCounts;
 
   private beepSoundIcon: Component ;
 
+  private topContainer: Component | undefined;
+
+  private timer: Timer | undefined;
+
+  private closeBtn: Component | undefined;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-game']);
+    this.topContainer = new Component(this.element, 'div', ['sprint-game__top']);
     this.content = new Component(this.element, 'div', ['sprint-game__content']);
     this.beepSoundEnabled = true; // TODO add changer
     this.activeWordIndex = 0;
@@ -48,7 +56,6 @@ class SprintGame extends Component {
     this.maxPointsPerCorrectAnswer = 80;
     this.rightAnsweredWords = [];
     this.wrongAnsweredWords = [];
-    this.beepSoundEnabled = true;
 
     this.sprintCounts = {
       pointsPerCorrectAnswer: 10,
@@ -58,32 +65,36 @@ class SprintGame extends Component {
       birds: 1, // rightInTheRow / 4 + 1;
     };
 
-    this.beepSoundIcon = new Component(this.content.element, 'div', ['sprint-game__beep-sound-icon']);
+    // this.timer = new Component(this.topContainer.element, 'div', ['sprint-game__timer'], '60');
+    this.timer = new Timer(this.topContainer.element);
+    this.beepSoundIcon = new Component(this.topContainer.element, 'div', ['sprint-game__beep-sound-icon']);
     this.updateBeepSoundIcon();
     this.beepSoundIcon.element.addEventListener('click', this.toggleBeepSoundStatus);
+    this.closeBtn = new Component(this.topContainer.element, 'div', ['sprint-game__close-btn'], 'X');
   }
 
-  private toggleBeepSoundStatus() {
+  private toggleBeepSoundStatus = () => {
     this.beepSoundEnabled = !this.beepSoundEnabled;
     this.updateBeepSoundIcon();
-  }
+  };
 
-  private updateBeepSoundIcon() {
+  private updateBeepSoundIcon = () => {
     if (this.beepSoundEnabled) { this.beepSoundIcon.element.classList.add('sprint-game__beep-sound_active'); } else {
       this.beepSoundIcon.element.classList.remove('sprint-game__beep-sound_active');
     }
-  }
+  };
 
   /**
    * Starts game.
    */
-  public start() {
+  public start(finishCallback: Function) {
     // console.log('Words to play:', this.words);
     // Prepare words
     const len = this.words!.length;
     this.correctIndexes = this.chooseCorrect(len);
     this.sprintWords = this.generateMixCorrectAndIncorrect();
     this.createCard();
+    this.timer!.start(finishCallback);
   }
 
   private createCard() {
@@ -94,12 +105,14 @@ class SprintGame extends Component {
       this.sprintCounts,
     );
     this.card.cardWrongBtn.onClickButton = () => {
+      this.card?.cardWrongBtn.setDisabled(true);
       if (!this.card?.sprintWord.correctFlag) {
         this.processCorrectAnswer();
       } else this.processWrongAnswer();
     };
 
     this.card.cardRightBtn.onClickButton = () => {
+      this.card?.cardRightBtn.setDisabled(true);
       if (this.card?.sprintWord.correctFlag === 1) {
         this.processCorrectAnswer();
       } else this.processWrongAnswer();

@@ -29,7 +29,7 @@ class SprintEntrance extends Component {
     // Get data from form
     const form = e.target as HTMLFormElement;
     const difficulty = (form.querySelector('#sprint__difficulty-input') as HTMLInputElement).value;
-    this.difficulty = +difficulty;
+    this.difficulty = +difficulty - 1;
     callback(); // leads to sprint.prepareGame()
   }
 

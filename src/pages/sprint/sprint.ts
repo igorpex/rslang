@@ -5,7 +5,8 @@ import SprintGame from '../../components/sprint-game/sprint-game';
 import SprintPrepare from '../../components/sprint-game/sprint-prepare';
 import Auth from '../../components/auth/auth/auth';
 import { getWords } from '../../api/api';
-import { WordPromise } from '../../interfaces';
+import { ShortWord, SprintCounts, WordPromise } from '../../interfaces';
+import SprintResults from '../../components/sprint-game/sprint-results';
 
 class Sprint extends Component {
   // private sprintContainer: SprintContainer;
@@ -16,6 +17,14 @@ class Sprint extends Component {
   private sprintGame: SprintGame | undefined;
 
   private auth: boolean | undefined;
+
+  private sprintResults: SprintResults | undefined;
+
+  private rightAnsweredWords: ShortWord[] | undefined;
+
+  private wrongAnsweredWords: ShortWord[] | undefined;
+
+  private sprintCounts: SprintCounts | undefined;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint']);
@@ -43,7 +52,7 @@ class Sprint extends Component {
     // Prepare game parameters
     this.sprintGame.words = words;
     this.sprintGame.auth = this.auth;
-    this.sprintGame.start();
+    this.sprintGame.start(this.finishGame.bind(this));
 
     // this.sprintGame.start(userId, wordsList, this.finishGame.bind(this));
   }
@@ -99,12 +108,23 @@ class Sprint extends Component {
   private getUserWordsByGroupPage() {
 
   }
-  // public finishGame() {
-  //   this.sprintPrepare!.destroy();
-  //   console.log('game started');
-  //   this.sprintGame = new SprintGame(this.element);
-  //   this.sprintGame.start(userId, wordsList, callback);
-  // }
+
+  public finishGame() {
+    // console.log('game finished');
+    // this.rightAnsweredWords = this.sprintGame!.rightAnsweredWords;
+    // this.wrongAnsweredWords = this.sprintGame!.wrongAnsweredWords;
+    // this.sprintCounts = this.sprintGame!.sprintCounts;
+    this.sprintGame?.destroy();
+
+    this.sprintResults = new SprintResults(this.element);
+
+    // Prepare results
+    this.sprintResults.rightAnsweredWords = this.sprintGame!.rightAnsweredWords;
+    this.sprintResults.wrongAnsweredWords = this.sprintGame!.wrongAnsweredWords;
+    this.sprintResults.sprintCounts = this.sprintGame!.sprintCounts;
+    // this.sprintResults.start(this.closeGame.bind(this));
+    this.sprintResults.start();
+  }
 
   private prepareToPlay() {
 
