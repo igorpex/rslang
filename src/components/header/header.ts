@@ -7,7 +7,8 @@ import gameImg from '../../assets/svg/game.svg';
 import statisticsImg from '../../assets/svg/statistics.svg';
 import teamImg from '../../assets/svg/team.svg';
 
-class Header extends Component {;
+class Header extends Component {
+  darkBg: Component;;
   private navItems: Component[] = [];
 
   private readonly logo: Component;
@@ -39,14 +40,14 @@ class Header extends Component {;
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['header', 'container']);
 
-    //logo in the left corner of header
+    // logo in the left corner of header
     this.logo = new Component(
       this.element,
       'a',
       ['header__logo'],
     )
 
-    //container for login/logout buttons AND burger in the right corner of header
+    // container for login/logout buttons AND burger in the right corner of header
     this.loginBurgerContainer = new Component(
       this.element,
       'div',
@@ -71,28 +72,28 @@ class Header extends Component {;
       ['header__burger'],
     );
 
-    //middle line of burger, added without "before" and "after" features
+    // middle line of burger, added without "before" and "after" features
     this.burgerSpan = new Component(
       this.burger.element,
       'span',
       ['header__burger-span'],
     );
 
-    //side burger panel
+    // side burger panel
     this.burgerPanel = new Component(
       this.element,
       'div',
       ['header__burger-panel'],
     )
 
-    //containers for menu with links
+    // containers for menu with links
     this.nav = new Component(
       this.burgerPanel.element,
       'nav',
       ['header__burger-panel__nav'],
     )
 
-    //link to main page 
+    // link to main page 
     this.linkToMain = new Component(
       this.nav.element,
       'a',
@@ -109,79 +110,88 @@ class Header extends Component {;
     linkToMainText.innerHTML = 'Главная';
     this.linkToMain.element.appendChild(linkToMainText);
 
-    //link to ebook page 
+    // link to ebook page 
     this.linkToEbook = new Component(
       this.nav.element,
       'a',
-      ['nav__item'],
+      ['nav__item', 'ebook'],
     );
 
     const linkToEbookImg = document.createElement('div');
-    linkToEbookImg.classList.add('nav__item-img');
+    linkToEbookImg.classList.add('nav__item-img', 'ebook');
     linkToEbookImg.style.backgroundImage = `url(${ebookImg})`;
     this.linkToEbook.element.appendChild(linkToEbookImg);
 
     const linkToEbookText = document.createElement('p');
-    linkToEbookText.classList.add('nav__item-text');
+    linkToEbookText.classList.add('nav__item-text', 'ebook');
     linkToEbookText.innerHTML = 'Электронный учебник';
     linkToEbookText.style.width = '146px';
     this.linkToEbook.element.appendChild(linkToEbookText);
 
-    //link to game page
+    // link to game page
     this.linkToMiniGames = new Component(
       this.nav.element,
       'a',
-      ['nav__item'],
+      ['nav__item', 'games'],
     );
 
     const linkToMiniGamesImg = document.createElement('div');
-    linkToMiniGamesImg.classList.add('nav__item-img');
+    linkToMiniGamesImg.classList.add('nav__item-img', 'games');
     linkToMiniGamesImg.style.backgroundImage = `url(${gameImg})`;
     this.linkToMiniGames.element.appendChild(linkToMiniGamesImg);
 
     const linkToMiniGamesText = document.createElement('p');
-    linkToMiniGamesText.classList.add('nav__item-text');
+    linkToMiniGamesText.classList.add('nav__item-text', 'games');
     linkToMiniGamesText.innerHTML = 'Мини-игры';
     this.linkToMiniGames.element.appendChild(linkToMiniGamesText);
 
-    //link to statistics page
+    // link to statistics page
     this.linkToStatistics = new Component(
       this.nav.element,
       'a',
-      ['nav__item'],
+      ['nav__item', 'statistics'],
     );
 
     const linkToStatisticsImg = document.createElement('div');
-    linkToStatisticsImg.classList.add('nav__item-img');
+    linkToStatisticsImg.classList.add('nav__item-img', 'statistics');
     linkToStatisticsImg.style.backgroundImage = `url(${statisticsImg})`;
     this.linkToStatistics.element.appendChild(linkToStatisticsImg);
 
     const linkToStatisticsText = document.createElement('p');
-    linkToStatisticsText.classList.add('nav__item-text');
+    linkToStatisticsText.classList.add('nav__item-text', 'statistics');
     linkToStatisticsText.innerHTML = 'Статистика';
     this.linkToStatistics.element.appendChild(linkToStatisticsText);
 
-    //link to team page
+    // link to team page
     this.linkToTeam = new Component(
       this.nav.element,
       'a',
-      ['nav__item'],
+      ['nav__item', 'team'],
     );
 
     const linkToTeamImg = document.createElement('div');
-    linkToTeamImg.classList.add('nav__item-img');
+    linkToTeamImg.classList.add('nav__item-img', 'team');
     linkToTeamImg.style.backgroundImage = `url(${teamImg})`;
     this.linkToTeam.element.appendChild(linkToTeamImg);
 
     const linkToTeamText = document.createElement('p');
-    linkToTeamText.classList.add('nav__item-text');
+    linkToTeamText.classList.add('nav__item-text', 'team');
     linkToTeamText.innerHTML = 'О команде';
     this.linkToTeam.element.appendChild(linkToTeamText);
 
+    // dark background for opened burger
+    this.darkBg = new Component(
+      this.element,
+      'div',
+      ['dark'],
+    );
+
+    // open or close burger panel by clicking on burger/cross
     this.burger.element.addEventListener('click', () => {
       this.openBurger();
     });
 
+    // close burger panel by clicking
     this.nav.element.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).className.includes('nav__item')) {
         this.openBurger();
@@ -217,10 +227,12 @@ class Header extends Component {;
     this.updateLogin();
   }
 
+  // 1.open/close burger panel 2.make or remove cross animation 3.remove span line from the middle of burger
   public openBurger() {
     this.burgerPanel.element.classList.toggle('active');
     this.burger.element.classList.toggle('active');
     this.burgerSpan.element.classList.toggle('active');
+    this.darkBg.element.classList.toggle('active');
   }
 
   public async updateLogin() {
