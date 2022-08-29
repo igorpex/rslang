@@ -8,7 +8,6 @@ import statisticsImg from '../../assets/svg/statistics.svg';
 import teamImg from '../../assets/svg/team.svg';
 
 class Header extends Component {
-  darkBg: Component;;
   private navItems: Component[] = [];
 
   private readonly logo: Component;
@@ -36,6 +35,8 @@ class Header extends Component {
   private readonly linkToTeam: Component;
 
   private readonly linkToMiniGames: Component;
+
+  private readonly darkBg: Component;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['header', 'container']);
@@ -86,7 +87,7 @@ class Header extends Component {
       ['header__burger-panel'],
     )
 
-    // containers for menu with links
+    // container for menu with links
     this.nav = new Component(
       this.burgerPanel.element,
       'nav',
@@ -191,11 +192,17 @@ class Header extends Component {
       this.openBurger();
     });
 
-    // close burger panel by clicking
+    // close burger panel by clicking on link
     this.nav.element.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).className.includes('nav__item')) {
+      const targetClassName = (e.target as HTMLElement).className;
+      if (targetClassName.includes('nav__item')) {
         this.openBurger();
       }
+    });
+
+    // close burger panel by clicking on dark background
+    this.darkBg.element.addEventListener('click', () => {
+      this.openBurger();
     });
 
     this.logo.element.setAttribute('href', '#/');
@@ -227,7 +234,7 @@ class Header extends Component {
     this.updateLogin();
   }
 
-  // 1.open/close burger panel 2.make or remove cross animation 3.remove span line from the middle of burger
+  // 1.open/close burger panel 2.change cross animation 3.add/remove span line from the middle of burger 4. open/close dark background
   public openBurger() {
     this.burgerPanel.element.classList.toggle('active');
     this.burger.element.classList.toggle('active');
