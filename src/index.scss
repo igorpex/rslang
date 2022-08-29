@@ -11,8 +11,12 @@ h1 {
 body {
     //background-color: #173750;
     //color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
     font-family: "Roboto", sans-serif;
-    padding: 0 10px;
+    padding: 0 0;
     position: relative;
     &::-webkit-scrollbar {
         width: 0px;
@@ -20,6 +24,7 @@ body {
 }
 
 main {
+    flex-grow: 1;
     margin-top: 20px;
     padding-bottom: 50px;
 }
