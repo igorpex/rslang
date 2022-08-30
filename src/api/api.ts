@@ -203,7 +203,7 @@ export const deleteUserWord = async (id: string, wordId: string, token: string) 
     'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`,
   },
-})).json();
+}));
 
 /* Users/AggregatedWords */
 
