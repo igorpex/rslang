@@ -5,6 +5,7 @@ class BookInput extends Component{
     input: UIInput;
     updateGroup: (group: number) => void =() => {};
     private group = 0;
+    amountOfLevel = 7;
 
     constructor(
         parentNode: HTMLElement,
@@ -15,7 +16,7 @@ class BookInput extends Component{
         this.input = new UIInput(this.element, 'select', ['book-input']);
         const select = this.input.element as HTMLInputElement;
 
-        for( let i = 1; i <= 6; i++) {
+        for( let i = 1; i <= this.amountOfLevel; i++) {
           const option = new Component(select, 'option', ['input__option'], `Section ${i}`);
           const item = option.element as HTMLInputElement;
           item.value = `${i}`;
