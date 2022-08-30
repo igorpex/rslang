@@ -45,7 +45,7 @@ export interface UserWord {
 
 export interface UserAggregatedWordsParams {
   id: string;
-  group: number;
+  group?: number;
   page: number;
   wordsPerPage: number;
   filter: Object;

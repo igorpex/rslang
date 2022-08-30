@@ -30,7 +30,6 @@ class BookItem extends Component{
 
         this.isDifficult = isDifficult;
         this.isEasy = isEasy;
-        console.log(this.isDifficult, isEasy);
         
         const mainBlock = new Component(this.element, 'div', ['main-block'])
         const leftItem = new Component(mainBlock.element, 'div', ['book-item__left']);
@@ -134,21 +133,22 @@ class BookItem extends Component{
         }
     }
     addToLearned(card: Word) {
-        this.lernedWords.push(card);
-        console.log(this.lernedWords);
+        const params = this.createWord('easy');
+        createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
     }
     addToDifficult(card: Word, arr: Word[]) {
         const params = this.createWord('hard');
         createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
-        // console.log(getUserWords(dataObj.userId, dataObj.token));
     }
     async removeFromDifficult(card: Word) {
-        const params = this.createWord('easy');
+        const params = this.getUserData();
+    //     const params = this.createWord('easy');
        
-       await updateUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
-       deleteUserWord(params.dataObj.userId, this.card._id, params.dataObj.token);
-       this.makeWordDisabled();
-    //    console.log(getUserWords(dataObj.userId, dataObj.token));
+    //    await updateUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+       deleteUserWord(params.userId, this.card._id, params.token);
+       if(this.element.id === 'group-7'){
+        this.element.remove();
+       }
     }
 
     playAudio() {

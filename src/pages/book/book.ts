@@ -1,4 +1,4 @@
-import { getAllWords, getUserAggregatedWords, getUserAllAggregatedWords, getUserWordById, getUserWords, getWordById, getWords } from "../../api/api";
+import { getAllWords, getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getUserAllAggregatedWords, getUserWordById, getUserWords, getWordById, getWords } from "../../api/api";
 import Auth from "../../components/auth/auth/auth";
 import BookContainer from "../../components/book-container/bookContainer";
 import { DifficultWord, IDataObj, Word } from "../../interfaces";
@@ -46,11 +46,13 @@ class Book extends Component{
     }
     async createForAuthUser() {
         this.bookContainer.clear();
-        // const filter = {"$or":[{"userWord.difficulty":"easy"},{"userWord":null}]}
-        const data = await this.getAggregatedWords(this.filter.all);
+        // const filter = {"$or":[{"userWord.difficulty":"easy"},{"userWord":null}]};
+        const wordsPerPage = 20;
+        const page =  this.page;
+        const group = this.group;
+        const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
         const words = data[0].paginatedResults;
-        await this.findIsDifficult();
-        await this.findIsEasy();
+        this.saveInLocalStorage(words);
         this.bookContainer.addWords(words, this.group, this.isAuth);
     }
     createForAnonymous() {
@@ -66,31 +68,25 @@ class Book extends Component{
     private async getDifficultWords(group: number, page: number){
         if(this.isAuth){
             this.bookContainer.clear();
-            const data = await this.getAggregatedWords(this.filter.hard);
+            const wordsPerPage = 3600;
+            const pageSearch =  0;
+            const data = await this.getAggregatedWords(this.filter.hard, wordsPerPage, pageSearch);
             const words = data[0].paginatedResults;
-            this.bookContainer.aggregatedHardWords = words;
+            this.saveInLocalStorage(words);
             this.bookContainer.addWords(words, group, this.isAuth);
         }
     }
-    async findIsDifficult() {
-        const data = await this.getAggregatedWords(this.filter.hard);
-        const words = data[0].paginatedResults;
-        this.bookContainer.aggregatedHardWords = words;
-    }
-    async findIsEasy() {
-        const data = await this.getAggregatedWords(this.filter.easy);
-        const words = data[0].paginatedResults;
-        console.log(data);
-        this.bookContainer.aggregatedEasyWords = words;
-    }
-    async getAggregatedWords(filter: {}) {
+    async getAggregatedWords(filter: {}, wordsPerPage: number, page: number, group?: number) {
         const dataObj = this.getUserData();
         const id = dataObj.userId;
         const token = dataObj.token;
-        const wordsPerPage = 20;
-        const page =  this.page;
-        const group = this.group;
-        const data = await getUserAggregatedWords({id, group, page, wordsPerPage, filter, token});
+        let data = [];
+        if(group) {
+            data = await getUserAggregatedWords({id, group, page, wordsPerPage, filter, token});
+        } else {
+            data = await getUserAggregatedWordsWithoutGroup({id, page, wordsPerPage, filter, token});
+        }
+        
         return data;
     };
     getUserData(){
@@ -117,12 +113,15 @@ class Book extends Component{
         this.bookContainer.updateGroup = (group) => {
             if(group < 6) {
                 this.group = group;
+                this.bookContainer.bookOptions.pagination.removeButtonDissabled();
                 if(this.isAuth) {
                     this.createForAuthUser();
                 } else {
                     this.getCards(this.group, this.page, this.isAuth);
                 }
             } else if (group === 6) {
+                this.bookContainer.bookOptions.pagination.makeButtonDissabled();
+                group = 6;
                 if(this.isAuth)
                     this.getDifficultWords(group, this.page);
                 } else {
@@ -130,6 +129,14 @@ class Book extends Component{
                 }
                 
             }
+    }
+    saveInLocalStorage(words: Word[]){
+        const userData = {
+            group: this.group,
+            page: this.page,
+            words: words,
+        };
+        localStorage.setItem('userData', JSON.stringify(userData));
     }
     
 }

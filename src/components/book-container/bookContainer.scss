@@ -156,6 +156,9 @@ i, b{
 .group-7{
     background-color: $color-group-7;
 }
+#group-7{
+    border: 5px dotted grey;
+}
 .item__overlay{
     display: none;
     position: absolute;

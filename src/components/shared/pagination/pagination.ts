@@ -10,7 +10,8 @@ class Pagination extends Component {
   private page = 0;
   limitOfPage = 30;
 
-  private titleBlock: SelectForm;
+  // private titleBlock: SelectForm;
+  private titleBlock: Component;
 
   nextButton: UIButton;
 
@@ -34,15 +35,15 @@ class Pagination extends Component {
     this.prevButton.element.style.backgroundImage = `url(./prev-arrow.svg)`;
     this.prevButton.onClickButton = () => this.switchPage('prev');
 
-    // this.title = new Component(
+    // this.titleBlock = new Component(
     //   this.element,
     //   'h3',
     //   ['pagination__title'],
-    //   `${this.page + 1} / 30`,
+    //   `Страница ${this.page + 1}`,
     // );
     const wrapper = new Component(this.element, 'div', ['select__wrapper']);
     this.titleBlock = new SelectForm(wrapper.element, this.nameArray);
-    
+
     this.nextButton = new UIButton(this.element, ['btn-next'], '', false);
     this.nextButton.element.style.backgroundImage = `url(./next-arrow.svg)`;
     this.nextButton.onClickButton = () => this.switchPage('next');
@@ -100,7 +101,6 @@ class Pagination extends Component {
 
   }
   private showPage(type: string){
-    console.log('click');
     if (type === 'first') {
       if (this.page > 0) this.page = 0;
     }
@@ -115,7 +115,23 @@ class Pagination extends Component {
     this.updateNextButton(this.page);
     this.updateDoubleNextButton(this.page);
   }
-
+  makeButtonDissabled(){
+    this.nextButton.setDisabled(true);
+    this.doubleNextButton.setDisabled(true);
+    this.prevButton.setDisabled(true);
+    this.doublePrevButton.setDisabled(true);
+  }
+  removeButtonDissabled(){
+    if(this.page > 0) {
+      this.prevButton.setDisabled(false);
+      this.doublePrevButton.setDisabled(false);
+    }
+    if(this.page < this.limitOfPage) {
+      this.nextButton.setDisabled(false);
+      this.doubleNextButton.setDisabled(false);
+    }
+   
+  }
 }
 
 export default Pagination;

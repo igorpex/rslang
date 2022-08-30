@@ -238,6 +238,16 @@ export const getUserAggregatedWords = async ({
     Authorization: `Bearer ${token}`,
   },
 })).json();
+export const getUserAggregatedWordsWithoutGroup = async ({
+  id, page, wordsPerPage, filter, token,
+}: UserAggregatedWordsParams) => (await fetch(`${users}/${id}/aggregatedWords?page=${page}&wordsPerPage=${wordsPerPage}&filter=${encodeURIComponent(JSON.stringify(filter))}`, {
+  method: 'GET',
+  // credentials: 'include',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+})).json();
 
 /**
  * Gets all user aggregated words.

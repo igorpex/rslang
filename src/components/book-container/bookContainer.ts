@@ -14,16 +14,12 @@ class BookContainer extends Component{
     isAuth: boolean;
     private title: Component;
     mainContent: Component;
-    aggregatedHardWords: Word[];
-    aggregatedEasyWords: Word[];
-    private bookOptions: BookOptions;
+    bookOptions: BookOptions;
     private cards: BookItem[];
 
     constructor(parentNode: HTMLElement) {
         super(parentNode, 'div', ['book-container']);
         this.isAuth = false;
-        this.aggregatedHardWords = [];
-        this.aggregatedEasyWords = [];
         // this.authorization = new Auth();
         // this.checkAuthorization();
 
@@ -44,12 +40,18 @@ class BookContainer extends Component{
 
     async addWords(cards: Word[], group: number, isAuth: boolean) {
         this.clear();
-
+        
         this.isAuth = isAuth;
         this.cards = cards.map( (card: Word) => {
-            let isDifficult = this.isDifficult(card);
-            let isEasy = this.isEasy(card);
-            console.log(isDifficult);
+            let isDifficult = false;
+            let isEasy = false
+            if(card.userWord !== undefined){
+                if(card.userWord.difficulty === 'easy'){
+                    isEasy = true;
+                } else if(card.userWord.difficulty === 'hard'){
+                    isDifficult = true;
+                }
+            }
             const item = new BookItem(this.mainContent.element, card, isDifficult, isEasy);
             if(isAuth){
                 item.addButtons();
@@ -58,42 +60,7 @@ class BookContainer extends Component{
             return item;
         })
     }
-    isDifficult(card: Word){
-        const arr = this.aggregatedHardWords.filter((x) => x._id === card._id);
-        console.log(arr);
-        if(arr.length > 0){
-            return true;
-        } else {
-            return false;
-        } 
-    }
-    isEasy(card: Word){
-        const arr = this.aggregatedEasyWords.filter((x) => x._id === card._id);
-        if(arr.length > 0){
-            return true;
-        } else {
-            return false;
-        }
-    }
-    // async getUsersWord(){
-    //     const dataObj = this.getUserData();
-    //     const data = await getUserWords(dataObj.userId,  dataObj.token);
-    //     return data;
-    // }
     
-    getUserData(){
-        const userAuthData = localStorage.getItem(authStorageKey);
-        if(!userAuthData){
-            this.isAuth = false;
-        }
-        const userId = JSON.parse(userAuthData!).userId;
-        const token = JSON.parse(userAuthData!).token;
-        const dataObj: IDataObj = {
-            userId: userId,
-            token: token,
-        };
-        return dataObj;
-    }
 
 }
 

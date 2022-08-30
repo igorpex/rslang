@@ -10,7 +10,7 @@ class BookOptions extends Component{
     updateGroup: (group: number) => void = () => {};
     
     private input: BookInput;
-    private pagination: Pagination;
+    pagination: Pagination;
     private gameOptions: GameOptions;
 
     group = 0;
