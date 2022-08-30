@@ -13,6 +13,8 @@ class BookItem extends Component{
     private learnButton: UIButton;
     private addToDifficultButton: UIButton;
     private statisticsButton: UIButton;
+    private modalWindow: Component;
+    private overlay: Component;
 
     lernedWords: Word[];
     difficultWords: Word[];
@@ -73,6 +75,29 @@ class BookItem extends Component{
         this.checkIsEasy();
         this.checkIsDifficult();
         
+        // window
+        this.overlay = new Component(this.element, 'div', ['item__overlay']);
+        this.modalWindow = new Component(this.element, 'div', ['item__statistics-window']);
+        const closeBtn = new UIButton(this.modalWindow.element, ['modal__close-btn'], '', false);
+        closeBtn.element.style.backgroundImage = `url(./close-btn.svg)`;
+        closeBtn.onClickButton = () => {
+            this.closeWindow();
+        }
+        const modalTitleBlock = new Component(this.modalWindow.element, 'div', ['window__title']);
+        const title = new Component(modalTitleBlock.element, 'h3', ['title'], 'Статистика:');
+        const word = new Component(modalTitleBlock.element, 'p', ['title__word'], `${this.card.word}`);
+        const table = new Component(this.modalWindow.element, 'table', ['window-table']);
+        const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
+        const sprintArr = ['Спринт', '0', '0'];
+        const audioGameArr = ['Аудиовызов', '0', '0'];
+        const firstRow = new Component(table.element, 'tr', ['firs-row']);
+        this.createRow(headArr, firstRow.element);
+        const secondRow = new Component(table.element, 'tr', ['second-row']);
+        this.createRow(sprintArr, secondRow.element);
+        const thirdRow = new Component(table.element, 'tr', ['second-row']);
+        this.createRow(audioGameArr, thirdRow.element);
+        
+
 
         this.learnButton.onClickButton = () => {
             this.makeWordDisabled();
@@ -89,6 +114,9 @@ class BookItem extends Component{
                 this.isDifficult = false;
             }
         };
+        this.statisticsButton.onClickButton = () => {
+            this.openWindow();
+        }
         
     }
 
@@ -159,6 +187,23 @@ class BookItem extends Component{
         return {
             dataObj: dataObj,
             userWord: userWord
+        }
+    }
+    openWindow() {
+        this.modalWindow.element.classList.add('open');
+        this.overlay.element.classList.add('open');
+        this.overlay.element.addEventListener('click', () => {
+            this.closeWindow();
+        })
+    }
+    closeWindow() {
+        this.modalWindow.element.classList.remove('open');
+        this.overlay.element.classList.remove('open');
+        
+    }
+    createRow(arr: string[], element: HTMLElement){
+        for(let i = 0; i < arr.length; i++) {
+            const td = new Component(element, 'td', ['table-header'], `${arr[i]}`);
         }
     }
     getUserData(){
