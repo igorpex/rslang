@@ -1,5 +1,4 @@
 $color-options: rgba(255, 244, 217, 1);
-$color-border-btn: rgba(255, 198, 156, 1);
 $color-header-bg: rgba(255, 198, 156, 1);
 
 .book-options{
@@ -11,13 +10,53 @@ $color-header-bg: rgba(255, 198, 156, 1);
     justify-content: start;
     gap: 4rem;
 }
-.wrapper-input{
+.wrapper-level{
     position: relative;
     background-color: $color-options;
     width: 20rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+.level__header{
+    padding: 1rem 0.7rem 1rem 0.7rem;
+    border: 1px solid #FFC69C;
+    display: flex;
+    font-size: 2.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 20rem;
+    background-color: rgba(255, 244, 217, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+}
+.level__icon,
+.level__btn{
+    display: block;
+    background-repeat: no-repeat;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-position: center center;
+}
+.level__list.open{
+    top: 4.5rem;;
+    list-style: none;
+    padding: 1rem 0 1rem 2.5rem;
+    z-index: 10;
+    border: 1px solid #FFC69C;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    width: 20rem;
+    background-color: $color-options;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.level__list{
+    display: none;
 }
 // .wrapper-input::after{
 //         content: '\25BC';
@@ -32,22 +71,19 @@ $color-header-bg: rgba(255, 198, 156, 1);
 // .ui-input::-ms-expand{
 //     display: none;
 // }
-.book-input{
-    padding: 1rem;
-    width: 20rem;
-    padding-left: 2rem;
-    outline: none;
-    border: none;
-    font-size: 1.8rem;
-    line-height: 2.663rem;
-    text-transform: uppercase;
-}
-.book-input::-ms-expand {
-    display: none;
-}
-.input__option{
-   
-}
+// .book-input{
+//     padding: 1rem;
+//     width: 20rem;
+//     padding-left: 2rem;
+//     outline: none;
+//     border: none;
+//     font-size: 1.8rem;
+//     line-height: 2.663rem;
+//     text-transform: uppercase;
+// }
+// .book-input::-ms-expand {
+//     display: none;
+// }
 .book-options__game {
     position: relative;
     width: 23rem;
@@ -86,7 +122,7 @@ $color-header-bg: rgba(255, 198, 156, 1);
     list-style: none;
     padding: 1rem 0 1rem 2.5rem;
     z-index: 10;
-    border: 1px solid $color-border-btn;
+    border: 1px solid $color-header-bg;
     background-color: $color-header-bg;
     display: flex;
     flex-direction: column;
