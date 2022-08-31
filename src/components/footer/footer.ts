@@ -4,14 +4,18 @@ import rsLogo from '../../assets/svg/rs_school_js.svg';
 
 class Footer extends Component {
   private rsLogoBox: Component;
-  private rsLogoImg: Component;
+
   private teamGhLink1: Component;
+
   private teamGhLink2: Component;
+
   private teamGhLink3: Component;
 
   private teamGhLinks: Component | undefined;
 
   private year: Component | undefined;
+
+  private rsLogoImg: Component;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['footer', 'container']);

@@ -1,4 +1,5 @@
 import Component from '../../utils/component';
+import mainImage from '../../assets/img/main-picture.jpg';
 
 import './index.scss';
 import Footer from '../footer/footer';

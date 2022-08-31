@@ -40,13 +40,13 @@ class Header extends Component {
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['header', 'container']);
-
+    
     // logo in the left corner of header
     this.logo = new Component(
       this.element,
       'a',
       ['header__logo'],
-    )
+    );
 
     // container for login/logout buttons AND burger in the right corner of header
     this.loginBurgerContainer = new Component(
