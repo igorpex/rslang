@@ -2,6 +2,7 @@ import { IDataObj, IDifficulWord, Word } from "../../interfaces";
 import Component from "../../utils/component";
 import { authStorageKey } from "../../utils/config"
 import BookOptions from "../book-options/bookOptions";
+import UIButton from "../UI/button/button";
 import './bookContainer.scss'
 import BookItem from "./bookItem";
 
@@ -27,6 +28,20 @@ class BookContainer extends Component{
         this.title = new Component(this.element, 'h2', ['book__title'], 'Электронный учебник');
         this.bookOptions = new BookOptions(this.element, 'div', ['book__setting']);
         this.mainContent = new Component(this.element, 'div', ['book__content']);
+
+        const overlay = new Component(this.element, 'div', ['overlay']);
+        const modalWindow = new Component(overlay.element, 'div', ['modal-window']);
+        const modalContainer = new Component(modalWindow.element, 'div', ['modal-window__container']);
+        const closeBtn = new UIButton(modalWindow.element, ['modal__close-btn'], '', false);
+        closeBtn.element.style.backgroundImage = `url(./cross.svg)`;
+        closeBtn.onClickButton = () => {
+            overlay.element.classList.remove('open');
+            modalContainer.element.innerHTML = '';
+        }
+        overlay.element.addEventListener('click', () => {
+            overlay.element.classList.remove('open');
+            modalContainer.element.innerHTML = '';
+        });
 
         this.bookOptions.updatePage = (page) => this.updatePage(page);
         this.bookOptions.updateGroup = (group) => this.updateGroup(group);

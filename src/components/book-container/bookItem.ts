@@ -13,8 +13,8 @@ class BookItem extends Component{
     private learnButton: UIButton;
     private addToDifficultButton: UIButton;
     private statisticsButton: UIButton;
-    private modalWindow: Component;
-    private overlay: Component;
+    // private modalWindow: Component;
+    // private overlay: Component;
 
     lernedWords: Word[];
     difficultWords: Word[];
@@ -75,26 +75,26 @@ class BookItem extends Component{
         this.checkIsDifficult();
         
         // window
-        this.overlay = new Component(this.element, 'div', ['item__overlay']);
-        this.modalWindow = new Component(this.element, 'div', ['item__statistics-window']);
-        const closeBtn = new UIButton(this.modalWindow.element, ['modal__close-btn'], '', false);
-        closeBtn.element.style.backgroundImage = `url(./close-btn.svg)`;
-        closeBtn.onClickButton = () => {
-            this.closeWindow();
-        }
-        const modalTitleBlock = new Component(this.modalWindow.element, 'div', ['window__title']);
-        const title = new Component(modalTitleBlock.element, 'h3', ['title'], 'Статистика:');
-        const word = new Component(modalTitleBlock.element, 'p', ['title__word'], `${this.card.word}`);
-        const table = new Component(this.modalWindow.element, 'table', ['window-table']);
-        const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
-        const sprintArr = ['Спринт', '0', '0'];
-        const audioGameArr = ['Аудиовызов', '0', '0'];
-        const firstRow = new Component(table.element, 'tr', ['firs-row']);
-        this.createRow(headArr, firstRow.element);
-        const secondRow = new Component(table.element, 'tr', ['second-row']);
-        this.createRow(sprintArr, secondRow.element);
-        const thirdRow = new Component(table.element, 'tr', ['second-row']);
-        this.createRow(audioGameArr, thirdRow.element);
+        // this.overlay = new Component(document.body, 'div', ['item__overlay']);
+        // this.modalWindow = new Component(this.element, 'div', ['item__statistics-window']);
+        // const closeBtn = new UIButton(this.modalWindow.element, ['modal__close-btn'], '', false);
+        // closeBtn.element.style.backgroundImage = `url(./close-btn.svg)`;
+        // closeBtn.onClickButton = () => {
+        //     this.closeWindow();
+        // }
+        // const modalTitleBlock = new Component(this.modalWindow.element, 'div', ['window__title']);
+        // const title = new Component(modalTitleBlock.element, 'h3', ['title'], 'Статистика:');
+        // const word = new Component(modalTitleBlock.element, 'p', ['title__word'], `${this.card.word}`);
+        // const table = new Component(this.modalWindow.element, 'table', ['window-table']);
+        // const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
+        // const sprintArr = ['Спринт', '0', '0'];
+        // const audioGameArr = ['Аудиовызов', '0', '0'];
+        // const firstRow = new Component(table.element, 'tr', ['firs-row']);
+        // this.createRow(headArr, firstRow.element);
+        // const secondRow = new Component(table.element, 'tr', ['second-row']);
+        // this.createRow(sprintArr, secondRow.element);
+        // const thirdRow = new Component(table.element, 'tr', ['second-row']);
+        // this.createRow(audioGameArr, thirdRow.element);
         
 
 
@@ -190,20 +190,45 @@ class BookItem extends Component{
         }
     }
     openWindow() {
-        this.modalWindow.element.classList.add('open');
-        this.overlay.element.classList.add('open');
-        this.overlay.element.addEventListener('click', () => {
+        
+        const modalWindow = document.querySelector('.modal-window__container')! as HTMLElement;
+        this.createWindow(modalWindow);
+        const overlay = document.querySelector('.overlay')!;
+        overlay.classList.add('open');
+
+        modalWindow.classList.add('open');
+        
+        overlay.addEventListener('click', () => {
             this.closeWindow();
         })
     }
     closeWindow() {
-        this.modalWindow.element.classList.remove('open');
-        this.overlay.element.classList.remove('open');
+        const modalWindow = document.querySelector('.item__statistics-window')!;
+        modalWindow.classList.remove('open');
+        const overlay = document.querySelector('.overlay')!;
+        overlay.classList.remove('open');
         
     }
-    createRow(arr: string[], element: HTMLElement){
+    createWindow(modalWindow: HTMLElement){
+        const modalTitleBlock = new Component(modalWindow, 'div', ['window__title']);
+        const title = new Component(modalTitleBlock.element, 'p', ['title__name'], 'Статистика по слову:');
+        const word = new Component(modalTitleBlock.element, 'p', ['title__word'], `${this.card.word}`);
+        const table = new Component(modalWindow, 'table', ['window-table']);
+        const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
+        const sprintArr = ['Спринт', '0', '0'];
+        const audioGameArr = ['Аудиовызов', '0', '0'];
+        const firstRow = new Component(table.element, 'tr', ['main-row']);
+        this.createRow(headArr, firstRow.element, 'th');
+        const secondRow = new Component(table.element, 'tr', ['row']);
+        this.createRow(sprintArr, secondRow.element, 'td');
+        const thirdRow = new Component(table.element, 'tr', ['row']);
+        this.createRow(audioGameArr, thirdRow.element, 'td');
+        
+
+    }
+    createRow(arr: string[], element: HTMLElement, tag: keyof HTMLElementTagNameMap){
         for(let i = 0; i < arr.length; i++) {
-            const td = new Component(element, 'td', ['table-header'], `${arr[i]}`);
+            const td = new Component(element, tag, ['table-header'], `${arr[i]}`);
         }
     }
     getUserData(){
