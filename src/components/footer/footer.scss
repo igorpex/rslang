@@ -4,15 +4,35 @@
   max-width: 1440px;
 }
 
-.footer-rs-logo {max-width: 100px;}
-.footer {height: 60px}
 .footer {
-  display:flex;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
   padding: 0 40px;
-}
-.footer__team-gh-links {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
+  height: 90px;
+  background-color: rgb(255, 198, 156);
+  border: 1px solid black;
+  box-sizing: border-box;
+  &__rs-logo {
+    width: 112px;
+    height: 56px;
+    background-image: url('../../assets/svg/rs_school-og\ 1.svg');
+  }
+  &__team-gh-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+  }
+  &__team-gh-link,
+  &__year {
+    padding: 10px;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+  }
+  &__year {
+    font-weight: bold;
+  }
 }

@@ -3,7 +3,6 @@ import './footer.scss';
 import rsLogo from '../../assets/svg/rs_school_js.svg';
 
 class Footer extends Component {
-  private rsLogoBox: Component;
 
   private teamGhLink1: Component;
 
@@ -15,27 +14,26 @@ class Footer extends Component {
 
   private year: Component | undefined;
 
-  private rsLogoImg: Component;
+  private rsLogo: Component;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['footer', 'container']);
 
-    this.rsLogoBox = new Component(this.element, 'div', ['footer__rs-logo-box']);
+    this.rsLogo = new Component(this.element, 'a', ['footer__rs-logo']);
+    this.rsLogo.element.setAttribute('href', 'https://rs.school/');
 
     // Using this.rsLogoBox.ELEMENT as parent, we insert rsLogoImg to rsLogoBox
-    this.rsLogoImg = new Component(this.rsLogoBox.element, 'img', ['footer__rs-logo-img']);
-    this.rsLogoImg.element.setAttribute('src', rsLogo);
 
     this.teamGhLinks = new Component(this.element, 'div', ['footer__team-gh-links']);
 
-    this.teamGhLink1 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Alexandra');
-    this.teamGhLink1.element.setAttribute('href', 'https://github.com/takeAmoment');
-    this.teamGhLink2 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Vladislav');
-    this.teamGhLink2.element.setAttribute('href', 'https://github.com/Vladislav122-kor');
-    this.teamGhLink3 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Igor');
-    this.teamGhLink3.element.setAttribute('href', 'https://github.com/igorpex');
+    this.teamGhLink1 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Игорь Богданов');
+    this.teamGhLink1.element.setAttribute('href', 'https://github.com/igorpex');
+    this.teamGhLink2 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Александра Пехота');
+    this.teamGhLink2.element.setAttribute('href', 'https://github.com/takeAmoment');
+    this.teamGhLink3 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Владислав Королев');
+    this.teamGhLink3.element.setAttribute('href', 'https://github.com/Vladislav122-kor');
 
-    this.year = new Component(this.element, 'div', ['footer__year'], '2022');
+    this.year = new Component(this.element, 'p', ['footer__year'], '2022');
   }
 }
 
