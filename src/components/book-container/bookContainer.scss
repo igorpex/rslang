@@ -35,10 +35,20 @@ $color-group-7: grey;
     background-color: $color-item-bg;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
+@media (max-width: 1000px) {
+    .book-item{
+        flex-direction: column;
+    }
+}
 .main-block{
     display: flex;
     flex-direction: row;
     gap: 2rem;
+}
+@media (max-width: 1000px) {
+    .main-block{
+        flex-direction: column;
+    }
 }
 .book-item__left{
     min-width: 29.8rem;
@@ -47,11 +57,21 @@ $color-group-7: grey;
     background-size: cover;
     background-position: center center;
 }
-
+@media (max-width: 1000px) {
+    .book-item__left{
+        height: 35rem;
+    }
+}
 .book-item__right{
     padding: 2rem 2rem 2rem 0rem;
 }
-.left__header{
+@media (max-width: 1000px){
+    .book-item__right{
+        padding-left: 4rem;
+        padding-top: 0;
+    }
+}
+.right__header{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,10 +121,26 @@ i, b{
     padding: 4rem 4rem 4rem 2rem;
     gap: 1.5rem
 }
+@media (max-width: 1000px){
+    .item__buttons{
+        flex-direction: row;
+        padding: 2rem 2rem 2rem 4rem;
+        align-items: start;
+        justify-content: start;
+    }
+}
+@media (max-width: 1000px){
+    .item__buttons{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
 .item__remove-button,
 .item__add-button,
 .item__statistics-button{
     width: 20rem;
+    height: 6.5rem;
     box-shadow: 0 0 0.5rem rgb(141, 141, 216);
     font-weight: 400;
     background-color: inherit;
@@ -117,6 +153,13 @@ i, b{
         box-shadow: none;
         transition: all 0.3s;
         transform: translateY(4px);
+    }
+}
+@media (max-width: 600px){
+    .item__remove-button,
+    .item__add-button,
+    .item__statistics-button{
+        font-size: 1.6rem;
     }
 }
 

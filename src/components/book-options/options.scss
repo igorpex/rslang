@@ -36,13 +36,26 @@ $color-header-bg: rgba(255, 198, 156, 1);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .book-options{
-    max-width: 97.7rem;
+    width: 100%;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: start;
     gap: 4rem;
+}
+@media (max-width: 1050px) {
+    .book-options{
+        gap: 2rem;
+    }
+}
+@media (max-width: 820px) {
+    .book-options{
+        flex-direction: column;
+        align-items: start;
+        gap: 2rem;
+    }
 }
 .wrapper-level{
     position: relative;
