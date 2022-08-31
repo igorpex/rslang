@@ -18,7 +18,7 @@ class Footer extends Component {
   private rsLogoImg: Component;
 
   constructor(parentNode: HTMLElement) {
-    super(parentNode, 'div', ['footer']);
+    super(parentNode, 'div', ['footer', 'container']);
 
     this.rsLogoBox = new Component(this.element, 'div', ['footer__rs-logo-box']);
 
