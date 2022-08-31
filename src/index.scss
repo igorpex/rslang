@@ -9,8 +9,6 @@ h1 {
 }
 
 body {
-    //background-color: #173750;
-    //color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -21,12 +19,15 @@ body {
     &::-webkit-scrollbar {
         width: 0px;
     }
+    #root,
+    #wt-sky-root {
+        display: none;
+    }
 }
 
 main {
+    //padding: 40px 0;
     flex-grow: 1;
-    margin-top: 20px;
-    padding-bottom: 50px;
 }
 
 button,

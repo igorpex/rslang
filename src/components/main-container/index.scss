@@ -1,8 +1,67 @@
-.main-container {
-  margin-top: 25px;
-  background-color: white;
-  background-color: lightgray;
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
 }
-.main-picture{
-  max-width: 100%;
+
+%flex {
+  display: flex;
+  align-items: center;
+}
+
+%box {
+  border: 1px solid rgb(255, 198, 156);
+  box-sizing: border-box;
+}
+
+.main-container {
+  @extend %flex;
+  justify-content: space-between;
+  padding: 40px;
+  background-color: rgb(255, 227, 156);
+  @extend %box;
+
+  &__hello-window {
+    width: 100%;
+    max-width: 700px;
+    height: 468px;
+    background-color: rgb(255, 244, 217);
+    @extend %box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &__divided-line {
+    width: 5px;
+    height: 468px;
+    background-color: rgb(255, 198, 156);
+  }
+
+  &__menu-window {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 540px;
+    height: 468px;
+
+    &__link-container {
+      @extend %flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      width: 250px;
+      height: 214px;
+      font-size: 20px;
+      color: black;
+      text-decoration: none;
+      background-color: rgb(255, 244, 217);
+      @extend %box;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+.link-container__img {
+  width: 100px;
+  height: 100px;
 }

@@ -22,8 +22,6 @@ class Footer extends Component {
     this.rsLogo = new Component(this.element, 'a', ['footer__rs-logo']);
     this.rsLogo.element.setAttribute('href', 'https://rs.school/');
 
-    // Using this.rsLogoBox.ELEMENT as parent, we insert rsLogoImg to rsLogoBox
-
     this.teamGhLinks = new Component(this.element, 'div', ['footer__team-gh-links']);
 
     this.teamGhLink1 = new Component(this.teamGhLinks.element, 'a', ['footer__team-gh-link'], 'Игорь Богданов');
