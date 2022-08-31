@@ -1,5 +1,6 @@
 import Component from '../../../utils/component';
 import UIButton from '../../UI/button/button';
+import ListItem from '../list/list';
 import SelectForm from '../select/select';
 
 import './pagination.scss';
@@ -20,14 +21,13 @@ class Pagination extends Component {
   doublePrevButton: UIButton;
 
   doubleNextButton: UIButton;
-  nameArray: string[];
+
+  wrapper: Component;
+  selectTitle: Component;
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['pagination']);
-    this.nameArray = [];
-    for(let i = 1; i <= this.limitOfPage; i++){
-      this.nameArray.push(`Страница ${i}`);
-    }
+   
     this.doublePrevButton = new UIButton(this.element, ['btn-double-prev'], '', true);
     this.doublePrevButton.element.style.backgroundImage = `url(./double-prev-arrows.svg)`;
     this.doublePrevButton.onClickButton = () => this.showPage('first');
@@ -35,15 +35,34 @@ class Pagination extends Component {
     this.prevButton.element.style.backgroundImage = `url(./prev-arrow.svg)`;
     this.prevButton.onClickButton = () => this.switchPage('prev');
 
-    // this.titleBlock = new Component(
-    //   this.element,
-    //   'h3',
-    //   ['pagination__title'],
-    //   `Страница ${this.page + 1}`,
-    // );
-    const wrapper = new Component(this.element, 'div', ['select__wrapper']);
-    this.titleBlock = new SelectForm(wrapper.element, this.nameArray);
+    
+    this.wrapper = new Component(this.element, 'div', ['select__wrapper']);
+    const wrapperHeader = new Component(this.wrapper.element, 'div', ['select__header']);
+    const wrapperIcon = new Component(wrapperHeader.element, 'span', ['select__icon']);
+    wrapperIcon.element.style.backgroundImage = `url(./file-icon.svg)`;
+    this.selectTitle = new Component(wrapperHeader.element, 'p', ['select__title']);
+    this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
+    const selectBtn = new Component(wrapperHeader.element, 'span', ['select__btn']);
+    selectBtn.element.style.backgroundImage = `url(./down-arrow.svg)`;
 
+    this.titleBlock = new Component(this.wrapper.element, 'ul', ['select__list']);
+
+    /// Page
+    for(let i = 1; i <= this.limitOfPage; i++){
+      const selectItem = new ListItem(this.titleBlock.element, i, `Страница ${i}`);
+      selectItem.onClickButton = (e) => {
+        const target = e.target as HTMLElement;
+        this.page = Number(target.getAttribute('data-page'));
+        this.reDrawPage();
+        // this.updatePage(this.page);
+        // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
+      }
+      selectItem.element.setAttribute('data-page', `${i-1}`);
+    }
+    this.wrapper.element.addEventListener('click', () => {
+      this.titleBlock.element.classList.toggle('open');
+    });
+    
     this.nextButton = new UIButton(this.element, ['btn-next'], '', false);
     this.nextButton.element.style.backgroundImage = `url(./next-arrow.svg)`;
     this.nextButton.onClickButton = () => this.switchPage('next');
@@ -91,13 +110,13 @@ class Pagination extends Component {
     }
 
     if (type === 'next') this.page += 1;
-
-    // this.title.element.innerHTML = `${this.page + 1} /30`;
-    this.updatePage(this.page);
-    this.updatePrevButton();
-    this.updateDoublePrevButton();
-    this.updateNextButton(this.page);
-    this.updateDoubleNextButton(this.page);
+    this.reDrawPage();
+    // this.updatePage(this.page);
+    // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
+    // this.updatePrevButton();
+    // this.updateDoublePrevButton();
+    // this.updateNextButton(this.page);
+    // this.updateDoubleNextButton(this.page);
 
   }
   private showPage(type: string){
@@ -109,17 +128,30 @@ class Pagination extends Component {
       if(this.page < this.limitOfPage - 1)
       this.page = this.limitOfPage - 1;
     }
+    this.reDrawPage();
+    // this.updatePage(this.page);
+    // this.updatePrevButton();
+    // this.updateDoublePrevButton();
+    // this.updateNextButton(this.page);
+    // this.updateDoubleNextButton(this.page);
+    // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
+  }
+  reDrawPage() {
     this.updatePage(this.page);
     this.updatePrevButton();
     this.updateDoublePrevButton();
     this.updateNextButton(this.page);
     this.updateDoubleNextButton(this.page);
+    this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
   }
   makeButtonDissabled(){
     this.nextButton.setDisabled(true);
     this.doubleNextButton.setDisabled(true);
     this.prevButton.setDisabled(true);
     this.doublePrevButton.setDisabled(true);
+    this.wrapper.element.classList.add('disabled');
+    this.selectTitle.element.innerHTML = `Страница 1`;
+    
   }
   removeButtonDissabled(){
     if(this.page > 0) {
@@ -130,7 +162,8 @@ class Pagination extends Component {
       this.nextButton.setDisabled(false);
       this.doubleNextButton.setDisabled(false);
     }
-   
+    this.wrapper.element.classList.remove('disabled');
+    
   }
 }
 
