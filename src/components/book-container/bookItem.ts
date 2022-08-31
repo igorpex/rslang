@@ -13,6 +13,9 @@ class BookItem extends Component{
     private learnButton: UIButton;
     private addToDifficultButton: UIButton;
     private statisticsButton: UIButton;
+    audioButton: UIButton;
+    isPlay: boolean;
+    audio: HTMLAudioElement;
     // private modalWindow: Component;
     // private overlay: Component;
 
@@ -40,9 +43,11 @@ class BookItem extends Component{
         const rightItemHeader = new Component(rightItem.element, 'div', ['right__header']);
         const groupIcon = new Component(rightItemHeader.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`);
         const cardName = new Component(rightItemHeader.element, 'p', ['item__name'], `${this.card.word} - ${this.card.transcription}`);
-        const audioButton = new UIButton(rightItemHeader.element, ['item__audio-button'], '', false);
-        audioButton.element.style.backgroundImage = 'url(./play-button.svg)';
-        audioButton.onClickButton = ()=> { this.playAudio()};
+        this.audioButton = new UIButton(rightItemHeader.element, ['item__audio-button'], '', false);
+        this.audioButton.element.style.backgroundImage = 'url(./play-button.svg)';
+        this.isPlay = false;
+        this.audio = new Audio();
+        this.audioButton.onClickButton = ()=> { this.loadAudio()};
 
         const cardTranslate = new Component(rightItem.element, 'p', ['item__translate'], `${this.card.wordTranslate}`);
 
@@ -128,10 +133,33 @@ class BookItem extends Component{
        }
     }
 
-    playAudio() {
-        const audio = new Audio();
-        audio.src = `${baseUrl}/${this.card.audio}`;
-        audio.play();
+    playAudio(i: number) {
+        const audioObj = [ this.card.audio, this.card.audioExample, this.card.audioMeaning];
+        this.audio.src = `${baseUrl}/${audioObj[i]}`;
+        this.audio.play(); 
+    }
+    loadAudio(){
+        let count = 0;
+        if(this.isPlay === false) {
+            this.audio = new Audio();
+            this.playAudio(count);
+           
+            this.audio.addEventListener('ended', () => {
+                if( count == 2) {
+                    this.audio.pause();
+                    this.isPlay = false;
+                } else{
+                    count++;
+                    this.playAudio(count);
+                }
+            
+            });
+            this.isPlay = true;
+        } else {
+            count = 0;
+            this.audio.pause();
+            this.isPlay = false;
+        } 
     }
     
     addButtons(){
