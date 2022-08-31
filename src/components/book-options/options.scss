@@ -50,43 +50,51 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .book-options__game {
     position: relative;
-    width: 17rem;
+    width: 23rem;
     padding: 1rem;
     background-color: $color-options;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     text-transform: uppercase;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid #FFC69C;
     line-height: 2.663rem;
+    cursor: pointer;
 }
-.book-options__game::after {
-    content: '\25BC';
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 1rem;
-    transition: all 0.3s ease;
+.game__header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    width: 23rem;
+
 }
-.book-options__game:hover::after {
-    color: rgba(128, 128, 128, 0.591);
+.game-header__icon,
+.game-header__btn{
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 0 0;
 }
-.book-options__game:active::after {
-    transform: rotate(90deg);
-    transition: all 0.3s ease;
-}
+
 .game__list.hidden{
     display: none;
     background-color: $color-header-bg;
 }
 .game__list{
     list-style: none;
-    padding: 1rem;
+    padding: 1rem 0 1rem 2.5rem;
     z-index: 10;
-    border: 3px solid $color-border-btn;
+    border: 1px solid $color-border-btn;
     background-color: $color-header-bg;
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: absolute;
     left: 0;
-    width: 17rem;
+    width: 23rem;
     background-color: $color-options;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .list__item{
     margin-bottom: 1rem;

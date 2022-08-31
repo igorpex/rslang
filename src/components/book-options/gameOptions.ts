@@ -10,7 +10,12 @@ class GameOptions extends Component {
     constructor(parentNode: HTMLElement){
         super(parentNode, 'div', ['book-options__game']);
 
-        this.element.innerHTML = 'Мини-игры';
+        const gameHeader = new Component(this.element, 'div', ['game__header']);
+        const headerIcon = new Component(gameHeader.element, 'span', ['game-header__icon']);
+        headerIcon.element.style.backgroundImage = `url(./video-game-icon.svg)`;
+        const headerTitle = new Component(gameHeader.element, 'p', ['game-header__title'], 'Мини-игры');
+        const headerBtn = new Component(gameHeader.element, 'span', ['game-header__btn']);
+        headerBtn.element.style.backgroundImage = `url(./down-arrow.svg)`;
         const gameList = new Component(this.element, 'ul', ['game__list']);
         gameList.element.classList.add('hidden');
 
