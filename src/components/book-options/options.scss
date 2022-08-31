@@ -1,6 +1,40 @@
 $color-options: rgba(255, 244, 217, 1);
 $color-header-bg: rgba(255, 198, 156, 1);
+@mixin header {
+    padding: 1rem 0.6rem 1rem 0.6rem;
+    border: 1px solid #FFC69C;
+    display: flex;
+    font-size: 2.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 20rem;
+    background-color: rgba(255, 244, 217, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+}
 
+@mixin imageIcon {
+    display: block;
+    background-repeat: no-repeat;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-position: center center;
+}
+@mixin list {
+    padding: 1rem 0 1rem 2.5rem;
+    list-style: none;
+    z-index: 10;
+    border: 1px solid #FFC69C;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    width: 20rem;
+    background-color: $color-options;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
 .book-options{
     max-width: 97.7rem;
     margin-bottom: 2rem;
@@ -20,70 +54,21 @@ $color-header-bg: rgba(255, 198, 156, 1);
     cursor: pointer;
 }
 .level__header{
-    padding: 1rem 0.7rem 1rem 0.7rem;
-    border: 1px solid #FFC69C;
-    display: flex;
-    font-size: 2.2rem;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
+   @include header();
     width: 20rem;
-    background-color: rgba(255, 244, 217, 1);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    text-transform: uppercase;
 }
 .level__icon,
 .level__btn{
-    display: block;
-    background-repeat: no-repeat;
-    width: 2.5rem;
-    height: 2.5rem;
-    background-size: contain;
-    background-position: center center;
+    @include imageIcon();
 }
 .level__list.open{
-    top: 4.5rem;;
-    list-style: none;
-    padding: 1rem 0 1rem 2.5rem;
-    z-index: 10;
-    border: 1px solid #FFC69C;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 0;
+    top: 4.5rem;
+    @include list();
     width: 20rem;
-    background-color: $color-options;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 .level__list{
     display: none;
 }
-// .wrapper-input::after{
-//         content: '\25BC';
-//         position: absolute;
-//         top: 0;
-//         right: 0;
-//         padding: 1em;
-//         transition: .25s all ease;
-//         pointer-events: none;
-    
-// }
-// .ui-input::-ms-expand{
-//     display: none;
-// }
-// .book-input{
-//     padding: 1rem;
-//     width: 20rem;
-//     padding-left: 2rem;
-//     outline: none;
-//     border: none;
-//     font-size: 1.8rem;
-//     line-height: 2.663rem;
-//     text-transform: uppercase;
-// }
-// .book-input::-ms-expand {
-//     display: none;
-// }
 .book-options__game {
     position: relative;
     width: 23rem;
@@ -106,34 +91,18 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .game-header__icon,
 .game-header__btn{
-    display: block;
-    width: 2.5rem;
-    height: 2.5rem;
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: 0 0;
+    @include imageIcon();
 }
 
 .game__list.hidden{
     display: none;
-    background-color: $color-header-bg;
 }
 .game__list{
-    list-style: none;
-    padding: 1rem 0 1rem 2.5rem;
-    z-index: 10;
-    border: 1px solid $color-header-bg;
-    background-color: $color-header-bg;
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    left: 0;
+   @include list();
     width: 23rem;
-    background-color: $color-options;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    
 }
 .list__item{
     margin-bottom: 1rem;
-    // border-bottom: 1px solid black;
 }
 
