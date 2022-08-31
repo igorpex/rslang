@@ -1,3 +1,4 @@
+import { ids } from "webpack";
 import { getAllWords, getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getUserAllAggregatedWords, getUserWordById, getUserWords, getWordById, getWords } from "../../api/api";
 import Auth from "../../components/auth/auth/auth";
 import BookContainer from "../../components/book-container/bookContainer";
@@ -7,7 +8,7 @@ import { authStorageKey } from "../../utils/config";
 import './book.scss';
 
 class Book extends Component{
-    private bookContainer: BookContainer;
+    bookContainer: BookContainer;
     authorization: Auth;
     isAuth: boolean;
     filter = {
@@ -22,33 +23,19 @@ class Book extends Component{
         super(parentNode, 'div', ['book']);
         this.isAuth = false;
 
+        this.bookContainer = new BookContainer(this.element);
         window.addEventListener('beforeunload', () => {
             this.saveInLocalStorage();
         });
-        window.addEventListener('load', () => {
-            const data = this.getLocalStorage();
-            if(localStorage.getItem('userData')) {
-                this.group = data.group;
-                this.page = data.page;
-            }
-           this.checkAuthorization();
-        });
-
-        this.authorization = new Auth();
-        // this.checkAuthorization();
         
-        this.bookContainer = new BookContainer(this.element);
+        this.getLocalStorage();
+    
+        this.authorization = new Auth();
+        this.checkAuthorization();
+        
+        
         this.updateGroup();
         this.updatePage();
-
-        window.addEventListener('beforeunload', () => {
-            this.saveInLocalStorage();
-        });
-        window.addEventListener('load', () => {
-            const data = this.getLocalStorage();
-            this.group = data.group;
-            this.page = data.page;
-        })
 
     }
     async checkAuthorization(){
@@ -88,7 +75,9 @@ class Book extends Component{
         }
     };
     private async getDifficultWords(group: number, page: number){
-        if(this.isAuth){
+        console.log(this.isAuth);
+        if(this.isAuth === true){
+            console.log('weref');
             this.bookContainer.clear();
             const wordsPerPage = 3600;
             const pageSearch =  0;
@@ -96,6 +85,8 @@ class Book extends Component{
             const words = data[0].paginatedResults;
             this.saveInLocalStorage(words);
             this.bookContainer.addWords(words, group, this.isAuth);
+        } else {
+            this.bookContainer.bookOptions.pagination.makeButtonDissabled();
         }
     }
     async getAggregatedWords(filter: {}, wordsPerPage: number, page: number, group?: number) {
@@ -146,14 +137,15 @@ class Book extends Component{
                 }
             } else if (group === 6) {
                 this.bookContainer.bookOptions.pagination.makeButtonDissabled();
-                group = 6;
-                if(this.isAuth)
+                this.group = group;
+                if (this.isAuth === true){
                     this.getDifficultWords(group, this.page);
-                } else {
+                } else if(this.isAuth === false){;
+                    this.bookContainer.mainContent.element.innerHTML = "";
                     this.bookContainer.mainContent.element.innerHTML = "Вы должны авторизоваться!"
                 }
-                
-            }
+            }   
+        }
     }
     saveInLocalStorage(words?: Word[]){
         const userData = {
@@ -163,13 +155,26 @@ class Book extends Component{
         };
         localStorage.setItem('userData', JSON.stringify(userData));
     }
-    getLocalStorage() {
-        const data = JSON.parse(localStorage.getItem('userData')!);
-        const page = data.page;
-        const group = data.group;
-        return {page, group}
+    async getLocalStorage() {
+
+        const userData = localStorage.getItem('userData');
+        if (userData !== undefined && userData !== null) {
+            this.page = JSON.parse(userData!).page;
+            this.group = JSON.parse(userData!).group;
+            if(this.group === 6){
+                await this.reOpenDifficult();
+                this.getDifficultWords(this.group, this.page);
+            }
+        }
     }
-    
+    async reOpenDifficult(){
+        this.authorization = new Auth();
+        const data = await this.authorization.isLoggedIn();
+        if(data){
+            this.isAuth = true;
+        }
+    }
+
 }
 
 export default Book;

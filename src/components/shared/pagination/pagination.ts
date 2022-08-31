@@ -67,35 +67,25 @@ class Pagination extends Component {
     this.doubleNextButton = new UIButton(this.element, ['btn-double-next'], '', false);
     this.doubleNextButton.element.style.backgroundImage = `url(./double-next-arrows.svg)`;
     this.doubleNextButton.onClickButton = () => this.showPage('last');
-     this.checkIsData();
-  }
-
-  checkIsData() {
-    const data = this.getLocalStorage();
-    if(data) {
-      this.page = data.page;
-      this.reDrawPage();
-    }
+    this.getLocalStorage();
   }
   getLocalStorage() {
-    const data = JSON.parse(localStorage.getItem('userData')!);
-    const page = data.page;
-    const group = data.group;
-    return {page, group}
+    const data = localStorage.getItem('userData')!;
+      if(data !== undefined && data !== null){
+        this.page = JSON.parse(data!).page;
+      } else {
+        this.page = 0;
+      }
   }
   updateNextButton(page: number): void {
-    console.log(page);
     if (page >= this.limitOfPage - 1) {
-      console.log(true);
       this.nextButton.setDisabled(true);
     } else {
       this.nextButton.setDisabled(false);
     }
   }
   updateDoubleNextButton(page: number): void {
-    console.log(page);
      if (page >= this.limitOfPage - 1) {
-      console.log(true);
        this.doubleNextButton.setDisabled(true);
      } else {
        this.doubleNextButton.setDisabled(false);
