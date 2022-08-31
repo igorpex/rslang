@@ -73,6 +73,7 @@ class Pagination extends Component {
     const data = localStorage.getItem('userData')!;
       if(data !== undefined && data !== null){
         this.page = JSON.parse(data!).page;
+        this.reDrawPage();
       } else {
         this.page = 0;
       }
