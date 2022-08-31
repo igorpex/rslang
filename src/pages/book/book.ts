@@ -70,7 +70,7 @@ class Book extends Component{
             this.bookContainer.clear();
             const wordsPerPage = 3600;
             const pageSearch =  0;
-            const data = await this.getAggregatedWords(this.filter.hard, wordsPerPage, pageSearch);
+            const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
             const words = data[0].paginatedResults;
             this.saveInLocalStorage(words);
             this.bookContainer.addWords(words, group, this.isAuth);
@@ -80,12 +80,15 @@ class Book extends Component{
         const dataObj = this.getUserData();
         const id = dataObj.userId;
         const token = dataObj.token;
-        let data = [];
-        if(group) {
-            data = await getUserAggregatedWords({id, group, page, wordsPerPage, filter, token});
-        } else {
-            data = await getUserAggregatedWordsWithoutGroup({id, page, wordsPerPage, filter, token});
-        }
+        let data = await getUserAggregatedWords({id, group, page, wordsPerPage, filter, token});
+      
+        return data;
+    };
+    async getAggregatedWordsWithoutGroup(filter: {}, wordsPerPage: number, page: number, group?: number) {
+        const dataObj = this.getUserData();
+        const id = dataObj.userId;
+        const token = dataObj.token;
+        const data = await getUserAggregatedWordsWithoutGroup({id, page, wordsPerPage, filter, token});
         
         return data;
     };
