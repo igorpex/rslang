@@ -22,12 +22,34 @@ class Book extends Component{
         super(parentNode, 'div', ['book']);
         this.isAuth = false;
 
+        window.addEventListener('beforeunload', () => {
+            this.saveInLocalStorage();
+        });
+        window.addEventListener('load', () => {
+            const data = this.getLocalStorage();
+            if(localStorage.getItem('userData')) {
+                this.group = data.group;
+                this.page = data.page;
+            }
+           this.checkAuthorization();
+        });
+
         this.authorization = new Auth();
-        this.checkAuthorization();
+        // this.checkAuthorization();
         
         this.bookContainer = new BookContainer(this.element);
         this.updateGroup();
         this.updatePage();
+
+        window.addEventListener('beforeunload', () => {
+            this.saveInLocalStorage();
+        });
+        window.addEventListener('load', () => {
+            const data = this.getLocalStorage();
+            this.group = data.group;
+            this.page = data.page;
+        })
+
     }
     async checkAuthorization(){
         const data = await this.authorization.isLoggedIn();
@@ -133,13 +155,19 @@ class Book extends Component{
                 
             }
     }
-    saveInLocalStorage(words: Word[]){
+    saveInLocalStorage(words?: Word[]){
         const userData = {
             group: this.group,
             page: this.page,
             words: words,
         };
         localStorage.setItem('userData', JSON.stringify(userData));
+    }
+    getLocalStorage() {
+        const data = JSON.parse(localStorage.getItem('userData')!);
+        const page = data.page;
+        const group = data.group;
+        return {page, group}
     }
     
 }

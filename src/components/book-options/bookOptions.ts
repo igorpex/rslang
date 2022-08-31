@@ -1,6 +1,5 @@
 import Component from "../../utils/component";
 import Pagination from "../shared/pagination/pagination";
-import UIButton from "../UI/button/button";
 import BookInput from "./bookInput";
 import GameOptions from "./gameOptions";
 import './options.scss';
@@ -9,11 +8,12 @@ class BookOptions extends Component{
     updatePage: (page: number) => void = () => {};
     updateGroup: (group: number) => void = () => {};
     
-    private input: BookInput;
+    input: BookInput;
     pagination: Pagination;
     private gameOptions: GameOptions;
 
     group = 0;
+    page = 0;
 
     constructor(
         parentNode: HTMLElement,
@@ -26,7 +26,13 @@ class BookOptions extends Component{
         this.gameOptions = new GameOptions(this.element);
 
         this.pagination.updatePage = (page) => this.updatePage(page);
-        this.input.updateGroup = (group) => this.updateGroup(group);
+        this.input.updateGroup = (group) => {
+            this.updateGroup(group);
+            if(group !== 6){
+                this.pagination.reDrawPage();
+            }
+            
+        }
     }
 }
 

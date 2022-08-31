@@ -26,7 +26,7 @@ class Pagination extends Component {
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['pagination']);
-   
+  
     this.doublePrevButton = new UIButton(this.element, ['btn-double-prev'], '', true);
     this.doublePrevButton.element.style.backgroundImage = `url(./double-prev-arrows.svg)`;
     this.doublePrevButton.onClickButton = () => this.showPage('first');
@@ -53,8 +53,6 @@ class Pagination extends Component {
         const target = e.target as HTMLElement;
         this.page = Number(target.getAttribute('data-page'));
         this.reDrawPage();
-        // this.updatePage(this.page);
-        // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
       }
       selectItem.element.setAttribute('data-page', `${i-1}`);
     }
@@ -69,19 +67,35 @@ class Pagination extends Component {
     this.doubleNextButton = new UIButton(this.element, ['btn-double-next'], '', false);
     this.doubleNextButton.element.style.backgroundImage = `url(./double-next-arrows.svg)`;
     this.doubleNextButton.onClickButton = () => this.showPage('last');
+     this.checkIsData();
   }
 
+  checkIsData() {
+    const data = this.getLocalStorage();
+    if(data) {
+      this.page = data.page;
+      this.reDrawPage();
+    }
+  }
+  getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('userData')!);
+    const page = data.page;
+    const group = data.group;
+    return {page, group}
+  }
   updateNextButton(page: number): void {
-   // add totalCount and limit
+    console.log(page);
     if (page >= this.limitOfPage - 1) {
+      console.log(true);
       this.nextButton.setDisabled(true);
     } else {
       this.nextButton.setDisabled(false);
     }
   }
   updateDoubleNextButton(page: number): void {
-    // add totalCount and limit
+    console.log(page);
      if (page >= this.limitOfPage - 1) {
+      console.log(true);
        this.doubleNextButton.setDisabled(true);
      } else {
        this.doubleNextButton.setDisabled(false);
@@ -110,13 +124,6 @@ class Pagination extends Component {
 
     if (type === 'next') this.page += 1;
     this.reDrawPage();
-    // this.updatePage(this.page);
-    // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
-    // this.updatePrevButton();
-    // this.updateDoublePrevButton();
-    // this.updateNextButton(this.page);
-    // this.updateDoubleNextButton(this.page);
-
   }
   private showPage(type: string){
     if (type === 'first') {
@@ -128,12 +135,6 @@ class Pagination extends Component {
       this.page = this.limitOfPage - 1;
     }
     this.reDrawPage();
-    // this.updatePage(this.page);
-    // this.updatePrevButton();
-    // this.updateDoublePrevButton();
-    // this.updateNextButton(this.page);
-    // this.updateDoubleNextButton(this.page);
-    // this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
   }
   reDrawPage() {
     this.updatePage(this.page);
