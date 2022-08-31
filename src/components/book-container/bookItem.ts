@@ -37,10 +37,10 @@ class BookItem extends Component{
 
         leftItem.element.style.backgroundImage = `url(${baseUrl}/${this.card.image})`;
 
-        const leftItemHeader = new Component(rightItem.element, 'div', ['left__header']);
-        const groupIcon = new Component(leftItemHeader.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`);
-        const cardName = new Component(leftItemHeader.element, 'p', ['item__name'], `${this.card.word} - ${this.card.transcription}`);
-        const audioButton = new UIButton(leftItemHeader.element, ['item__audio-button'], '', false);
+        const rightItemHeader = new Component(rightItem.element, 'div', ['right__header']);
+        const groupIcon = new Component(rightItemHeader.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`);
+        const cardName = new Component(rightItemHeader.element, 'p', ['item__name'], `${this.card.word} - ${this.card.transcription}`);
+        const audioButton = new UIButton(rightItemHeader.element, ['item__audio-button'], '', false);
         audioButton.element.style.backgroundImage = 'url(./play-button.svg)';
         audioButton.onClickButton = ()=> { this.playAudio()};
 
