@@ -1,7 +1,6 @@
 import Component from '../../../utils/component';
 import UIButton from '../../UI/button/button';
 import ListItem from '../list/list';
-import SelectForm from '../select/select';
 
 import './pagination.scss';
 
