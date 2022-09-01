@@ -13,7 +13,7 @@ class UIInput extends Component {
     initValue?: string,
   ) {
     super(parentNode, tagName, ['ui-input']);
-    if(type !== undefined) {
+    if (type !== undefined) {
       this.element.setAttribute('type', type);
     }
     this.element.classList.add(...styles);

@@ -40,7 +40,7 @@ class Header extends Component {
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['header', 'container']);
-    
+
     // logo in the left corner of header
     this.logo = new Component(
       this.element,
@@ -52,7 +52,7 @@ class Header extends Component {
     this.loginBurgerContainer = new Component(
       this.element,
       'div',
-      ['header__login-burger-container']
+      ['header__login-burger-container'],
     );
 
     this.loginButton = new Component(
@@ -85,16 +85,16 @@ class Header extends Component {
       this.element,
       'div',
       ['header__burger-panel'],
-    )
+    );
 
     // container for menu with links
     this.nav = new Component(
       this.burgerPanel.element,
       'nav',
       ['header__burger-panel__nav'],
-    )
+    );
 
-    // link to main page 
+    // link to main page
     this.linkToMain = new Component(
       this.nav.element,
       'a',
@@ -111,7 +111,7 @@ class Header extends Component {
     linkToMainText.innerHTML = 'Главная';
     this.linkToMain.element.appendChild(linkToMainText);
 
-    // link to ebook page 
+    // link to ebook page
     this.linkToEbook = new Component(
       this.nav.element,
       'a',
