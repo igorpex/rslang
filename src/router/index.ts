@@ -91,8 +91,6 @@ class Router {
   updateRouter(): void {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
-    console.log(currentRouteName);
-    console.log(currentRouteName);
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
     );
