@@ -62,6 +62,12 @@ $color-group-7: grey;
         height: 35rem;
     }
 }
+@media (max-width: 400px) {
+    .book-item__left{
+        min-width: 20rem;
+        height: 15rem;
+    }
+}
 .book-item__right{
     padding: 2rem 2rem 2rem 0rem;
 }
@@ -129,9 +135,9 @@ i, b{
         justify-content: start;
     }
 }
-@media (max-width: 1000px){
+@media (max-width: 530px){
     .item__buttons{
-        flex-direction: column;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: center;
     }
@@ -160,6 +166,15 @@ i, b{
     .item__add-button,
     .item__statistics-button{
         font-size: 1.6rem;
+        width: 15rem;
+    }
+}
+@media (max-width: 500px){
+    .item__remove-button,
+    .item__add-button,
+    .item__statistics-button{
+        font-size: 1.4rem;
+        width: 10rem;
     }
 }
 
