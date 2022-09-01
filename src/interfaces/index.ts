@@ -57,10 +57,10 @@ export interface UserStatistics {
   optional: {}
 }
 
-export interface DifficultWord{
+export interface DifficultWord {
   wordId: string;
   difficulty: string;
-  optional: {}; 
+  optional: {};
 }
 
 export interface UserSettings {
@@ -86,11 +86,13 @@ export interface IDataObj {
   userId: string,
   token: string
 }
+
 export interface IDifficulWord {
   id: string;
   wordId: string;
   difficulty: string;
   optional: {};
+}
 
 export interface WordPromise {
   items: Word;
