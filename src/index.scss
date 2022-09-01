@@ -7,10 +7,13 @@ h1 {
     margin: 0;
     box-sizing: border-box;
 }
-
+html{
+    font-size: 10px;
+}
 body {
     //background-color: #173750;
     //color: #fff;
+    font-size: 1.6rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
