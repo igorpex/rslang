@@ -2,6 +2,7 @@ class Component {
   appendChild(img: HTMLDivElement) {
     throw new Error('Method not implemented.');
   }
+
   element: HTMLElement;
 
   constructor(

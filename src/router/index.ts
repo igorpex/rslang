@@ -31,7 +31,6 @@ class Router {
 
   testPage: Component | undefined;
 
-
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
 
