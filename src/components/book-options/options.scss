@@ -112,10 +112,13 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .game__list{
    @include list();
-    width: 23rem;
-    
+    width: 23rem; 
 }
 .list__item{
     margin-bottom: 1rem;
+}
+a{
+    color: inherit;
+    text-decoration: none;
 }
 

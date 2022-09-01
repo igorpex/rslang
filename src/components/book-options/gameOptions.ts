@@ -19,8 +19,12 @@ class GameOptions extends Component {
         const gameList = new Component(this.element, 'ul', ['game__list']);
         gameList.element.classList.add('hidden');
 
-        const sprintBtn = new Component(gameList.element, 'li', ['list__item'],  'Спринт');
-        const audioGameBtn = new Component(gameList.element, 'li', ['list__item'], 'Аудивызов');
+        const sprintBtn = new Component(gameList.element, 'li', ['list__item']);
+        const sprintLink = new Component(sprintBtn.element, 'a', ['sprint__link'], 'Спринт');
+        sprintLink.element.setAttribute('href', '#/sprint');
+        const audioGameBtn = new Component(gameList.element, 'li', ['list__item'], '');
+        const audioGameLink = new Component(audioGameBtn.element, 'a', ['audio-game__link'], 'Аудиовызов');
+        audioGameLink.element.setAttribute('href', '#/audioGame');
 
         this.element.addEventListener ('click', () => {
             gameList.element.classList.toggle('hidden');
