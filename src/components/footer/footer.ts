@@ -1,25 +1,30 @@
 import Component from '../../utils/component';
 import './footer.scss';
+import rsLogo from '../../assets/svg/rs_school_js.svg';
 
 class Footer extends Component {
   private rsLogoBox: Component;
-  private rsLogoImg: Component;
+
   private teamGhLink1: Component;
+
   private teamGhLink2: Component;
+
   private teamGhLink3: Component;
 
   private teamGhLinks: Component | undefined;
 
   private year: Component | undefined;
 
+  private rsLogoImg: Component;
+
   constructor(parentNode: HTMLElement) {
-    super(parentNode, 'div', ['footer']);
+    super(parentNode, 'div', ['footer', 'container']);
 
     this.rsLogoBox = new Component(this.element, 'div', ['footer__rs-logo-box']);
 
     // Using this.rsLogoBox.ELEMENT as parent, we insert rsLogoImg to rsLogoBox
     this.rsLogoImg = new Component(this.rsLogoBox.element, 'img', ['footer__rs-logo-img']);
-    this.rsLogoImg.element.setAttribute('src', './rs_school_js.svg');
+    this.rsLogoImg.element.setAttribute('src', rsLogo);
 
     this.teamGhLinks = new Component(this.element, 'div', ['footer__team-gh-links']);
 

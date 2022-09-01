@@ -6,6 +6,8 @@ import Book from '../pages/book/book';
 import Login from '../pages/login/login';
 import AuthTestContainer from '../components/auth/auth-test-container/auth-test-container';
 import SignupContainer from '../components/auth/signup-container/signup-container';
+import Sprint from '../pages/sprint/sprint';
+import Games from '../pages/games/games';
 
 class Router {
   private readonly routes: Array<IRoute>;
@@ -22,6 +24,10 @@ class Router {
   loginPage: Component | undefined;
 
   signupPage: Component | undefined;
+
+  gamesPage: Component | undefined;
+
+  sprintPage: Component | undefined;
 
   testPage: Component | undefined;
 
@@ -69,6 +75,20 @@ class Router {
         component: () => {
           this.signupPage = new SignupContainer(this.rootElement);
           this.rootElement.append(this.signupPage.element);
+        },
+      },
+      {
+        name: '/games',
+        component: () => {
+          this.gamesPage = new Games(this.rootElement);
+          this.rootElement.append(this.gamesPage.element);
+        },
+      },
+      {
+        name: '/games/sprint',
+        component: () => {
+          this.sprintPage = new Sprint(this.rootElement);
+          this.rootElement.append(this.sprintPage.element);
         },
       },
       {

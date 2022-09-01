@@ -229,7 +229,7 @@ export const deleteUserWord = async (id: string, wordId: string, token: string) 
  * @param {string} token - user token.
  */
 export const getUserAggregatedWords = async ({
-  id, group, page, wordsPerPage, filter, token,
+  id, group = 0, page = 0, wordsPerPage = 30, filter = {}, token,
 }: UserAggregatedWordsParams) => (await fetch(`${users}/${id}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${wordsPerPage}&filter=${encodeURIComponent(JSON.stringify(filter))}`, {
   method: 'GET',
   // credentials: 'include',
