@@ -54,15 +54,23 @@ class Book extends Component{
         }
     }
     async createForAuthUser() {
-        this.bookContainer.clear();
-        // const filter = {"$or":[{"userWord.difficulty":"easy"},{"userWord":null}]};
-        const wordsPerPage = 20;
-        const page =  this.page;
-        const group = this.group;
-        const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
-        const words = data[0].paginatedResults;
-        this.saveInLocalStorage(words);
-        this.bookContainer.addWords(words, this.group, this.isAuth);
+        const isExpired = this.authorization.JwtHasExpired();
+        if(isExpired === false){
+            this.bookContainer.clear();
+        
+            const wordsPerPage = 20;
+            const page =  this.page;
+            const group = this.group;
+            
+            const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
+            const words = data[0].paginatedResults;
+            this.saveInLocalStorage(words);
+            this.bookContainer.addWords(words, this.group, this.isAuth);
+        } else {
+            this.isAuth = false;
+            this.bookContainer.isAuth = false;
+            this.createForAnonymous();
+        }
     }
     createForAnonymous() {
         this.getCards(this.group, this.page, this.isAuth);
@@ -75,16 +83,18 @@ class Book extends Component{
         }
     };
     private async getDifficultWords(group: number, page: number){
-        console.log(this.isAuth);
         if(this.isAuth === true){
-            console.log('weref');
-            this.bookContainer.clear();
-            const wordsPerPage = 3600;
-            const pageSearch =  0;
-            const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
-            const words = data[0].paginatedResults;
-            this.saveInLocalStorage(words);
-            this.bookContainer.addWords(words, group, this.isAuth);
+            try{
+                this.bookContainer.clear();
+                const wordsPerPage = 3600;
+                const pageSearch =  0;
+                const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
+                const words = data[0].paginatedResults;
+                this.saveInLocalStorage(words);
+                this.bookContainer.addWords(words, group, this.isAuth);
+            } catch{
+                alert('Войдите завново!');
+            }
         } else {
             this.bookContainer.bookOptions.pagination.makeButtonDissabled();
         }
@@ -174,7 +184,6 @@ class Book extends Component{
             this.isAuth = true;
         }
     }
-
 }
 
 export default Book;

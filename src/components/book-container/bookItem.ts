@@ -2,6 +2,7 @@ import { baseUrl, createUserWord, deleteUserWord, getUserWords, updateUserWord }
 import { Word } from "../../interfaces";
 import Component from "../../utils/component";
 import { authStorageKey } from "../../utils/config";
+import Auth from "../auth/auth/auth";
 import UIButton from "../UI/button/button";
 import './bookContainer.scss'
 
@@ -16,6 +17,7 @@ class BookItem extends Component{
     audioButton: UIButton;
     isPlay: boolean;
     audio: HTMLAudioElement;
+    authorization: Auth;
     // private modalWindow: Component;
     // private overlay: Component;
 
@@ -27,6 +29,7 @@ class BookItem extends Component{
 
     constructor(parentNode: HTMLElement, card: Word, isDifficult: boolean, isEasy: boolean){
         super(parentNode, 'div', ['book-item']);
+        this.authorization = new Auth();
         this.card = card;
         this.lernedWords  = [];
         this.difficultWords = [];
@@ -82,34 +85,48 @@ class BookItem extends Component{
 
        
         this.addToDifficultButton.onClickButton = () => {
-            if(this.isDifficult === false) {
-                this.addToDifficult(this.card, this.difficultWords);
-                
-            } else if (this.isDifficult === true) {
-                
-                this.removeFromDifficult(this.card);
-                
-            }
-        };
-        this.statisticsButton.onClickButton = () => {
-            this.openWindow();
-        }
-        this.learnButton.onClickButton = async() => {
-            if(this.isEasy === false){
-                this.makeWordDisabled();
-                if(this.isDifficult){
-                    await this.updateWord();
-                    this.isEasy = true;
-                } else {
-                    this.addToLearned(this.card);
+            const isExpired = this.authorization.JwtHasExpired();
+            if(isExpired === false) {
+                if(this.isDifficult === false) {
+                    this.addToDifficult(this.card, this.difficultWords);
+                    
+                } else if (this.isDifficult === true) {
+                    
+                    this.removeFromDifficult(this.card);
+                    
                 }
             } else {
-                console.log('not aesy');
-                this.removeFromEasy();
+                window.location.reload();
             }
             
         };
-        
+        this.statisticsButton.onClickButton = () => {
+            const isExpired = this.authorization.JwtHasExpired();
+            if(isExpired === false) {
+                this.openWindow();
+            } else {
+                window.location.reload();
+            } 
+        }
+        this.learnButton.onClickButton = async() => {
+            const isExpired = this.authorization.JwtHasExpired();
+            if(isExpired === false) {
+                if(this.isEasy === false){
+                    this.makeWordDisabled();
+                    if(this.isDifficult){
+                        await this.updateWord();
+                        this.isEasy = true;
+                    } else {
+                        this.addToLearned(this.card);
+                    }
+                } else {
+                    console.log('not aesy');
+                    this.removeFromEasy();
+                }
+            } else {
+                window.location.reload();
+            }  
+        };
     }
     async updateWord(){
         this.deleteRemoveButtonClass();
@@ -157,11 +174,16 @@ class BookItem extends Component{
     async removeFromDifficult(card: Word) {
         this.deleteRemoveButtonClass();
         const params = this.getUserData();
-       deleteUserWord(params.userId, this.card._id, params.token);
-       this.isDifficult = false;
-       if(this.element.id === 'group-7'){
-        this.element.remove();
-       }
+        try {
+            deleteUserWord(params.userId, this.card._id, params.token);
+        } catch {
+            alert('Войдите заново');
+        }
+        
+        this.isDifficult = false;
+        if(this.element.id === 'group-7'){
+            this.element.remove();
+        }
     }
 
     playAudio(i: number) {
@@ -210,16 +232,12 @@ class BookItem extends Component{
     }
     makeWordDisabled(){
         this.element.style.opacity = '0.6';
-        // this.learnButton.setDisabled(true);
-        // this.learnButton.element.style.background = 'lightskyblue';
         this.learnButton.element.innerHTML = 'удалить из изученных'
         this.addToDifficultButton.setDisabled(true);
         this.statisticsButton.setDisabled(true);
     }
     removeWordDisabled() {
         this.element.style.opacity = '1.0';
-        // this.learnButton.setDisabled(true);
-        // this.learnButton.element.style.background = 'lightskyblue';
         this.learnButton.element.innerHTML = 'изучено'
         this.addToDifficultButton.setDisabled(false);
         this.statisticsButton.setDisabled(false);
