@@ -52,6 +52,7 @@ class LoginContainer extends Component {
     this.logOutButton.element.addEventListener('click', async () => {
       const auth = new Auth();
       auth.logOut();
+      console.log('document.referrer:', document.referrer);
       window.location.reload();
     });
 
@@ -83,11 +84,21 @@ class LoginContainer extends Component {
     const user = await signinUser({ email: username, password });
     if (user) {
       localStorage.setItem(authStorageKey, JSON.stringify(user));
-      window.location.reload();
+      const params = new URLSearchParams(document.location.search);
+      const ref = params.get('ref');
+      let next = '';
+      if (ref) {
+        next = ref.slice(1);
+      }
+      const loc = window.location;
+      loc.hash = next;
+      const url = new URL(loc.href);
+      url.searchParams.delete('ref');
+      window.location.replace(url);
     } else {
       alert('error logging in');
     }
-    console.log('user:', user);
+    // console.log('user:', user);
   }
 }
 
