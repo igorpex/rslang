@@ -80,27 +80,56 @@ class BookItem extends Component{
         this.checkIsDifficult();
         
 
-        this.learnButton.onClickButton = () => {
-            this.makeWordDisabled();
-            this.addToLearned(this.card);
-        };
+       
         this.addToDifficultButton.onClickButton = () => {
             if(this.isDifficult === false) {
-                this.addRemoveButtonClass();
                 this.addToDifficult(this.card, this.difficultWords);
-                this.isDifficult = true;
+                
             } else if (this.isDifficult === true) {
-                this.deleteRemoveButtonClass();
+                
                 this.removeFromDifficult(this.card);
-                this.isDifficult = false;
+                
             }
         };
         this.statisticsButton.onClickButton = () => {
             this.openWindow();
         }
+        this.learnButton.onClickButton = async() => {
+            if(this.isEasy === false){
+                this.makeWordDisabled();
+                if(this.isDifficult){
+                    await this.updateWord();
+                    this.isEasy = true;
+                } else {
+                    this.addToLearned(this.card);
+                }
+            } else {
+                console.log('not aesy');
+                this.removeFromEasy();
+            }
+            
+        };
         
     }
-
+    async updateWord(){
+        this.deleteRemoveButtonClass();
+        this.isDifficult = false;
+        const dataObj = this.getUserData();
+        const userWord = {
+            difficulty: 'easy',
+            optional: {},
+        }
+        await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+        if(this.element.id === 'group-7'){
+            this.element.remove();
+        }
+    }
+    removeFromEasy(){
+       const params = this.getUserData();
+       this.removeWordDisabled();
+       deleteUserWord(params.userId, this.card._id, params.token);
+       this.isEasy = false;
+    }
 
     checkIsDifficult() {
         if(this.isDifficult){
@@ -117,17 +146,19 @@ class BookItem extends Component{
     addToLearned(card: Word) {
         const params = this.createWord('easy');
         createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+        this.isEasy = true;
     }
     addToDifficult(card: Word, arr: Word[]) {
+        this.addRemoveButtonClass();
         const params = this.createWord('hard');
         createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+        this.isDifficult = true;
     }
     async removeFromDifficult(card: Word) {
+        this.deleteRemoveButtonClass();
         const params = this.getUserData();
-    //     const params = this.createWord('easy');
-       
-    //    await updateUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
        deleteUserWord(params.userId, this.card._id, params.token);
+       this.isDifficult = false;
        if(this.element.id === 'group-7'){
         this.element.remove();
        }
@@ -179,9 +210,19 @@ class BookItem extends Component{
     }
     makeWordDisabled(){
         this.element.style.opacity = '0.6';
-        this.learnButton.setDisabled(true);
+        // this.learnButton.setDisabled(true);
+        // this.learnButton.element.style.background = 'lightskyblue';
+        this.learnButton.element.innerHTML = 'удалить из изученных'
         this.addToDifficultButton.setDisabled(true);
         this.statisticsButton.setDisabled(true);
+    }
+    removeWordDisabled() {
+        this.element.style.opacity = '1.0';
+        // this.learnButton.setDisabled(true);
+        // this.learnButton.element.style.background = 'lightskyblue';
+        this.learnButton.element.innerHTML = 'изучено'
+        this.addToDifficultButton.setDisabled(false);
+        this.statisticsButton.setDisabled(false);
     }
     createWord(type: string){
         const dataObj = this.getUserData();
@@ -208,8 +249,7 @@ class BookItem extends Component{
         })
     }
     closeWindow() {
-        const modalWindow = document.querySelector('.item__statistics-window')!;
-        modalWindow.classList.remove('open');
+        // const modalWindow = document.querySelector('.item__statistics-window')!;
         const overlay = document.querySelector('.overlay')!;
         overlay.classList.remove('open');
         
