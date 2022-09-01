@@ -83,18 +83,15 @@ class Book extends Component{
         }
     };
     private async getDifficultWords(group: number, page: number){
-        if(this.isAuth === true){
-            try{
-                this.bookContainer.clear();
-                const wordsPerPage = 3600;
-                const pageSearch =  0;
-                const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
-                const words = data[0].paginatedResults;
-                this.saveInLocalStorage(words);
-                this.bookContainer.addWords(words, group, this.isAuth);
-            } catch{
-                alert('Войдите завново!');
-            }
+        const isExpired = this.authorization.JwtHasExpired();
+        if(this.isAuth === true && isExpired === false){
+            this.bookContainer.clear();
+            const wordsPerPage = 3600;
+            const pageSearch =  0;
+            const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
+            const words = data[0].paginatedResults;
+            this.saveInLocalStorage(words);
+            this.bookContainer.addWords(words, group, this.isAuth);
         } else {
             this.bookContainer.bookOptions.pagination.makeButtonDissabled();
         }
