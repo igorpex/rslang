@@ -1,26 +1,30 @@
 .games-container {
   display: flex;
-  margin-top: 25px;
-  min-height: 500px;
+  justify-content: space-between;
+  padding: 40px;
   background-color: #FFE39C;
 }
 
 .games__box {
-  width: 50vw;
+  width: 100%;
+  max-width: 798px;
   display: flex;
-  gap: 20px;
+  gap: 40px;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .games__game {
-  height: 30%;
+  height: 215px;
   display: flex;
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  background-repeat: no-repeat;
   background-position: center;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
+  text-decoration: none;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .games__game_audio-challenge {
@@ -36,15 +40,16 @@
   display: flex;
   align-content: center;
   justify-content: center;
-}
-.games__game-link {
-  display: block;
+  font-weight: bold;
+  font-size: 80px;
+  line-height: 121px;
+  letter-spacing: 0.1em;
+  color: rgb(255, 244, 217);
 }
 
 .games__image {
-  width: 50vw;
-  height: 100vh;
-  background-repeat: no-repeat;
+  width: 330.27px;
+  height: 470px;
   background-image: url('../../assets/img/mario.png');
-  background-size: 400px, 200px;
+  background-size: contain;
 }

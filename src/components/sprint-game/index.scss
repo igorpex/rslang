@@ -1,99 +1,208 @@
+%text {
+  font-size: 1.4rem;
+  line-height: 27px;
+  color: rgb(255, 244, 217);
+}
+
 .sprint {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.sprint-container {
-  margin-top: 25px;
-  min-height: 500px;
-  background-color: #FFE39C;
-}
-.sprint-entrance {
-  width: 100vw;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-image: url('../../assets/img/sprint-entrance.jpg');
-  background-size: 100%, 100%;
-}
-
-.sprint-entrance__content {
   width: 100%;
-  height: 100%;
+  height: 85vh;
+  padding: 40px;
+  background: #FFE39C;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
 }
 
-.sprint__difficulty-btn {
+.sprint-entrance {
+  width: 100%;
+  height: 75vh;
+  padding: 40px;
+  background-image: url('../../assets/img/sprint-entrance.jpg');
+  background-repeat: no-repeat;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
 }
 
-.sprint-prepare {
-  margin-left: auto;
-  margin-right: auto;
+.sprint__title {
+  font-weight: bold;
+  font-size: 5rem;
+  line-height: 121px;
+  letter-spacing: 0.1em;
+  color: rgb(255, 244, 217);
+}
+
+.sprint__description,
+.sprint__difficulty-text {
+  padding-top: 40px;
+  @extend %text;
+}
+
+.sprint__description2 {
+  padding-left: 40px;
+  @extend %text;
+}
+
+#sprint__difficulty-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.select {
+  position: relative;
+  width: 215px;
+  background-color: rgba(255, 244, 217, 1);
+  border: 1px solid rgba(255, 198, 156, 1);
+  box-sizing: border-box;
+  cursor: pointer;
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 10px;
+  }
+  &__img {
+    width: 25px;
+    background-image: url('../../assets/svg/levels-svgrepo-com\ 1.svg');
+    background-repeat: no-repeat;
+  }
+  &__current-option {
+    font-size: 1.4rem;
+  }
+  &__arrow {
+    width: 25px;
+    background-image: url('../../assets/svg/arrow.svg');
+    background-repeat: no-repeat;
+  }
+  &__options {
+    display: none;
+    position: absolute;
+    top: 41px;
+    left: -1px;
+    width: 215px;
+    background-color: rgba(255, 244, 217, 1);
+    border: 1px solid rgba(255, 198, 156, 1);
+    box-sizing: border-box;
+  }
+  &__options.active {
+    display: block;
+  }
+  &__option {
+    text-align: center;
+    font-size: 1.4rem;
+    padding: 0.3rem 0;
+  }
+}
+
+#sprint__difficulty-btn {
+  margin-top: 40px;
+  width: 350px;
+  height: 80px;
+  font-weight: bold;
+  font-size: 3rem;
+  line-height: 48px;
+  letter-spacing: 0.15em;
+  background: #FFF4D9;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
+  cursor: pointer;
 }
 
 .sprint-game {
-  width: 90vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  //margin-left: auto;
-  //margin-right: auto;
- }
+  width: 100%;
+  height: 75vh;
+  padding: 40px;
+  background-image: url('../../assets/img/sprint-entrance.jpg');
+  background-repeat: no-repeat;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
+}
+
+.sprint-game__title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: 48px;
+  color: #FFF4D9;
+}
 
 .sprint-game__top {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  width: 100%;
 }
 
-.sprint-game__content {
+.sprint-game__timer {
+  font-weight: 700;
+  font-size: 2.7rem;
+  line-height: 73px;
+  width: 15%;
+}
 
+.sprint-game__sound-close-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 .sprint-game__beep-sound-icon {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  //background-color: #57e6e6;
-  margin-left: auto;
-  fill: #d34160;
-  stroke: #57e6e6;
-  background-repeat: no-repeat;
-  background-position: 0% 0%;
-  background-size: 19px 24px;
-  cursor: pointer;
+  width: 2.2rem;
   background-image: url('../../assets/svg/note-muted.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .sprint-game__beep-sound-icon.sprint-game__beep-sound_active {
   background-image: url('../../assets/svg/note-active.svg');
 }
 
-.sprint-game__beep-sound-icon_disabled {
+.sprint-game__close-btn {
+  position: relative;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+}
 
+.sprint-game__close-btn:before,
+.sprint-game__close-btn:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: black;
+}
+
+.sprint-game__close-btn::before {
+  top: 46%;
+  transform: rotate(45deg);
+}
+
+.sprint-game__close-btn::after {
+  bottom: 46%;
+  transform: rotate(-45deg);
 }
 
 .sprint__card{
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
-  border: #bbbbbb 2px solid;
-  margin-top: 100px;
+  gap: 15px;
+  margin: 0 auto;
+  padding: 3px;
+  width: 50%;
+  margin-top: 0;
+  border: 3px solid rgba(255, 244, 217, 0);
 }
 
 .sprint__card-total-points {
-  margin-top: -2rem;
+  font-size: 1.8rem;
+  color: #FFF4D9;
+  text-decoration: underline;
 }
 
 .sprint__card-audio-btn {
-  font-size: 2rem;
-  width: 2rem;
-  height: 2rem;
-  color: #bbbbbb;
-  fill: #bbbbbb;
-  stroke: #bbbbbb;
+  width: 4rem;
+  height: 4rem;
   cursor: pointer;
-  //@apply h-8 w-8
 }
 
 .sprint__card_right-answer{
@@ -105,39 +214,37 @@
 
 .sprint__card-dots-container {
   display: flex;
-  flex-direction: row;
   gap: 30px;
 }
 
 .sprint__card-dot {
   width: 20px;
   height: 20px;
-  border: #63e795 2px solid;
+  border: #FFC69C 2px solid;
   border-radius: 50%;
   display: inline-block;
-  background-color: #bbb;
+  background-color: rgba(255, 244, 217, 0.5);
 }
 .sprint__card-dot_active {
-  background-color: #63e795;
+  background-color: #FFF4D9;
 }
 
 .sprint__card-per-answer-count{
-  height: 1rem;
+  height: 0rem;
 }
 
 .sprint__card-birds-container {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-end;
+  align-items: center;
   background-image: url('../../assets/img/branch.svg');
   background-repeat: no-repeat;
   background-position: bottom;
-  width: 80%;
-
+  width: 35%;
 }
 
 .sprint__card-bird{
-  width: 45px;
+  width: 24%;
   height: 70px;
   background-position: bottom;
   background-repeat: no-repeat;
@@ -160,42 +267,86 @@
   background-image: url('../../assets/img/bird4.png');
 }
 
+.sprint__card-bird-5{
+  background-image: url('../../assets/img/bird1.png');
+}
+
 .sprint__card-word{
   font-size: 2rem;
   font-weight: bold;
+  color: #FFF4D9;
 }
 
 .sprint__card-translation {
+  font-style: italic;
   font-size: 1.5rem;
   font-weight: normal;
+  color: #FFF4D9;
+}
+
+.sprint__card-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
 }
 
 .sprint__right-btn {
-  background-color: #63e795;
-  border: #63e795 1px;
-  width: 7rem;
-  height: 2rem;
+  width: 45%;
+  height: 7vh;
+  font-size: 2rem;
+  text-transform: capitalize;
+  background-color: rgba(255, 244, 217, 1);
+  border: 1px solid rgba(255, 198, 156, 1);
 }
 
 .sprint__wrong-btn {
-  background-color: #d34160;
-  border: #d34160 1px;
-  width: 7rem;
-  height: 2rem;
+  width: 45%;
+  height: 7vh;
+  font-size: 2rem;
+  text-transform: capitalize;
+  background-color: rgba(255, 244, 217, 0.5);
+  border: 1px solid rgba(255, 198, 156, 1);
 }
 
-.sprint-results {
+.sprint-results,
+.sprint-game__prepare {
+  width: 100%;
+  height: 75vh;
+  padding: 40px;
+  background-image: url('../../assets/img/sprint-entrance.jpg');
+  background-repeat: no-repeat;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
+}
+
+.sprint-game__prepare-title {
+  font-size: 2.5rem;
+  line-height: 48px;
+  text-align: center;
+  color: #FFF4D9;
+}
+
+.sprint-results__container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
+  width: 50%;
+  height: 45vh;
+  padding: 40px;
+  background-color: rgba(255, 198, 156, 1);
+  margin: 0 auto;
+  overflow: auto;
 }
 
 .sprint-results__answers {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
+  width: 100%;
   gap: 0.5rem;
+  
 }
 
 .sprint-results__title {
@@ -205,11 +356,41 @@
 
 .sprint__results-word-box {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   gap: 1rem;
   width: 100px;
 }
 
-.sprint__results-word {
-  min-width: 7rem;
+.sprint__results__card-audio-btn {
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+}
+
+.sprint__results-word,
+.sprint__results-dash {
+  font-weight: bold;
+}
+
+.sprint__results-translate {
+  font-style: italic;
+}
+
+.sprint-results__buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 50%;
+}
+
+.sprint-results__button {
+  margin-top: 3vh;
+  padding: 1rem;
+  width: 45%;
+  font-size: 2rem;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+  background-color: rgba(255, 244, 217, 1);
+  border: 1px solid rgba(255, 198, 156, 1);
 }
