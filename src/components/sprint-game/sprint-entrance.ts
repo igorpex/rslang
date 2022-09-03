@@ -1,18 +1,32 @@
 import Component from '../../utils/component';
 
 import './index.scss';
+import UIButton from '../UI/button/button';
+
+type GameType = 'menu' | 'ebook';
 
 class SprintEntrance extends Component {
   private content:Component;
 
   public difficulty: number | undefined;
 
+  public type: string | undefined;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-entrance']);
 
-    this.content = new Component(this.element, 'div', ['sprint-entrance__content']);
+    const params = new URLSearchParams(document.location.search);
+    const ref = params.get('ref');
+    let type = 'menu';
+    let next = '';
+    if (ref) {
+      next = ref.slice(1);
+      type = 'ebook';
+    }
+    this.type = type;
 
-    this.content.element.innerHTML = this.pageContent;
+    this.content = new Component(this.element, 'div', ['sprint-entrance__content']);
+    this.createPageContent();
 
     // this.loginForm.element.addEventListener('submit', (e) => this.handleChoose(e));
   }
@@ -33,32 +47,37 @@ class SprintEntrance extends Component {
     callback(); // leads to sprint.prepareGame()
   }
 
-  // form2 = new Component(this.element, 'form', ['difficulty__form']);
+  createForm = (defDifficulty = 0, disabled = false) => {
+    const form = new Component(null, 'form', ['sprint__difficulty-form']);
+    form.element.id = 'sprint__difficulty-form';
+    const select = new Component(form.element, 'select', ['sprint__difficulty-form']);
+    select.element.id = 'sprint__difficulty-input';
+    select.element.setAttribute('name', 'difficulty');
+    const levels = ['1 - обезьянка', '2 - новичек', '3 - ученик', '4 - мыслитель', '5 - кандидат', '6 - эксперт', '7 - свои слова'];
+    levels.forEach((difficulty, index) => {
+      const option = new Component(select.element, 'option', ['sprint__difficulty-option'], difficulty);
+      option.element.setAttribute('value', `${index + 1}`);
+      if (index === defDifficulty) { option.element.setAttribute('selected', 'selected'); }
+    });
 
-  private form = `<form id="sprint__difficulty-form">
-            <select name="difficulty" id="sprint__difficulty-input">
-                <option value="1">1 - обезьянка</option>
-                <option value="2">2 - новичек</option>
-                <option value="3">3 - ученик</option>
-                <option value="4">4 - мыслитель</option>
-                <option value="5">5 - кандидат</option>
-                <option value="6">6 - эксперт</option>
-          </select>
-             <button id="sprint__difficulty-btn" type="submit">Начать</button>
-        </form>`;
+    const difficultyBtn = new UIButton(form.element, ['sprint__difficulty-btn'], 'Начать');
+    difficultyBtn.element.setAttribute('type', 'submit');
+    difficultyBtn.element.id = 'sprint__difficulty-btn';
+    return form.element;
+  };
 
-  private pageContent = `
-    <h1>Спринт</h1>
-    <div>
+  createPageContent = () => {
+    const title = new Component(this.content.element, 'h1', ['sprint-entrance__title'], 'Спринт');
+    const contentBox = new Component(this.content.element, 'div', ['sprint-entrance__box']);
+    contentBox.element.innerHTML = `
         <p>«Спринт» - это тренировка для повторения заученных слов из вашего словаря.</p>
         <ul>
             <li>Используйте мышь, чтобы выбрать.</li>
             <li>Используйте клавиши влево или вправо</li>
         </ul>
-        <p>Выберите сложность</p>
-        ${this.form}
-    </div>
-    `;
+        <p>Выберите сложность</p>`;
+    contentBox.element.append(this.createForm());
+  };
 
   private clear() {
     this.element.innerHTML = '';
