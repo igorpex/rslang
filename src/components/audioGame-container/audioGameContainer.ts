@@ -1,33 +1,51 @@
-import { getAllWords, getWords, updateUser } from "../../api/api";
+import { Compilation } from "webpack";
+import { getAllWords, getUserAggregatedWordsWithoutGroup, getWords, updateUser } from "../../api/api";
 import { GameObj, StatisticsObject, Word } from "../../interfaces";
 import Component from "../../utils/component";
+import ListItem from "../shared/list/list";
 import Sections from "../shared/section/section";
 import UIButton from "../UI/button/button";
 import "./audioGame.scss";
 import Game from "./game";
 import Result from "./result";
+import arrowButton from '../../assets/svg/down-arrow.svg';
+import levelsIcon from '../../assets/svg/levels-icon.svg';
 
 class AudioGameContainer extends Component{
     updateGroup: (group: number) => void = () => {};
 
     private title: Component;
+
     private content: Component;
-    
-    select: Sections;
+
+    select: Component;
+
+    levelTitle: Component;
+
     private group = 1;
+
     private page = 0;
+
     private randomPage = 0;
+
     arrayOfPage: number[];
+
     gameObject: GameObj;
+
     count = 0;
+
     words: Word[];
+
     allAnswers: Word[];
+
+    arrayOfName: string[];
 
     staticsObjects: StatisticsObject[];
     //statistics object
 
     constructor(parentNode: HTMLElement) {
-        super(parentNode, 'div', ['audio-game__container']);
+        super(parentNode, 'div', ['audioChallange__container']);
+
         this.words = [];
         this.arrayOfPage = [];
         this.allAnswers = [];
@@ -36,36 +54,60 @@ class AudioGameContainer extends Component{
             answers: [],
         };
         this.staticsObjects = [];
+        this.arrayOfName = ['Новичок', 'Ученик', 'Мыслитель', 'Кандидат', 'Мастер', 'Эксперт',
+        'Сложные'];
 
-        this.content = new Component(this.element, 'div', ['audio-game__content']);
-        this.title = new Component(this.content.element, 'h2', ['audio-game__title'], 'Аудиовызов');
+        this.content = new Component(this.element, 'div', ['audioChallenge__content']);
+        this.title = new Component(this.content.element, 'h2', ['audioChallenge__title'], 'Аудиовызов');
         const description = new Component(this.content.element, 'p', ['content__list']);
         description.element.innerHTML = '«Аудиовызов» - это тренировка, которая улучшает восприятие речи на слух.'
         const list = new Component(this.content.element, 'ul', ['description__list']);
-        const pointOne = new Component(list.element, 'li', ['audio-game-list__item']);
+        const pointOne = new Component(list.element, 'li', ['audioChallenge-list__item']);
         pointOne.element.innerHTML = 'Используйте мышь, чтобы выбрать.'
-        const pointTwo = new Component(list.element, 'li', ['audio-game-list__item']);
+        const pointTwo = new Component(list.element, 'li', ['audioChallenge-list__item']);
         pointTwo.element.innerHTML = 'Используйте цифровые клавиши от 1 до 5 для выбора ответа.'
-        const pointThree = new Component(list.element, 'li', ['audio-game-list__item']);
+        const pointThree = new Component(list.element, 'li', ['audioChallenge-list__item']);
         pointThree.element.innerHTML = 'Используйте пробел для повтроного звучания слова.'
-        const pointFour = new Component(list.element, 'li', ['audio-game-list__item']);
+        const pointFour = new Component(list.element, 'li', ['audioChallenge-list__item']);
         pointFour.element.innerHTML = 'Используйте клавишу Enter для подсказки или для перехода к следующему слову.';
         
         
-        const options = new Component(this.content.element, 'div', ['content__options']);
-        const selectBlock = new Component(options.element, 'div', ['select-block']);
-        const selectTitle = new Component(selectBlock.element, 'p', ['select__title'] );
+        const options = new Component(this.content.element, 'div', ['audioChallenge__options']);
+        const selectBlock = new Component(options.element, 'div', ['options__select-block']);
+        const selectTitle = new Component(selectBlock.element, 'p', ['options__select-title'] );
         selectTitle.element.innerHTML = 'Выберите сложность:'
-        this.select = new Sections(selectBlock.element);
+
+        //level-list
+        this.select = new Component(selectBlock.element, 'div', ['audioChallenge__level']);
+        const levelHeader = new Component(this.select.element, 'div', ['audioChallenge-level__header'])
+        const levelIcon = new Component(levelHeader.element, 'span', ['audioChallenge-level__icon']);
+        levelIcon.element.style.backgroundImage = `url(${levelsIcon})`;
+        this.levelTitle = new Component(levelHeader.element, 'div', ['audioChallenge-level__title']);
+        const levelBtn = new Component(levelHeader.element, 'span', ['audioChallenge-level__btn']);
+        levelBtn.element.style.backgroundImage = `url(${arrowButton})`;
+
+        const levelList = new Component(this.select.element, 'ul', ['audioChallenge-level__list']);
+        for (let i = 0; i < this.arrayOfName.length; i++) {
+            const listItem = new ListItem(levelList.element, i, this.arrayOfName[i]);
+            if (this.group === i) {
+                this.levelTitle.element.innerHTML = listItem.element.innerHTML;
+            }
+            listItem.onClickButton = (e) => {
+                const target = e.target as HTMLElement;
+                this.group = Number(target.getAttribute('data-group'));
+                this.redrawPage(target);
+            };
+            listItem.element.setAttribute('data-group', `${i}`);
+        }
+        
+        this.select.element.addEventListener('click', () => {
+            levelList.element.classList.toggle('open');
+        });
+
         const startButton = new UIButton(options.element, ['options__start-button'], 'Начать');
         
-        this.select.upgrateGroup = (group) => {
-            this.group = group;
-            this.createRandomArray();
-        }
-        startButton.onClickButton = async () => {
+        startButton.onClickButton = () => {
             this.createGame()
-            // this.startGame();
         };
 
         
@@ -81,6 +123,10 @@ class AudioGameContainer extends Component{
     //   url.searchParams.delete('ref');
     //   window.location.replace(url);
     }
+    redrawPage(target: HTMLElement) {
+        this.updateGroup(this.group);
+        this.levelTitle.element.innerHTML = `${target.innerHTML}`;
+      }
     async createGame(){
         const params = new URLSearchParams(document.location.search);
         const ref = params.get('ref');

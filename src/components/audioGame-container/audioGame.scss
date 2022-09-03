@@ -2,6 +2,8 @@ $color-button: rgba(250, 77, 77, 0.867);
 $color-title: rgba(255, 244, 217, 1);
 $color-main: rgba(255, 227, 156, 1);
 $color-border: rgba(255, 198, 156, 1);
+$color-options: rgba(255, 244, 217, 1);
+$color-header-bg: rgba(255, 198, 156, 1);
 
 @mixin mainButton {
     width: 35rem;
@@ -13,6 +15,40 @@ $color-border: rgba(255, 198, 156, 1);
     font-weight: 700;
     border: 1px solid $color-border;
 }
+@mixin header {
+    padding: 1rem 0.6rem 1rem 0.6rem;
+    border: 1px solid #FFC69C;
+    display: flex;
+    font-size: 2.2rem;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 20rem;
+    background-color: rgba(255, 244, 217, 1);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+}
+@mixin imageIcon {
+    display: block;
+    background-repeat: no-repeat;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: contain;
+    background-position: center center;
+}
+@mixin list {
+    padding: 1rem 0 1rem 2.5rem;
+    list-style: none;
+    z-index: 10;
+    border: 1px solid #FFC69C;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 0;
+    width: 22rem;
+    background-color: $color-options;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
 
 .audio-page{
     max-width: 1440px;
@@ -20,7 +56,7 @@ $color-border: rgba(255, 198, 156, 1);
     background-color: $color-main;
     padding: 4rem;
 }
-.audio-game__container{
+.audioChallenge__container{
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -31,7 +67,7 @@ $color-border: rgba(255, 198, 156, 1);
     background-size: cover;
     background-position: center center;
 }
-.audio-game__title{
+.audioChallenge__title{
     font-size: 10rem;
     margin: 4rem;
     color: $color-title;
@@ -43,7 +79,7 @@ $color-border: rgba(255, 198, 156, 1);
     color:rgba(255, 244, 217, 1);
     font-size: 2.2rem;
 }
-.audio-game-list__item{
+.audioChallenge-list__item{
     list-style:disc; 
     color:rgba(255, 244, 217, 1);
     margin-left: 6rem;
@@ -51,24 +87,54 @@ $color-border: rgba(255, 198, 156, 1);
     font-size: 2.2rem;
     text-transform: none;
 }
-.select__game-title{
+.options__select-title{
     color: $color-title;
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 2rem;
    
 }
-.content__options{
+.audioChallenge__options{
     margin-top: 6rem;
     margin-left: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: 5rem;
+    gap: 10rem;
     align-items: start;
+}
+.audioChallenge__level{
+    position: relative;
+    background-color: $color-options;
+    width: 22rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.audioChallenge-level__header{
+   @include header();
+    width: 22rem;
+}
+.audioChallenge-level__icon,
+.audioChallenge-level__btn{
+    @include imageIcon();
+}
+.audioChallenge-level__list.open{
+    top: 100%;
+    @include list();
+    max-height: 8rem;
+    overflow: auto;
+}
+.audioChallenge-level__list{
+    display: none;
 }
 .options__start-button{
     @include mainButton();
+    &:hover{
+        transition: all 0.5s;
+        opacity: 0.9;
+    }
 }
 
 //game
