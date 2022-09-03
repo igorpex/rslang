@@ -1,9 +1,18 @@
 import Component from '../../utils/component';
 
 import './index.scss';
-import { ShortWord, SprintCounts, SprintWord } from '../../interfaces';
+import {
+  Game, GameCounters, ShortWord, SprintCounts, SprintWord, UserWord, Word, WordOptional,
+} from '../../interfaces';
 import SprintCard from './card';
 import Timer from './timer';
+import Auth from '../auth/auth/auth';
+import {
+  createUserWord, getUserWordByIdWithStatus, updateUserWord,
+} from '../../api/api';
+import { authStorageKey } from '../../utils/config';
+import { createEmptyUserWord } from '../shared/emptyUserWord/emptyUserWord';
+import updateWordStatistics from '../shared/updateUserWord/updateUserWord';
 
 class SprintGame extends Component {
   private content:Component;
@@ -61,6 +70,7 @@ class SprintGame extends Component {
       pointsPerCorrectAnswer: 10,
       totalPoints: 0,
       rightInTheRow: 0,
+      maxRightInTheRow: 0,
       dots: 0, // rightInTheRow % 4
       birds: 1, // rightInTheRow / 4 + 1;
     };
@@ -119,9 +129,11 @@ class SprintGame extends Component {
     };
   }
 
-  private processCorrectAnswer() {
+  private async processCorrectAnswer() {
     console.log('Correct answer!');
     this.card?.element.classList.add('sprint__card_right-answer');
+    // this.updateWordStatistics('right', this.sprintWords![this.activeWordIndex]);
+    await updateWordStatistics('sprint', 'right', this.sprintWords![this.activeWordIndex]);
 
     setTimeout(this.createCard.bind(this), 800);
     if (this.beepSoundEnabled) {
@@ -133,6 +145,10 @@ class SprintGame extends Component {
     // update counts on correct answer
     this.sprintCounts.totalPoints += this.sprintCounts.pointsPerCorrectAnswer;
     this.sprintCounts.rightInTheRow += 1;
+    this.sprintCounts.maxRightInTheRow = Math.max(
+      this.sprintCounts.maxRightInTheRow,
+      this.sprintCounts.rightInTheRow,
+    );
 
     // calc point per next correct answer
     this.sprintCounts.pointsPerCorrectAnswer = Math.min(
@@ -143,9 +159,11 @@ class SprintGame extends Component {
     this.sprintCounts.birds = (Math.floor(this.sprintCounts.rightInTheRow / 4)) + 1;
   }
 
-  private processWrongAnswer() {
+  private async processWrongAnswer() {
     console.log('Wrong answer!');
     this.card?.element.classList.add('sprint__card_wrong-answer');
+    // this.updateWordStatistics('wrong', this.sprintWords![this.activeWordIndex]);
+    await updateWordStatistics('sprint', 'wrong', this.sprintWords![this.activeWordIndex]);
     setTimeout(this.createCard.bind(this), 800);
     this.wrongAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
@@ -153,7 +171,6 @@ class SprintGame extends Component {
     if (this.beepSoundEnabled) {
       console.log('play Wrong Sound'); // TODO add sound
     }
-
     // update counts on wrong
     this.sprintCounts.rightInTheRow = 0;
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
