@@ -127,3 +127,12 @@ export interface SprintCounts {
   dots: number;
   birds: number;
 }
+export interface GameObj {
+  word: Word | null;
+  answers: Word[];
+}
+
+export interface StatisticsObject{
+  word: Word;
+  isAnswerTrue: boolean;
+}
