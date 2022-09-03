@@ -1,5 +1,5 @@
 import {
-  baseUrl, createUserWord, getUserWordById, updateUserWord,
+  baseUrl, createUserWord, getUserWordById, getUserWordByIdWithStatus, updateUserWord,
 } from '../../api/api';
 import { Difficulty, Word } from '../../interfaces';
 import Component from '../../utils/component';
@@ -89,6 +89,14 @@ class BookItem extends Component {
     this.addToDifficultButton.element.style.display = 'none';
 
     this.statisticsButton = new UIButton(buttonContainer.element, ['item__statistics-button'], 'Статистика');
+    if (!this.card.userWord || this.card.userWord.optional.dateNew === 0) { this.statisticsButton.setDisabled(true); } else {
+      this.statisticsButton.element.textContent = '';
+      this.statisticsButton.element.innerHTML = `
+      ${this.card.userWord.optional.sprint.successCounter
+      + this.card.userWord.optional.audioChallenge.successCounter} &#10003; , 
+      ${this.card.userWord.optional.sprint.failureCounter
+      + this.card.userWord.optional.audioChallenge.failureCounter} &#10007; Статистика`;
+    }
     this.statisticsButton.element.style.display = 'none';
 
     this.checkIsEasy();
@@ -144,23 +152,25 @@ class BookItem extends Component {
     }
   }
 
-  async updateWordDifficulty(difficulty: 'hard' | 'easy' | 'normal') {
+  async updateWordDifficultyNew(difficulty: 'hard' | 'easy' | 'normal') {
     const dataObj = this.getUserData();
     const currentUserWord = await getUserWordById(dataObj.userId, this.card._id, dataObj.token);
-
     if (difficulty === 'normal') {
       this.isDifficult = false;
       this.isEasy = false;
       currentUserWord.optional.rightInARow = 0;
+      currentUserWord.optional.dateEasy = 0;
     }
     if (difficulty === 'hard') {
       this.isDifficult = true;
       this.isEasy = false;
       currentUserWord.optional.rightInARow = 0;
+      currentUserWord.optional.dateEasy = 0;
     }
     if (difficulty === 'easy') {
       this.isEasy = true;
       this.isDifficult = false;
+      currentUserWord.optional.dateEasy = Date.now();
     }
 
     const userWord = {
@@ -168,6 +178,37 @@ class BookItem extends Component {
       optional: currentUserWord.optional,
     };
     await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+  }
+
+  async updateWordDifficulty(difficulty: 'hard' | 'easy' | 'normal') {
+    const dataObj = this.getUserData();
+    const currentUserWord = await getUserWordById(dataObj.userId, this.card._id, dataObj.token);
+    const currentDifficulty = currentUserWord.difficulty;
+    delete currentUserWord.id;
+    delete currentUserWord.wordId;
+
+    if (difficulty === 'normal') {
+      this.isDifficult = false;
+      this.isEasy = false;
+    }
+    if (difficulty === 'hard') {
+      this.isDifficult = true;
+      this.isEasy = false;
+    }
+    if (difficulty === 'easy') {
+      this.isEasy = true;
+      this.isDifficult = false;
+    }
+
+    if (currentDifficulty !== 'easy' && difficulty === 'easy') {
+      currentUserWord.optional.dateEasy = Date.now();
+    } else if (currentDifficulty === 'easy' && difficulty !== 'easy') {
+      currentUserWord.optional.dateEasy = 0;
+      currentUserWord.optional.rightInARow = 0;
+    }
+    currentUserWord.difficulty = difficulty;
+
+    await updateUserWord(dataObj.userId, this.card._id, dataObj.token, currentUserWord);
   }
 
   async removeFromEasy() {
@@ -192,16 +233,14 @@ class BookItem extends Component {
     }
   }
 
-  addToLearned(card: Word) {
-    this.createOrUpdateUserWord('easy');
+  async addToLearned(card: Word) {
+    await this.createOrUpdateUserWord('easy');
     this.isEasy = true;
   }
 
-  addToDifficult(card: Word, arr: Word[]) {
+  async addToDifficult(card: Word, arr: Word[]) {
     this.addRemoveButtonClass();
-    // const params = this.createWord('hard');
-    // createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
-    this.createOrUpdateUserWord('hard');
+    await this.createOrUpdateUserWord('hard');
     this.isDifficult = true;
   }
 
@@ -209,8 +248,7 @@ class BookItem extends Component {
     this.deleteRemoveButtonClass();
     const params = this.getUserData();
     try {
-      this.updateWordDifficulty('normal');
-      // deleteUserWord(params.userId, this.card._id, params.token);
+      await this.updateWordDifficulty('normal');
     } catch {
       alert('Войдите заново');
     }
@@ -234,11 +272,11 @@ class BookItem extends Component {
       this.playAudio(count);
 
       this.audio.addEventListener('ended', () => {
-        if (count == 2) {
+        if (count === 2) {
           this.audio.pause();
           this.isPlay = false;
         } else {
-          count++;
+          count += 1;
           this.playAudio(count);
         }
       });
@@ -281,14 +319,23 @@ class BookItem extends Component {
   }
 
   async createOrUpdateUserWord(difficulty: 'hard' | 'easy' | 'normal') {
-    const dataObj = this.getUserData();
-    try {
-      await getUserWordById(dataObj.userId, this.card._id, dataObj.token);
-      this.updateWordDifficulty(difficulty);
-    } catch {
-      const userWord = this.createWord(difficulty);
-      createUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
-      // await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+    const auth = new Auth();
+    if (!auth.JwtHasExpired()) {
+      const userAuthData = localStorage.getItem(authStorageKey);
+      const { userId, token } = JSON.parse(userAuthData!);
+      // case if user word does exist - when get curren user word info, update it and PUT to server
+      const userWordWStatus = await getUserWordByIdWithStatus(userId, this.card._id, token);
+
+      if (userWordWStatus.status === 404) {
+        console.log('word is new, not in userWords');
+        const newUserWord = createEmptyUserWord();
+        await createUserWord(userId, this.card._id, token, newUserWord);
+        await this.updateWordDifficulty(difficulty);
+      } else if (userWordWStatus.status === 200) {
+        await this.updateWordDifficulty(difficulty);
+      } else {
+        console.log('Error creating or updating user word');
+      }
     }
   }
 
@@ -323,7 +370,7 @@ class BookItem extends Component {
     const word = new Component(modalTitleBlock.element, 'p', ['title__word'], `${this.card.word}`);
     const table = new Component(modalWindow, 'table', ['window-table']);
     const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
-    const sprintArr = ['Спринт', '0', '0'];
+    const sprintArr = ['Спринт', `${this.card.userWord ? this.card.userWord.optional.sprint.successCounter : 0}`, `${this.card.userWord ? this.card.userWord.optional.sprint.failureCounter : 0} `];
     const audioGameArr = ['Аудиовызов', '0', '0'];
     const firstRow = new Component(table.element, 'tr', ['main-row']);
     this.createRow(headArr, firstRow.element, 'th');
