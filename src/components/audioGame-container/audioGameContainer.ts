@@ -37,8 +37,6 @@ class AudioGameContainer extends Component{
         };
         this.staticsObjects = [];
 
-        this.checkPreviousPage();
-
         this.content = new Component(this.element, 'div', ['audio-game__content']);
         this.title = new Component(this.content.element, 'h2', ['audio-game__title'], 'Аудиовызов');
         const description = new Component(this.content.element, 'p', ['content__list']);
@@ -66,7 +64,8 @@ class AudioGameContainer extends Component{
             this.createRandomArray();
         }
         startButton.onClickButton = async () => {
-            this.startGame();
+            this.createGame()
+            // this.startGame();
         };
 
         
@@ -81,10 +80,8 @@ class AudioGameContainer extends Component{
     //   const url = new URL(loc.href);
     //   url.searchParams.delete('ref');
     //   window.location.replace(url);
-
     }
-    async checkPreviousPage(){
-        console.log(this.group);
+    async createGame(){
         const params = new URLSearchParams(document.location.search);
         const ref = params.get('ref');
         if(ref !== null) {
@@ -96,7 +93,9 @@ class AudioGameContainer extends Component{
                     this.createGamesArray();
                 }
             }
-        } 
+        } else {
+            this.createRandomArray();
+        }
     }
     async createGamesArray() {
 
@@ -115,10 +114,11 @@ class AudioGameContainer extends Component{
         answers.push(this.words, arr.flat());
         this.allAnswers = answers.flat();
         // this.prepareGame();
+        this.startGame();
         
     }
     createRandomArray(){
-        const randomPage = this.getRandomPage(0, 29);
+        this.page = this.getRandomPage(0, 29);
         this.createArrayOfPage();
         this.createGamesArray();
 
@@ -135,6 +135,7 @@ class AudioGameContainer extends Component{
         return words.items;
     }
     async startGame(){
+        console.log(this.group, this.page);
         if(this.words.length >= 15) {
             this.words = this.shuffleArray(this.words);
             this.prepareGame();
