@@ -1,396 +1,557 @@
 %text {
-  font-size: 1.4rem;
-  line-height: 27px;
+  font-size: 2.2rem;
+  line-height: 2.7rem;
   color: rgb(255, 244, 217);
+}
+
+%box {
+  background-color: rgba(255, 244, 217, 1);
+  border: 1px solid rgba(255, 198, 156, 1);
+  box-sizing: border-box;
+}
+
+%flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .sprint {
   width: 100%;
-  height: 85vh;
   padding: 40px;
   background: #FFE39C;
   border: 1px solid #FFC69C;
   box-sizing: border-box;
-}
 
-.sprint-entrance {
-  width: 100%;
-  height: 75vh;
-  padding: 40px;
-  background-image: url('../../assets/img/sprint-entrance.jpg');
-  background-repeat: no-repeat;
-  border: 1px solid #FFC69C;
-  box-sizing: border-box;
-}
-
-.sprint__title {
-  font-weight: bold;
-  font-size: 5rem;
-  line-height: 121px;
-  letter-spacing: 0.1em;
-  color: rgb(255, 244, 217);
-}
-
-.sprint__description,
-.sprint__difficulty-text {
-  padding-top: 40px;
-  @extend %text;
-}
-
-.sprint__description2 {
-  padding-left: 40px;
-  @extend %text;
-}
-
-#sprint__difficulty-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.select {
-  position: relative;
-  width: 215px;
-  background-color: rgba(255, 244, 217, 1);
-  border: 1px solid rgba(255, 198, 156, 1);
-  box-sizing: border-box;
-  cursor: pointer;
-  &__wrapper {
-    display: flex;
-    justify-content: space-between;
-    padding: 7px 10px;
-  }
-  &__img {
-    width: 25px;
-    background-image: url('../../assets/svg/levels-svgrepo-com\ 1.svg');
-    background-repeat: no-repeat;
-  }
-  &__current-option {
-    font-size: 1.4rem;
-  }
-  &__arrow {
-    width: 25px;
-    background-image: url('../../assets/svg/arrow.svg');
-    background-repeat: no-repeat;
-  }
-  &__options {
-    display: none;
-    position: absolute;
-    top: 41px;
-    left: -1px;
-    width: 215px;
-    background-color: rgba(255, 244, 217, 1);
-    border: 1px solid rgba(255, 198, 156, 1);
+  &-entrance {
+    width: 100%;
+    padding: 40px;
+    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
     box-sizing: border-box;
   }
-  &__options.active {
-    display: block;
+
+  &__title {
+    font-weight: bold;
+    font-size: 8rem;
+    line-height: 10.2rem;
+    letter-spacing: 0.1em;
+    color: rgb(255, 244, 217);
   }
-  &__option {
+
+  &__description,
+  &__difficulty-text {
+    padding-top: 50px;
+    @extend %text;
+  }
+
+  &__description2 {
+    padding-left: 40px;
+    @extend %text;
+  }
+
+  &__difficulty-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__select {
+    position: relative;
+    width: 215px;
+    @extend %box;
+    cursor: pointer;
+    z-index: 0;
+  
+    &-wrapper {
+      @extend %flex;
+      padding: 7px 10px;
+    }
+
+    &-img {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-image: url('../../assets/svg/levels-svgrepo-com\ 1.svg');
+      background-repeat: no-repeat;
+    }
+
+    &-current-option {
+      font-size: 2.2rem;
+    }
+
+    &-arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-image: url('../../assets/svg/arrow.svg');
+      background-repeat: no-repeat;
+    }
+
+    &-options {
+      display: none;
+      position: absolute;
+      top: 41px;
+      left: -1px;
+      width: 215px;
+      @extend %box;
+    }
+
+    &-options.active {
+      display: block;
+    }
+
+    &-option {
+      text-align: center;
+      font-size: 2.2rem;
+      padding: 0.4rem 0;
+    }
+  }
+
+  &__difficulty-btn {
+    margin-top: 50px;
+    width: 350px;
+    height: 80px;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 48px;
+    letter-spacing: 0.15em;
+    @extend %box;
+    cursor: pointer;
+  }
+
+  &-game {
+    width: 100%;
+    padding: 40px;
+    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+
+    &__prepare {
+      width: 100%;
+      height: 75vh;
+      padding: 40px;
+      background-image: url('../../assets/img/sprint-entrance.jpg');
+      background-position: top right;
+      border: 1px solid #FFC69C;
+      box-sizing: border-box;
+
+      &-title {
+        font-size: 4rem;
+        line-height: 48px;
+        text-align: center;
+        color: #FFF4D9;
+      }
+    }
+
+    &__top {
+      @extend %flex;
+    }
+
+    &__timer {
+      font-weight: 700;
+      font-size: 5rem;
+      line-height: 73px;
+      width: 5%;
+    }
+
+    &__title {
+      padding: 0 40px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 4rem;
+      line-height: 48px;
+      color: #FFF4D9;
+    }
+
+    &__sound-close-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    &__beep-sound-icon {
+      width: 3rem;
+      background-image: url('../../assets/svg/note-muted.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    &__beep-sound-icon.sprint-game__beep-sound_active {
+      background-image: url('../../assets/svg/note-active.svg');
+    }
+
+    &__close-btn {
+      position: relative;
+      width: 4rem;
+      height: 4rem;
+      cursor: pointer;
+    }
+    
+    &__close-btn:before,
+    &__close-btn:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: black;
+    }
+    
+    &__close-btn::before {
+      top: 46%;
+      transform: rotate(45deg);
+    }
+    
+    &__close-btn::after {
+      bottom: 47%;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 0 auto;
+    padding: 3px;
+    width: 100%;
+    margin-top: 0;
+    border: 3px solid rgba(255, 244, 217, 0);
+    
+    &-total-points {
+      font-size: 2.6rem;
+      color: #FFF4D9;
+      text-decoration: underline;
+    }
+
+    &-audio-btn {
+      width: 7rem;
+      height: 7rem;
+      cursor: pointer;
+    }
+    
+    &_right-answer{
+      border: #2fe928 2px solid;
+    }
+    &_wrong-answer {
+      border: #d34160 2px solid;
+    }
+    
+    &-dots-container {
+      display: flex;
+      gap: 30px;
+    }
+    
+    &-dot {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(255, 244, 217, 0.5);
+      border: 2px solid #FFC69C;
+      border-radius: 50%;
+    }
+
+    &-dot_active {
+      background-color: #FFC69C;
+    }
+    
+    &-per-answer-count {
+      height: 0rem;
+    }
+    
+    &-birds-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 270px;
+      background-image: url('../../assets/img/branch.svg');
+      background-repeat: no-repeat;
+      background-position: bottom;
+    }
+    
+    &-bird {
+      width: 24%;
+      height: 40px;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      background-size: 40px auto;
+    }
+    
+    &-bird-1 {
+      background-image: url('../../assets/img/bird1.png');
+    }
+    
+    &-bird-2 {
+      background-image: url('../../assets/img/bird2.png');
+    }
+    &-bird-3 {
+      background-image: url('../../assets/img/bird3.png');
+    }
+    &-bird-4 {
+      background-image: url('../../assets/img/bird4.png');
+    }
+    
+    &-bird-5 {
+      background-image: url('../../assets/img/bird1.png');
+    }
+    
+    &-word {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #FFF4D9;
+    }
+    
+    &-translation {
+      font-style: italic;
+      font-size: 2.5rem;
+      font-weight: normal;
+      color: #FFF4D9;
+    }
+    
+    &-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      font-size: 3rem;
+    }
+  }
+
+  &__right-btn,
+  &__wrong-btn {
+    width: 30%;
+    height: 60px;
+    font-size: 2.5rem;
+    color: black;
+    text-transform: capitalize;
+    border: 1px solid rgba(255, 198, 156, 1);
+  }
+
+  &__wrong-btn {
+    background-color: rgba(255, 244, 217, 1);
+  }
+  
+  &__wrong-btn {
+    background-color: rgba(255, 244, 217, 0.5);
+  }
+  
+  &-results {
+    width: 100%;
+    height: 75vh;
+    padding: 40px;
+    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      width: 50%;
+      height: 45vh;
+      padding: 40px;
+      background-color: rgba(255, 198, 156, 1);
+      margin: 0 auto;
+      overflow: auto;
+    }
+    
+    &__answers {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.5rem;
+    }
+    
+    &__title {
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+    
+    &-word-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100px;
+    }
+    
+    &__card-audio-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+    }
+    
+    &-word,
+    &-dash {
+      font-weight: bold;
+    }
+    
+    &-translate {
+      font-style: italic;
+    }
+    
+    &__buttons-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      width: 50%;
+    }
+    
+    &__button {
+      margin-top: 3vh;
+      padding: 1rem;
+      width: 45%;
+      font-size: 2.8rem;
+      text-align: center;
+      color: black;
+      text-decoration: none;
+      @extend %box;
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .sprint-game__title {
+    font-size: 3rem;
+    line-height: 2.5rem;
+  }
+
+  .sprint-game__timer {
+    font-size: 4rem;
+  }
+
+  .sprint-game__beep-sound-icon 
+  .sprint-game__beep-sound_active.sprint-game__beep-sound_active {
+    width: 1rem;
+  }
+
+  .sprint-game__close-btn {
+      width: 3rem;
+      height: 3rem;
+  }
+
+  .sprint-results__button {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 785px) {
+  .sprint-game__top {
+    flex-direction: column-reverse;
+  }
+
+  .sprint-game__sound-close-container {
+    align-self: flex-end;
+  }
+
+  .sprint-game__timer {
+    height: 50px;
+    font-size: 3rem;
+  }
+
+  .sprint__card-total-points {
+    font-size: 2rem;
+  }
+
+  .sprint__card-dot {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .sprint__card-audio-btn {
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .sprint__title,
+  .sprint__difficulty-text,
+  .sprint__select,
+  .sprint__difficulty-btn {
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sprint__wrong-btn,
+  .sprint__right-btn {
+    width: 100px;
+    height: 60px;
     font-size: 1.4rem;
-    padding: 0.3rem 0;
+  }
+
+  .sprint-results__container {
+    padding: 10px;
+    width: 340px;
+  }
+
+  .sprint-results__buttons-container {
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
   }
 }
 
-#sprint__difficulty-btn {
-  margin-top: 40px;
-  width: 350px;
-  height: 80px;
-  font-weight: bold;
-  font-size: 3rem;
-  line-height: 48px;
-  letter-spacing: 0.15em;
-  background: #FFF4D9;
-  border: 1px solid #FFC69C;
-  box-sizing: border-box;
-  cursor: pointer;
+@media (max-width: 515px) {
+  .sprint {
+    padding: 40px 10px;
+  }
+
+  .sprint__title {
+    font-size: 5rem;
+  }
+
+  .sprint-game__title {
+    font-size: 2rem;
+  }
+
+  .sprint-game__prepare {
+    padding: 40px 10px;
+  }
+
+  .sprint-game__prepare-title {
+    font-size: 3rem;
+  }
 }
 
-.sprint-game {
-  width: 100%;
-  height: 75vh;
-  padding: 40px;
-  background-image: url('../../assets/img/sprint-entrance.jpg');
-  background-repeat: no-repeat;
-  border: 1px solid #FFC69C;
-  box-sizing: border-box;
+@media (max-width: 450px) {
+  .sprint__description,
+  .sprint__description2,
+  .sprint__difficulty-text {
+    font-size: 1.7rem;
+  }
+
+  .sprint__select-current-option,
+  .sprint__select-option.difficulty {
+    font-size: 1.8rem;
+  }
+
+  .sprint__difficulty-btn {
+    width: 215px;
+    height: 50px;
+    font-size: 2.2rem;
+  }
+
+  .sprint-results {
+    padding: 40px 10px;
+  }
+
+  .sprint-results__container {
+    padding: 40px 10px;
+  }
+
+  .sprint-results__buttons-container {
+    width: 330px;
+  }
+
+  .sprint-results__container {
+    padding: 10px;
+    width: 280px;
+  }
 }
 
-.sprint-game__title {
-  text-align: center;
-  font-weight: 700;
-  font-size: 2.5rem;
-  line-height: 48px;
-  color: #FFF4D9;
-}
 
-.sprint-game__top {
-  display: flex;
-  justify-content: space-between;
-}
 
-.sprint-game__timer {
-  font-weight: 700;
-  font-size: 2.7rem;
-  line-height: 73px;
-  width: 15%;
-}
 
-.sprint-game__sound-close-container {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.sprint-game__beep-sound-icon {
-  width: 2.2rem;
-  background-image: url('../../assets/svg/note-muted.svg');
-  background-size: contain;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-.sprint-game__beep-sound-icon.sprint-game__beep-sound_active {
-  background-image: url('../../assets/svg/note-active.svg');
-}
-
-.sprint-game__close-btn {
-  position: relative;
-  width: 3rem;
-  height: 3rem;
-  cursor: pointer;
-}
-
-.sprint-game__close-btn:before,
-.sprint-game__close-btn:after {
-  content: "";
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: black;
-}
-
-.sprint-game__close-btn::before {
-  top: 46%;
-  transform: rotate(45deg);
-}
-
-.sprint-game__close-btn::after {
-  bottom: 46%;
-  transform: rotate(-45deg);
-}
-
-.sprint__card{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin: 0 auto;
-  padding: 3px;
-  width: 50%;
-  margin-top: 0;
-  border: 3px solid rgba(255, 244, 217, 0);
-}
-
-.sprint__card-total-points {
-  font-size: 1.8rem;
-  color: #FFF4D9;
-  text-decoration: underline;
-}
-
-.sprint__card-audio-btn {
-  width: 4rem;
-  height: 4rem;
-  cursor: pointer;
-}
-
-.sprint__card_right-answer{
-  border: #2fe928 2px solid;
-}
-.sprint__card_wrong-answer {
-  border: #d34160 2px solid;
-}
-
-.sprint__card-dots-container {
-  display: flex;
-  gap: 30px;
-}
-
-.sprint__card-dot {
-  width: 20px;
-  height: 20px;
-  border: #FFC69C 2px solid;
-  border-radius: 50%;
-  display: inline-block;
-  background-color: rgba(255, 244, 217, 0.5);
-}
-.sprint__card-dot_active {
-  background-color: #FFF4D9;
-}
-
-.sprint__card-per-answer-count{
-  height: 0rem;
-}
-
-.sprint__card-birds-container {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  background-image: url('../../assets/img/branch.svg');
-  background-repeat: no-repeat;
-  background-position: bottom;
-  width: 35%;
-}
-
-.sprint__card-bird{
-  width: 24%;
-  height: 70px;
-  background-position: bottom;
-  background-repeat: no-repeat;
-  //background-size: auto;
-  //background-size: 70px 70px;
-  background-size: 40px auto;
-}
-
-.sprint__card-bird-1{
-  background-image: url('../../assets/img/bird1.png');
-}
-
-.sprint__card-bird-2{
-  background-image: url('../../assets/img/bird2.png');
-}
-.sprint__card-bird-3{
-  background-image: url('../../assets/img/bird3.png');
-}
-.sprint__card-bird-4{
-  background-image: url('../../assets/img/bird4.png');
-}
-
-.sprint__card-bird-5{
-  background-image: url('../../assets/img/bird1.png');
-}
-
-.sprint__card-word{
-  font-size: 2rem;
-  font-weight: bold;
-  color: #FFF4D9;
-}
-
-.sprint__card-translation {
-  font-style: italic;
-  font-size: 1.5rem;
-  font-weight: normal;
-  color: #FFF4D9;
-}
-
-.sprint__card-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  width: 100%;
-}
-
-.sprint__right-btn {
-  width: 45%;
-  height: 7vh;
-  font-size: 2rem;
-  text-transform: capitalize;
-  background-color: rgba(255, 244, 217, 1);
-  border: 1px solid rgba(255, 198, 156, 1);
-}
-
-.sprint__wrong-btn {
-  width: 45%;
-  height: 7vh;
-  font-size: 2rem;
-  text-transform: capitalize;
-  background-color: rgba(255, 244, 217, 0.5);
-  border: 1px solid rgba(255, 198, 156, 1);
-}
-
-.sprint-results,
-.sprint-game__prepare {
-  width: 100%;
-  height: 75vh;
-  padding: 40px;
-  background-image: url('../../assets/img/sprint-entrance.jpg');
-  background-repeat: no-repeat;
-  border: 1px solid #FFC69C;
-  box-sizing: border-box;
-}
-
-.sprint-game__prepare-title {
-  font-size: 2.5rem;
-  line-height: 48px;
-  text-align: center;
-  color: #FFF4D9;
-}
-
-.sprint-results__container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
-  width: 50%;
-  height: 45vh;
-  padding: 40px;
-  background-color: rgba(255, 198, 156, 1);
-  margin: 0 auto;
-  overflow: auto;
-}
-
-.sprint-results__answers {
-  display: flex;
-  flex-direction: column;
-  
-  width: 100%;
-  gap: 0.5rem;
-  
-}
-
-.sprint-results__title {
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.sprint__results-word-box {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: 100px;
-}
-
-.sprint__results__card-audio-btn {
-  width: 1.8rem;
-  height: 1.8rem;
-  cursor: pointer;
-}
-
-.sprint__results-word,
-.sprint__results-dash {
-  font-weight: bold;
-}
-
-.sprint__results-translate {
-  font-style: italic;
-}
-
-.sprint-results__buttons-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  width: 50%;
-}
-
-.sprint-results__button {
-  margin-top: 3vh;
-  padding: 1rem;
-  width: 45%;
-  font-size: 2rem;
-  text-align: center;
-  color: black;
-  text-decoration: none;
-  background-color: rgba(255, 244, 217, 1);
-  border: 1px solid rgba(255, 198, 156, 1);
-}

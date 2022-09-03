@@ -29,31 +29,31 @@ class SprintResults extends Component {
     const rightContainer = new Component(answersContainer.element, 'div', ['sprint-results__answers']);
     const rightContainerTitle = new Component(rightContainer.element, 'div', ['sprint-results__title'], 'Правильно отвеченные слова: ' + rightCount);
     this.rightAnsweredWords!.forEach((word: ShortWord) => {
-      const wordBox = new Component(rightContainer.element, 'div', ['sprint__results-word-box']);
-      const playAudioBtn = new Component(wordBox.element, 'img', ['sprint__results__card-audio-btn']);
+      const wordBox = new Component(rightContainer.element, 'div', ['sprint-results-word-box']);
+      const playAudioBtn = new Component(wordBox.element, 'img', ['sprint-results__card-audio-btn']);
       playAudioBtn.element.setAttribute('src', playBtn);
       const wordAudio = new Audio(`${baseUrl}/${word.audio}`);
       playAudioBtn.element.addEventListener('click', () => {
         wordAudio.play();
       });
-      const wordEn = new Component(wordBox.element, 'div', ['sprint__results-word'], word.word);
-      const dash = new Component(wordBox.element, 'div', ['sprint__results-dash'], '-');
-      const wordRu = new Component(wordBox.element, 'div', ['sprint__results-translate'], word.wordTranslate);
+      const wordEn = new Component(wordBox.element, 'div', ['sprint-results-word'], word.word);
+      const dash = new Component(wordBox.element, 'div', ['sprint-results-dash'], '-');
+      const wordRu = new Component(wordBox.element, 'div', ['sprint-results-translate'], word.wordTranslate);
     });
 
     const wrongContainer = new Component(answersContainer.element, 'div', ['sprint-results__answers']);
     const wrongContainerTitle = new Component(wrongContainer.element, 'div', ['sprint-results__title'], 'Неправильно отвеченные слова: ' + wrongCount);
     this.wrongAnsweredWords!.forEach((word: ShortWord) => {
-      const wordBox = new Component(wrongContainer.element, 'div', ['sprint__results-word-box']);
-      const playAudioBtn = new Component(wordBox.element, 'img', ['sprint__results__card-audio-btn']);
+      const wordBox = new Component(wrongContainer.element, 'div', ['sprint-results-word-box']);
+      const playAudioBtn = new Component(wordBox.element, 'img', ['sprint-results__card-audio-btn']);
       playAudioBtn.element.setAttribute('src', playBtn);
       const wordAudio = new Audio(`${baseUrl}/${word.audio}`);
       playAudioBtn.element.addEventListener('click', () => {
         wordAudio.play();
       });
-      const wordEn = new Component(wordBox.element, 'div', ['sprint__results-word'], word.word);
-      const dash = new Component(wordBox.element, 'div', ['sprint__results-dash'], '-');
-      const wordRu = new Component(wordBox.element, 'div', ['sprint__results-translate'], word.wordTranslate);
+      const wordEn = new Component(wordBox.element, 'div', ['sprint-results-word'], word.word);
+      const dash = new Component(wordBox.element, 'div', ['sprint-results-dash'], '-');
+      const wordRu = new Component(wordBox.element, 'div', ['sprint-results-translate'], word.wordTranslate);
     });
 
     // buttons for replay or returning to game page

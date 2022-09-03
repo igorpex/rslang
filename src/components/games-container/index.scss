@@ -1,55 +1,88 @@
-.games-container {
-  display: flex;
-  justify-content: space-between;
+.games {
   padding: 40px;
   background-color: #FFE39C;
+
+  &-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 40px;
+    width: 100%;
+    max-width: 798px;
+  }
+
+  &__game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 798px;
+    height: 220px;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+    text-decoration: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    &_audio-challenge {
+      background-image: url('../../assets/img/audio-challenge-box.jpg');
+    }
+
+    &_sprint {
+      background-image: url('../../assets/img/sprint-box.jpg');
+    }
+
+    &-title {
+      font-weight: bold;
+      font-size: 8rem;
+      line-height: 121px;
+      letter-spacing: 0.1em;
+      color: rgb(255, 244, 217);
+    }
+  }
+
+  &__image {
+    width: 100%;
+    max-width: 337.75px;
+    background-image: url('../../assets/img/mario.png');
+    background-size: contain;
+  }
 }
 
-.games__box {
-  width: 100%;
-  max-width: 798px;
-  display: flex;
-  gap: 40px;
-  flex-direction: column;
-  justify-content: flex-start;
+@media (max-width: 1200px) {
+  .games__image {
+    display: none;
+  }
+
+  .games-container {
+    justify-content: center;
+  }
 }
 
-.games__game {
-  height: 215px;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  background-position: center;
-  border: 1px solid #FFC69C;
-  box-sizing: border-box;
-  text-decoration: none;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+@media (max-width: 785px) {
+  .games__game-title {
+    font-size: 5rem;
+  }
 }
 
-.games__game_audio-challenge {
-  background-repeat: no-repeat;
-  background-image: url('../../assets/img/audio-challenge-box.jpg');
-}
-.games__game_sprint {
-  background-repeat: no-repeat;
-  background-image: url('../../assets/img/sprint-box.jpg');
+@media (max-width: 500px) {
+  .games {
+    padding: 40px 10px;
+
+    &__box {
+      gap: 20px;
+    }
+  }
 }
 
-.games__game-title {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 80px;
-  line-height: 121px;
-  letter-spacing: 0.1em;
-  color: rgb(255, 244, 217);
-}
-
-.games__image {
-  width: 330.27px;
-  height: 470px;
-  background-image: url('../../assets/img/mario.png');
-  background-size: contain;
+@media (max-width: 420px) {
+  .games__game-title {
+    font-size: 3rem;
+  }
 }
