@@ -33,14 +33,15 @@ class Auth {
   }
 
   public async isLoggedIn() {
-    const userAuthData = localStorage.getItem(authStorageKey);
-    if (userAuthData === undefined) return false;
-    try {
-      await getUser(JSON.parse(userAuthData!).userId, JSON.parse(userAuthData!).token);
-      return true;
-    } catch {
-      return false;
-    }
+    return !this.JwtHasExpired();
+    // const userAuthData = localStorage.getItem(authStorageKey);
+    // if (userAuthData === undefined) return false;
+    // try {
+    //   await getUser(JSON.parse(userAuthData!).userId, JSON.parse(userAuthData!).token);
+    //   return true;
+    // } catch {
+    //   return false;
+    // }
   }
 }
 
