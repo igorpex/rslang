@@ -1,0 +1,138 @@
+$color-button: rgba(250, 77, 77, 0.867);
+$color-title: rgba(255, 244, 217, 1);
+$color-main: rgba(255, 227, 156, 1);
+$color-border: rgba(255, 198, 156, 1);
+
+@mixin mainButton {
+    width: 35rem;
+    height: 8rem;
+    background-color: $color-title;
+    margin-bottom: 4rem;
+    font-size: 4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid $color-border;
+}
+
+.audio-page{
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: $color-main;
+    padding: 4rem;
+}
+.audio-game__container{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    // background: linear-gradient( rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.5) ), url('/img/back/home-back.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+.audio-game__title{
+    font-size: 10rem;
+    margin: 4rem;
+    color: $color-title;
+}
+
+.content__list{
+    margin-left: 4rem;
+    margin-bottom: 3rem;
+    color:rgba(255, 244, 217, 1);
+    font-size: 2.2rem;
+}
+.game-list__item{
+    list-style:disc; 
+    color:rgba(255, 244, 217, 1);
+    margin-left: 6rem;
+    margin-bottom: 0.5rem;
+    font-size: 2.2rem;
+    text-transform: none;
+}
+.select__title{
+    color: $color-title;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+   
+}
+.content__options{
+    margin-top: 6rem;
+    margin-left: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 5rem;
+    align-items: start;
+}
+.options__start-button{
+    @include mainButton();
+}
+
+//game
+.game{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+.game__content{
+    max-width: 71.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.game__title{
+    font-size: 4rem;
+    margin: 4rem 2rem 8rem 4rem;
+    font-weight: 700;
+    color: $color-title;
+}
+.game__audio-button {
+    width: 15rem;
+    height: 15rem;
+    background-color: inherit;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 4rem;
+}
+
+.game__answers{
+    max-width: 87rem;
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 8rem;
+  
+}
+.answer__btn {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    font-size: 2.2rem;
+    color: $color-title;
+    text-transform: none;
+    font-weight: 400;
+}
+.next__game-btn{
+    @include mainButton();
+}
+
+.result__container{
+    width: 100%;
+    height: 100vh;
+    // position: absolute;
+    // top: 40%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    // height: 50%;
+    // z-index: 10;
+    background-color: $color-title;
+}
