@@ -1,7 +1,6 @@
 import { getAllWords, getWords, updateUser } from "../../api/api";
 import { GameObj, StatisticsObject, Word } from "../../interfaces";
 import Component from "../../utils/component";
-import { getRandomPage, shuffleArray } from "../shared/random";
 import Sections from "../shared/section/section";
 import UIButton from "../UI/button/button";
 import "./audioGame.scss";
@@ -60,9 +59,6 @@ class AudioGameContainer extends Component{
         selectTitle.element.innerHTML = 'Выберите сложность:'
         this.select = new Sections(selectBlock.element);
         const startButton = new UIButton(options.element, ['options__start-button'], 'Начать');
-
-        this.randomPage = getRandomPage(0, 29);
-
         
         startButton.onClickButton = async () => {
             this.startGame();
@@ -137,10 +133,10 @@ class AudioGameContainer extends Component{
         const wordObject = this.words[0];
         this.words = this.words.slice(1);
 
-        const allAnswers = shuffleArray(this.allAnswers);
+        const allAnswers = this.shuffleArray(this.allAnswers);
         const answers = [];
         answers.push(wordObject, allAnswers.slice(0, 4));
-        const newAnswers = shuffleArray(answers).flat();
+        const newAnswers = this.shuffleArray(answers).flat();
         this.gameObject = {
             word: wordObject,
             answers: newAnswers,

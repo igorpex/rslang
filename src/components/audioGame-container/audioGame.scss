@@ -99,7 +99,13 @@ $color-border: rgba(255, 198, 156, 1);
     background-color: inherit;
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
+}
+.game__translate{
+    font-size: 2.2rem;
+    font-style: italic;
+    color: $color-title;
+    margin-top: -2rem;
 }
 
 .game__answers{
@@ -121,7 +127,8 @@ $color-border: rgba(255, 198, 156, 1);
     text-transform: none;
     font-weight: 400;
 }
-.next__game-btn{
+.next__game-btn,
+.help__game-btn{
     @include mainButton();
 }
 
