@@ -26,7 +26,7 @@ class Game extends Component{
         const audioButton = new UIButton(gameContent.element, ['game__audio-button'], '');
         audioButton.element.style.backgroundImage = `url(${audioIcon})`;
         const audioTranslate = new Component(gameContent.element, 'p', ['game__translate'], `${gameObj.word!.word}`)
-        audioTranslate.element.style.display = 'none';
+        audioTranslate.element.style.opacity = '0';
         const answersButton = new Component(gameContent.element, 'div', ['game__answers'] );
         const answers = gameObj.answers;
         this.buttons = [];
@@ -38,8 +38,8 @@ class Game extends Component{
             button.element.setAttribute('data-word', answer.wordTranslate);
             this.buttons.push(button);
             button.onClickButton = () => {
-                audioTranslate.element.style.display = 'block';
-                if(gameObj.word!.wordTranslate === answer.wordTranslate){
+                audioTranslate.element.style.opacity = '1';
+                if(this.gameObj.word!.wordTranslate === answer.wordTranslate){
                     button.element.style.background = "green";
                     this.staticsObject = {
                         word: this.gameObj.word!,
@@ -74,7 +74,7 @@ class Game extends Component{
             this.playAudio();
         }
         this.helpBtn.onClickButton = () => {
-            audioTranslate.element.style.display = 'block';
+            audioTranslate.element.style.opacity = '1';
             this.findTrueAnswer();
             this.buttons.forEach((button) => {
                 button.setDisabled(true);
@@ -91,9 +91,7 @@ class Game extends Component{
     findTrueAnswer() {
         
         this.buttons.forEach((button) => {
-            console.log(button.element.innerHTML);
             if(button.element.getAttribute('data-word') === this.gameObj.word!.wordTranslate){
-                console.log('green')
                 button.element.style.background = "green";
             }
         });
