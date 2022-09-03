@@ -55,8 +55,13 @@ class SprintGame extends Component {
 
   private closeBtn: Component | undefined;
 
+  private title: Component;
+
+  soundCloseContainer: Component;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-game']);
+
     this.topContainer = new Component(this.element, 'div', ['sprint-game__top']);
     this.content = new Component(this.element, 'div', ['sprint-game__content']);
     this.beepSoundEnabled = true; // TODO add changer
@@ -77,10 +82,29 @@ class SprintGame extends Component {
 
     // this.timer = new Component(this.topContainer.element, 'div', ['sprint-game__timer'], '60');
     this.timer = new Timer(this.topContainer.element);
-    this.beepSoundIcon = new Component(this.topContainer.element, 'div', ['sprint-game__beep-sound-icon']);
+    this.title = new Component(this.topContainer.element, 'p', ['sprint-game__title'], 'Выберите “Верно” или “Неверно”');
+    this.soundCloseContainer = new Component(this.topContainer.element, 'div', ['sprint-game__sound-close-container'])
+    this.beepSoundIcon = new Component(this.soundCloseContainer.element, 'div', ['sprint-game__beep-sound-icon']);
     this.updateBeepSoundIcon();
     this.beepSoundIcon.element.addEventListener('click', this.toggleBeepSoundStatus);
-    this.closeBtn = new Component(this.topContainer.element, 'div', ['sprint-game__close-btn'], 'X');
+    this.closeBtn = new Component(this.soundCloseContainer.element, 'a', ['sprint-game__close-btn']);
+    this.closeBtn.element.setAttribute('href', '#/games/sprint');
+
+    // switch off the timer by clicking on the closeBtn
+    this.closeBtn.element.addEventListener('click', () => {
+      this.clear();
+    })
+
+    // switch off the timer by clicking on any link
+    window.addEventListener('click', (e: MouseEvent) => {
+      const listOfLinkClasses = ['nav__item', 'logo', 'login', 'logout'];
+      for (let elem of listOfLinkClasses) {
+        if ((e.target as HTMLElement).className.includes(elem)) {
+          this.clear();
+          return;
+        }
+      }
+    });
   }
 
   private toggleBeepSoundStatus = () => {
@@ -220,6 +244,7 @@ class SprintGame extends Component {
   }
 
   private clear() {
+    this.timer!.clear();
     this.element.innerHTML = '';
     // this.content.element.innerHTML = '';
   }

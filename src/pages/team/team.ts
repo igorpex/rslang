@@ -10,6 +10,7 @@ class Team extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['team']);
     this.teamContainer = new TeamContainer(this.element);
+    console.log('team');
   }
 }
 

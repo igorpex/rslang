@@ -1,11 +1,12 @@
 import Component from '../../utils/component';
-import './header.scss';
 import Auth from '../auth/auth/auth';
 import logoImg from '../../assets/svg/logo.svg';
 import ebookImg from '../../assets/svg/book.svg';
 import gameImg from '../../assets/svg/game.svg';
 import statisticsImg from '../../assets/svg/statistics.svg';
 import teamImg from '../../assets/svg/team.svg';
+
+import './header.scss';
 
 class Header extends Component {
   private navItems: Component[] = [];
