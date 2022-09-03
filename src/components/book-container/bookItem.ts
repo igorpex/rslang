@@ -1,12 +1,13 @@
 import {
-  baseUrl, createUserWord, deleteUserWord, getUserWords, updateUserWord,
+  baseUrl, createUserWord, getUserWordById, updateUserWord,
 } from '../../api/api';
-import { Word } from '../../interfaces';
+import { Difficulty, Word } from '../../interfaces';
 import Component from '../../utils/component';
 import { authStorageKey } from '../../utils/config';
 import Auth from '../auth/auth/auth';
 import UIButton from '../UI/button/button';
 import './bookContainer.scss';
+import { createEmptyUserWord } from '../shared/emptyUserWord/emptyUserWord';
 
 class BookItem extends Component {
   // addToLearned: (cardId: number) => void = () => {};
@@ -137,21 +138,43 @@ class BookItem extends Component {
   async updateWord() {
     this.deleteRemoveButtonClass();
     this.isDifficult = false;
-    const dataObj = this.getUserData();
-    const userWord = {
-      difficulty: 'easy',
-      optional: {},
-    };
-    await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+    await this.updateWordDifficulty('easy');
     if (this.element.id === 'group-7') {
       this.element.remove();
     }
   }
 
-  removeFromEasy() {
-    const params = this.getUserData();
+  async updateWordDifficulty(difficulty: 'hard' | 'easy' | 'normal') {
+    const dataObj = this.getUserData();
+    const currentUserWord = await getUserWordById(dataObj.userId, this.card._id, dataObj.token);
+
+    if (difficulty === 'normal') {
+      this.isDifficult = false;
+      this.isEasy = false;
+      currentUserWord.optional.rightInARow = 0;
+    }
+    if (difficulty === 'hard') {
+      this.isDifficult = true;
+      this.isEasy = false;
+      currentUserWord.optional.rightInARow = 0;
+    }
+    if (difficulty === 'easy') {
+      this.isEasy = true;
+      this.isDifficult = false;
+    }
+
+    const userWord = {
+      difficulty,
+      optional: currentUserWord.optional,
+    };
+    await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+  }
+
+  async removeFromEasy() {
+    // const params = this.getUserData();
     this.removeWordDisabled();
-    deleteUserWord(params.userId, this.card._id, params.token);
+    // deleteUserWord(params.userId, this.card._id, params.token);
+    await this.updateWordDifficulty('normal');
     this.isEasy = false;
   }
 
@@ -170,15 +193,15 @@ class BookItem extends Component {
   }
 
   addToLearned(card: Word) {
-    const params = this.createWord('easy');
-    createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+    this.createOrUpdateUserWord('easy');
     this.isEasy = true;
   }
 
   addToDifficult(card: Word, arr: Word[]) {
     this.addRemoveButtonClass();
-    const params = this.createWord('hard');
-    createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+    // const params = this.createWord('hard');
+    // createUserWord(params.dataObj.userId, card._id, params.dataObj.token, params.userWord);
+    this.createOrUpdateUserWord('hard');
     this.isDifficult = true;
   }
 
@@ -186,7 +209,8 @@ class BookItem extends Component {
     this.deleteRemoveButtonClass();
     const params = this.getUserData();
     try {
-      deleteUserWord(params.userId, this.card._id, params.token);
+      this.updateWordDifficulty('normal');
+      // deleteUserWord(params.userId, this.card._id, params.token);
     } catch {
       alert('Войдите заново');
     }
@@ -256,16 +280,22 @@ class BookItem extends Component {
     this.statisticsButton.setDisabled(false);
   }
 
-  createWord(type: string) {
+  async createOrUpdateUserWord(difficulty: 'hard' | 'easy' | 'normal') {
     const dataObj = this.getUserData();
-    const userWord = {
-      difficulty: type,
-      optional: {},
-    };
-    return {
-      dataObj,
-      userWord,
-    };
+    try {
+      await getUserWordById(dataObj.userId, this.card._id, dataObj.token);
+      this.updateWordDifficulty(difficulty);
+    } catch {
+      const userWord = this.createWord(difficulty);
+      createUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+      // await updateUserWord(dataObj.userId, this.card._id, dataObj.token, userWord);
+    }
+  }
+
+  createWord(type: Difficulty) {
+    const userWord = createEmptyUserWord();
+    userWord.difficulty = type;
+    return userWord;
   }
 
   openWindow() {
