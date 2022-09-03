@@ -9,7 +9,6 @@ export class UserWordClass implements UserWord {
     this.difficulty = 'normal';
     this.optional = {
       dateNew: 0,
-      gameNew: 'sprint',
       dateEasy: 0,
       rightInARow: 0,
       sprint: {
