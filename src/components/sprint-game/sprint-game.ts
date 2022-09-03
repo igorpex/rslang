@@ -2,16 +2,11 @@ import Component from '../../utils/component';
 
 import './index.scss';
 import {
-  Game, GameCounters, ShortWord, SprintCounts, SprintWord, UserWord, Word, WordOptional,
+  ShortWord, SprintCounts, SprintWord,
 } from '../../interfaces';
 import SprintCard from './card';
 import Timer from './timer';
-import Auth from '../auth/auth/auth';
-import {
-  createUserWord, getUserWordByIdWithStatus, updateUserWord,
-} from '../../api/api';
-import { authStorageKey } from '../../utils/config';
-import { createEmptyUserWord } from '../shared/emptyUserWord/emptyUserWord';
+
 import updateWordStatistics from '../shared/updateUserWord/updateUserWord';
 
 class SprintGame extends Component {
@@ -83,7 +78,7 @@ class SprintGame extends Component {
     // this.timer = new Component(this.topContainer.element, 'div', ['sprint-game__timer'], '60');
     this.timer = new Timer(this.topContainer.element);
     this.title = new Component(this.topContainer.element, 'p', ['sprint-game__title'], 'Выберите “Верно” или “Неверно”');
-    this.soundCloseContainer = new Component(this.topContainer.element, 'div', ['sprint-game__sound-close-container'])
+    this.soundCloseContainer = new Component(this.topContainer.element, 'div', ['sprint-game__sound-close-container']);
     this.beepSoundIcon = new Component(this.soundCloseContainer.element, 'div', ['sprint-game__beep-sound-icon']);
     this.updateBeepSoundIcon();
     this.beepSoundIcon.element.addEventListener('click', this.toggleBeepSoundStatus);
@@ -93,17 +88,16 @@ class SprintGame extends Component {
     // switch off the timer by clicking on the closeBtn
     this.closeBtn.element.addEventListener('click', () => {
       this.clear();
-    })
+    });
 
     // switch off the timer by clicking on any link
     window.addEventListener('click', (e: MouseEvent) => {
       const listOfLinkClasses = ['nav__item', 'logo', 'login', 'logout'];
-      for (let elem of listOfLinkClasses) {
+      listOfLinkClasses.forEach((elem) => {
         if ((e.target as HTMLElement).className.includes(elem)) {
           this.clear();
-          return;
         }
-      }
+      });
     });
   }
 
