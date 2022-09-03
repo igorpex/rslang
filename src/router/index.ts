@@ -2,6 +2,7 @@ import { IRoute } from '../interfaces';
 import Component from '../utils/component';
 import Main from '../pages/main/main';
 import Team from '../pages/team/team';
+import Book from '../pages/book/book';
 import Login from '../pages/login/login';
 import AuthTestContainer from '../components/auth/auth-test-container/auth-test-container';
 import SignupContainer from '../components/auth/signup-container/signup-container';
@@ -17,6 +18,8 @@ class Router {
   mainPage: Component;
 
   teamPage: Component;
+
+  bookPage: Component | undefined;
 
   loginPage: Component | undefined;
 
@@ -46,6 +49,20 @@ class Router {
         component: () => {
           this.rootElement.append(this.teamPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
+        },
+      },
+      {
+        name: '/ebook',
+        component: () => {
+          this.bookPage = new Book(this.rootElement);
+          this.rootElement.append(this.bookPage.element);
+        },
+      },
+      {
+        name: '/ebook',
+        component: () => {
+          this.bookPage = new Book(this.rootElement);
+          this.rootElement.append(this.bookPage.element);
         },
       },
       {

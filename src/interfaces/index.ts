@@ -17,6 +17,11 @@ export interface UpdateUser {
 
 export interface Word {
   id: string,
+  _id: string,
+  userWord: {
+    difficulty: string,
+    optional: {},
+  }
   group: 0,
   page: 0,
   word: string,
@@ -35,12 +40,12 @@ export interface Word {
 export type WordId = string;
 export interface UserWord {
   difficulty: string;
-  optional: {}
+  optional?: {}
 }
 
 export interface UserAggregatedWordsParams {
   id: string;
-  group: number;
+  group?: number;
   page: number;
   wordsPerPage: number;
   filter: Object;
@@ -50,6 +55,12 @@ export interface UserAggregatedWordsParams {
 export interface UserStatistics {
   learnedWords: number;
   optional: {}
+}
+
+export interface DifficultWord {
+  wordId: string;
+  difficulty: string;
+  optional: {};
 }
 
 export interface UserSettings {
@@ -69,6 +80,18 @@ export interface UserSignUpResponse {
   id: string;
   name?: string;
   email: string;
+}
+
+export interface IDataObj {
+  userId: string,
+  token: string
+}
+
+export interface IDifficulWord {
+  id: string;
+  wordId: string;
+  difficulty: string;
+  optional: {};
 }
 
 export interface WordPromise {
