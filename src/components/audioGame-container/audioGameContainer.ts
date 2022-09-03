@@ -44,14 +44,15 @@ class AudioGameContainer extends Component{
         const description = new Component(this.content.element, 'p', ['content__list']);
         description.element.innerHTML = '«Аудиовызов» - это тренировка, которая улучшает восприятие речи на слух.'
         const list = new Component(this.content.element, 'ul', ['description__list']);
-        const pointOne = new Component(list.element, 'li', ['game-list__item']);
+        const pointOne = new Component(list.element, 'li', ['audio-game-list__item']);
         pointOne.element.innerHTML = 'Используйте мышь, чтобы выбрать.'
-        const pointTwo = new Component(list.element, 'li', ['game-list__item']);
+        const pointTwo = new Component(list.element, 'li', ['audio-game-list__item']);
         pointTwo.element.innerHTML = 'Используйте цифровые клавиши от 1 до 5 для выбора ответа.'
-        const pointThree = new Component(list.element, 'li', ['game-list__item']);
+        const pointThree = new Component(list.element, 'li', ['audio-game-list__item']);
         pointThree.element.innerHTML = 'Используйте пробел для повтроного звучания слова.'
-        const pointFour = new Component(list.element, 'li', ['game-list__item']);
+        const pointFour = new Component(list.element, 'li', ['audio-game-list__item']);
         pointFour.element.innerHTML = 'Используйте клавишу Enter для подсказки или для перехода к следующему слову.';
+        
         
         const options = new Component(this.content.element, 'div', ['content__options']);
         const selectBlock = new Component(options.element, 'div', ['select-block']);
@@ -60,22 +61,42 @@ class AudioGameContainer extends Component{
         this.select = new Sections(selectBlock.element);
         const startButton = new UIButton(options.element, ['options__start-button'], 'Начать');
         
+        this.select.upgrateGroup = (group) => {
+            this.group = group;
+            this.createRandomArray();
+        }
         startButton.onClickButton = async () => {
             this.startGame();
         };
 
+        
+    // const params = new URLSearchParams(document.location.search);
+    //   const ref = params.get('ref');
+    //   let next = '';
+    //   if (ref) {
+    //     next = ref.slice(1);
+    //   }
+    //   const loc = window.location;
+    //   loc.hash = next;
+    //   const url = new URL(loc.href);
+    //   url.searchParams.delete('ref');
+    //   window.location.replace(url);
+
     }
     async checkPreviousPage(){
-        const prevPage = localStorage.getItem ("previourUrl");
-        if(prevPage?.includes('ebook')){
-            const userData = localStorage.getItem ("userData");
-            if(userData) {
-                this.group = JSON.parse(userData!).group;
-                this.page = JSON.parse(userData!).page;
-                this.createGamesArray();
+        console.log(this.group);
+        const params = new URLSearchParams(document.location.search);
+        const ref = params.get('ref');
+        if(ref !== null) {
+            if(ref!.includes('ebook')){
+                const userData = localStorage.getItem ("userData");
+                if(userData) {
+                    this.group = JSON.parse(userData!).group;
+                    this.page = JSON.parse(userData!).page;
+                    this.createGamesArray();
+                }
             }
-            
-        }
+        } 
     }
     async createGamesArray() {
 
@@ -93,14 +114,21 @@ class AudioGameContainer extends Component{
         const answers = [];
         answers.push(this.words, arr.flat());
         this.allAnswers = answers.flat();
-        this.prepareGame();
-        this.select.destroy();
+        // this.prepareGame();
+        
+    }
+    createRandomArray(){
+        const randomPage = this.getRandomPage(0, 29);
+        this.createArrayOfPage();
+        this.createGamesArray();
+
     }
     createArrayOfPage(){
         const amountOfPage = 30;
         for(let i = 0; i < 30; i++){
             this.arrayOfPage.push(i);
         }
+        this.arrayOfPage = this.arrayOfPage.filter((page) => page !== this.page);
     }
     async getWords(group: number, page: number) {
         const words = await getWords({group, page});
@@ -121,8 +149,6 @@ class AudioGameContainer extends Component{
                     this.staticsObjects.push(game.staticsObject);
                     this.showResult(this.staticsObjects);
                 }
-                
-                
             })
         } else {
             this.showResult(this.staticsObjects);
@@ -133,7 +159,8 @@ class AudioGameContainer extends Component{
         const wordObject = this.words[0];
         this.words = this.words.slice(1);
 
-        const allAnswers = this.shuffleArray(this.allAnswers);
+        let allAnswers = this.shuffleArray(this.allAnswers);
+        allAnswers = allAnswers.filter((item) => item !== wordObject);
         const answers = [];
         answers.push(wordObject, allAnswers.slice(0, 4));
         const newAnswers = this.shuffleArray(answers).flat();

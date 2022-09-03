@@ -43,7 +43,7 @@ $color-border: rgba(255, 198, 156, 1);
     color:rgba(255, 244, 217, 1);
     font-size: 2.2rem;
 }
-.game-list__item{
+.audio-game-list__item{
     list-style:disc; 
     color:rgba(255, 244, 217, 1);
     margin-left: 6rem;
@@ -51,7 +51,7 @@ $color-border: rgba(255, 198, 156, 1);
     font-size: 2.2rem;
     text-transform: none;
 }
-.select__title{
+.select__game-title{
     color: $color-title;
     font-size: 2.2rem;
     font-weight: 700;
@@ -74,7 +74,7 @@ $color-border: rgba(255, 198, 156, 1);
 //game
 .game{
     width: 100%;
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -99,18 +99,18 @@ $color-border: rgba(255, 198, 156, 1);
     background-color: inherit;
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 5rem;
+    margin-bottom: 4rem;
 }
 .game__translate{
     font-size: 2.2rem;
     font-style: italic;
     color: $color-title;
-    margin-top: -2rem;
+    margin-bottom: 1rem;
 }
 
 .game__answers{
     max-width: 87rem;
-    width:100%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -120,6 +120,7 @@ $color-border: rgba(255, 198, 156, 1);
 }
 .answer__btn {
     background-color: inherit;
+    font-weight: normal;
     border: none;
     outline: none;
     font-size: 2.2rem;
@@ -130,6 +131,7 @@ $color-border: rgba(255, 198, 156, 1);
 .next__game-btn,
 .help__game-btn{
     @include mainButton();
+    margin-bottom: 4rem;
 }
 
 .result__container{
