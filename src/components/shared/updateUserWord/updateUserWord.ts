@@ -43,7 +43,7 @@ function updateUserWordObject(game: Game, result: 'right' | 'wrong', userWord: U
     }
   } else if (result === 'wrong') {
     // Update game fail counter
-    updatedUserWord.optional[game].failCounter += 1;
+    updatedUserWord.optional[game].failureCounter += 1;
 
     // reset in a Row counter)
     updatedUserWord.optional.rightInARow = 0;
@@ -74,6 +74,8 @@ async function updateWordStatistics(game: Game, result: 'right' | 'wrong', word:
       await createUserWord(userId, word.id, token, updatedUserWord);
     } else if (userWordWStatus.status === 200) {
       const userWord = userWordWStatus.data;
+      delete userWord.id;
+      delete userWord.wordId;
       const updatedUserWord = updateUserWordObject(game, result, userWord);
       await updateUserWord(userId, word.id, token, updatedUserWord);
     } else {
