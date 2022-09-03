@@ -33,6 +33,7 @@ class SprintCard extends Component {
     this.cardTotalPoints = new Component(this.element, 'p', ['sprint__card-total-points'], `Всего очков: ${sprintCounts.totalPoints}`);
 
     const wordAudio = new Audio(`${baseUrl}/${this.sprintWord.audio}`);
+    console.log(this.sprintWord);
     // this.playAudioBtn = new Component(this.element, 'button', ['sprint__card-audio-btn'], 'Аудио \u23F5');
     // this.playAudioBtn = new Component(this.element, 'div', ['sprint__card-audio-btn']);
     // this.playAudioBtn.element.style.backgroundImage = '../assets/images/play.svg';

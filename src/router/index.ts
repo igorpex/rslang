@@ -17,7 +17,7 @@ class Router {
   // Pages
   mainPage: Component;
 
-  teamPage: Component | undefined;
+  teamPage: Component;
 
   bookPage: Component | undefined;
 
@@ -25,7 +25,7 @@ class Router {
 
   signupPage: Component | undefined;
 
-  gamesPage: Component | undefined;
+  gamesPage: Component;
 
   sprintPage: Component | undefined;
 
@@ -33,19 +33,22 @@ class Router {
 
   constructor(private rootElement: HTMLElement) {
     this.mainPage = new Main(this.rootElement);
+    this.teamPage = new Team(this.rootElement);
+    this.gamesPage = new Games(this.rootElement);
 
     this.routes = [
       {
         name: '/',
         component: () => {
           this.rootElement.append(this.mainPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
         name: '/team',
         component: () => {
-          this.teamPage = new Team(this.rootElement);
           this.rootElement.append(this.teamPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
@@ -67,6 +70,7 @@ class Router {
         component: () => {
           this.loginPage = new Login(this.rootElement);
           this.rootElement.append(this.loginPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
@@ -74,13 +78,14 @@ class Router {
         component: () => {
           this.signupPage = new SignupContainer(this.rootElement);
           this.rootElement.append(this.signupPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
         name: '/games',
         component: () => {
-          this.gamesPage = new Games(this.rootElement);
           this.rootElement.append(this.gamesPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
@@ -88,6 +93,7 @@ class Router {
         component: () => {
           this.sprintPage = new Sprint(this.rootElement);
           this.rootElement.append(this.sprintPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
         },
       },
       {
@@ -95,6 +101,7 @@ class Router {
         component: () => {
           this.testPage = new AuthTestContainer(this.rootElement);
           this.rootElement.append(this.testPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
     ];
@@ -103,6 +110,7 @@ class Router {
       name: 'Default router',
       component: () => {
         this.rootElement.innerHTML = '404. Page not found.';
+        (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
       },
     };
   }
