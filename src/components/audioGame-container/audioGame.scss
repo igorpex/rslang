@@ -204,8 +204,8 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .next__game-btn,
 .help__game-btn,
-.repeat-button,
-.return-button{
+.audioChallenge-repeat__button,
+.audioChallenge-return__button{
     @include mainButton();
     margin-bottom: 4rem;
 }
@@ -264,4 +264,13 @@ $color-header-bg: rgba(255, 198, 156, 1);
     display: flex;
     flex-direction: row;
     gap: 8rem;
+}
+.audioChallenge-repeat__button,
+.audioChallenge-return__button{
+    @include mainButton();
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
 }
