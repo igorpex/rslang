@@ -92,6 +92,7 @@ class Book extends Component {
     const data = await getWords({ group, page });
     if (data) {
       const cardsArr: Word[] = data.items;
+      this.saveInLocalStorage(cardsArr);
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
   }
