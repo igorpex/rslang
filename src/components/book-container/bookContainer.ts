@@ -5,6 +5,7 @@ import BookOptions from '../book-options/bookOptions';
 import UIButton from '../UI/button/button';
 import './bookContainer.scss';
 import BookItem from './bookItem';
+import crossImg from '../../assets/svg/cross.svg';
 
 class BookContainer extends Component {
   updatePage: (page: number) => void = () => {};
@@ -39,7 +40,7 @@ class BookContainer extends Component {
     const modalWindow = new Component(overlay.element, 'div', ['modal-window']);
     const modalContainer = new Component(modalWindow.element, 'div', ['modal-window__container']);
     const closeBtn = new UIButton(modalWindow.element, ['modal__close-btn'], '', false);
-    closeBtn.element.style.backgroundImage = 'url(./cross.svg)';
+    closeBtn.element.style.backgroundImage = `url(${crossImg})`;
     closeBtn.onClickButton = () => {
       overlay.element.classList.remove('open');
       modalContainer.element.innerHTML = '';

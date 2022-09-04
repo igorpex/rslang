@@ -3,9 +3,11 @@
     margin: 0;
     box-sizing: border-box;
 }
+
 html{
     font-size: 10px;
 }
+
 body {
     font-size: 1.6rem;
     display: flex;
@@ -25,7 +27,7 @@ body {
 }
 
 main {
-    margin: 0 auto;
+    margin: 10px auto 0;
     width: 100%;
     max-width: 1440px;
 }
@@ -38,6 +40,5 @@ input {
 @media(min-height: 899px) {
     main {
         flex-grow: 1;
-        margin-top: 20px;
     }
 }
