@@ -13,10 +13,18 @@ class MainContainer extends Component {
 
   private menuWindow: Component;
 
+  private title: Component;
+
+  private description: Component;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['main-container']);
 
     this.helloWindow = new Component(this.element, 'div', ['main-container__hello-window']);
+
+    this.title = new Component(this.helloWindow.element, 'h1', ['main-container__title'], '"EnWorld" - онлайн приложение по изучению английского языка.');
+
+    this.description = new Component(this.helloWindow.element, 'p', ['main-container__description'], 'На странице "Электронный учебник" находится 3 600 слов, которые поделены на шесть разделов, в зависимости от уровня сложности. Наиболее сложные слова можно добавить в седьмой раздел, и сконцентрировать на них особое внимание. Также, приложение оснащено двумя интересными играми, для лучшего усвоения материала. Для отслеживания прогресса в изучении, можно воспользоваться статистикой. Вот и вся нехитрая инструкция, удачи в изучении =)');
 
     this.dividedLine = new Component(this.element, 'div', ['main-container__divided-line']);
 
