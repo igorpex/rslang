@@ -27,6 +27,7 @@ body {
 }
 
 main {
+    flex-grow: 1;
     margin: 10px auto 0;
     width: 100%;
     max-width: 1440px;
@@ -35,10 +36,4 @@ main {
 button,
 input {
     font-family: "Robot", sans-serif;
-}
-
-@media(min-height: 899px) {
-    main {
-        flex-grow: 1;
-    }
 }
