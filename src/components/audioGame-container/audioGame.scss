@@ -69,38 +69,68 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .audioChallenge__title{
     font-size: 10rem;
-    padding: 4rem;
+    margin-bottom: 4rem;
     color: $color-title;
+}
+@media (max-width: 768px) {
+    .audioChallenge__title{
+        font-size: 7rem;
+    }
+}
+@media (max-width: 570px) {
+    .audioChallenge__title{
+        font-size: 5rem;
+    }
+}
+@media (max-width: 452px) {
+    .audioChallenge__title{
+        font-size: 3.0rem;
+    }
+}
+.audioChallenge__content{
+    padding: 4rem;
 }
 
 .content__list{
-    margin-left: 4rem;
     margin-bottom: 3rem;
     color:rgba(255, 244, 217, 1);
     font-size: 2.2rem;
 }
+@media (max-width: 570px) {
+    .content__list{
+        font-size: 1.8rem;
+    }
+}
 .audioChallenge-list__item{
     list-style:disc; 
     color:rgba(255, 244, 217, 1);
-    margin-left: 6rem;
+    margin-left: 2rem;
     margin-bottom: 0.5rem;
     font-size: 2.2rem;
     text-transform: none;
+}
+@media (max-width: 570px) {
+    .audioChallenge-list__item{
+        font-size: 1.8rem;
+    }
 }
 .options__select-title{
     color: $color-title;
     font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 2rem;
-   
+    margin-bottom: 2rem; 
+}
+@media (max-width: 570px) {
+    .options__select-title{
+        font-size: 1.8rem;
+    }
 }
 .audioChallenge__options{
     margin-top: 6rem;
-    margin-left: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: 10rem;
+    gap: 6rem;
     align-items: start;
 }
 .audioChallenge__level{
@@ -112,9 +142,29 @@ $color-header-bg: rgba(255, 198, 156, 1);
     justify-content: center;
     cursor: pointer;
 }
+@media (max-width: 420px) {
+    .audioChallenge__level{
+        width: 20rem
+    }
+}
+@media (max-width: 350px) {
+    .audioChallenge__level{
+        width: 18rem
+    }
+}
 .audioChallenge-level__header{
    @include header();
     width: 22rem;
+}
+@media (max-width: 420px) {
+    .audioChallenge-level__header{
+        width: 20rem;
+    }
+}
+@media (max-width: 350px) {
+    .audioChallenge-level__header{
+        width: 18rem;
+    }
 }
 .audioChallenge-level__icon,
 .audioChallenge-level__btn{
@@ -126,6 +176,18 @@ $color-header-bg: rgba(255, 198, 156, 1);
     max-height: 15rem;
     overflow: auto;
 }
+@media (max-width: 420px) {
+    .audioChallenge-level__list.open{
+        width: 20rem;
+        padding: 1rem 0rem 1rem 0rem;
+    }
+}
+@media (max-width: 350px) {
+    .audioChallenge-level__list.open{
+        width: 18rem;
+        padding: 1rem 0rem 1rem 0rem;
+    }
+}
 .audioChallenge-level__list{
     display: none;
 }
@@ -134,6 +196,18 @@ $color-header-bg: rgba(255, 198, 156, 1);
     &:hover{
         transition: all 0.5s;
         opacity: 0.9;
+    }
+}
+@media (max-width: 500px) {
+    .options__start-button{
+        width: 25rem;
+        font-size: 3.2rem;
+    }
+}
+@media (max-width: 400px) {
+    .options__start-button{
+        width: 18rem;
+        font-size: 2.4rem;
     }
 }
 
@@ -154,11 +228,22 @@ $color-header-bg: rgba(255, 198, 156, 1);
     justify-content: center;
     align-items: center;
 }
+@media (max-width: 500px) {
+    .game__content{
+        margin: 2rem;
+    }
+}
 .game__title{
     font-size: 4rem;
-    margin: 4rem 2rem 8rem 4rem;
+    margin: 4rem 4rem 8rem 4rem;
     font-weight: 700;
     color: $color-title;
+}
+@media (max-width: 768px) {
+    .game__title{
+        font-size: 3.2rem;
+        margin: 4rem 2rem 4rem 2rem;
+    }
 }
 .game__audio-button {
     width: 15rem;
@@ -184,7 +269,11 @@ $color-header-bg: rgba(255, 198, 156, 1);
     gap: 2rem;
     flex-wrap: wrap;
     margin-bottom: 5rem;
-  
+}
+@media (max-width: 500px) {
+    .game__answers{
+        flex-direction: column;
+    }
 }
 .answer__btn {
     padding: 0.5rem;
@@ -209,6 +298,24 @@ $color-header-bg: rgba(255, 198, 156, 1);
     @include mainButton();
     margin-bottom: 4rem;
 }
+@media (max-width: 500px) {
+    .next__game-btn,
+    .help__game-btn,
+    .audioChallenge-repeat__button,
+    .audioChallenge-return__button{
+        width: 25rem;
+        font-size: 3.2rem;
+    }
+}
+@media (max-width: 400px) {
+    .next__game-btn,
+    .help__game-btn,
+    .audioChallenge-repeat__button,
+    .audioChallenge-return__button{
+        width: 18rem;
+        font-size: 2.4rem;
+    }
+}
 
 .audioChallenge-result__container{
     width: 100%;
@@ -223,25 +330,60 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .audioChallenge-result__content{
     background-color: $color-border;
+    margin: 4rem;
     padding: 4rem;
-    width: 92rem;
+    width: 60%;
     height: 52rem;
     overflow: auto;
-    margin-bottom: 4rem;
 }
+@media (max-width: 768px) {
+    .audioChallenge-result__content{
+       width: 90%;
+    }
+}
+@media (max-width: 350px) {
+    .audioChallenge-result__content{
+       width: 95%;
+    }
+}
+
 .audioChallenge-content__title{
     font-size: 4rem;
     text-align: center;
     margin-bottom: 4rem;
    
 }
+@media (max-width: 600px) {
+    .audioChallenge-content__title{
+        font-size: 3.2rem;
+        margin-bottom: 3rem;
+    }
+}
+@media (max-width: 340px) {
+    .audioChallenge-content__title{
+        font-size: 2.4rem;
+    }
+}
+.audioChallenge-true__block{
+    margin-bottom: 4rem;
+}
+.audioChallenge-false__block,
+.audioChallenge-true__block{
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+}
 .true-title,
 .false-title{
     font-size: 3rem;
     margin-bottom: 2rem;
 }
-.true-list{
-    margin-bottom: 4rem;
+@media (max-width: 620px) {
+    .true-title,
+    .false-title{
+    font-size: 2.4rem;
+    margin-bottom: 2rem;
+}
 }
 .result-list__item {
     display: flex;
@@ -268,6 +410,17 @@ $color-header-bg: rgba(255, 198, 156, 1);
     flex-direction: row;
     gap: 8rem;
 }
+@media (max-width: 620px) {
+    .audioChallenge-result__buttons{
+        gap: 4rem
+    }
+}
+@media (max-width: 450px) {
+    .audioChallenge-result__buttons{
+       flex-direction: column;
+       gap: 2rem;
+    }
+}
 .audioChallenge-repeat__button,
 .audioChallenge-return__button{
     @include mainButton();
@@ -276,4 +429,26 @@ $color-header-bg: rgba(255, 198, 156, 1);
     align-items: center;
     justify-content: center;
     margin-bottom: 4rem;
+    &:hover{
+        transition: all 0.3s;
+        opacity: 0.8;
+    }
+}
+@media (max-width: 900px) {
+    .audioChallenge-repeat__button,
+    .audioChallenge-return__button{
+        width: 20rem;
+        font-size: 2.4rem;
+    }
+}
+@media (max-width: 620px) {
+    .audioChallenge-repeat__button,
+    .audioChallenge-return__button{
+        width: 16rem;
+        font-size: 1.8rem;
+        margin-bottom: 0rem;
+    }
+}
+i{
+    font-style: italic;
 }

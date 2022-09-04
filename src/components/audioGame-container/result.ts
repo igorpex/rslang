@@ -31,11 +31,13 @@ class Result extends Component {
     const resultTitle = new Component(resultContent.element, 'h2', ['audioChallenge-content__title']);
     resultTitle.element.innerHTML = 'Отличный результат!';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.trueTitle = new Component(resultContent.element, 'p', ['true-title'], 'Правильныx ответов:');
-    this.trueList = new Component(resultContent.element, 'ul', ['true-list']);
+    const trueBlock = new Component(resultContent.element, 'div', ['audioChallenge-true__block']);
+    this.trueTitle = new Component(trueBlock.element, 'p', ['true-title'], 'Правильныx ответов:');
+    this.trueList = new Component(trueBlock.element, 'ul', ['true-list']);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    this.falseTitle = new Component(resultContent.element, 'p', ['false-title'], 'Неправильных ответов:');
-    this.falseList = new Component(resultContent.element, 'ul', ['false-list']);
+    const falseBlock = new Component(resultContent.element, 'div', ['audioChallenge-false__block']);
+    this.falseTitle = new Component(falseBlock.element, 'p', ['false-title'], 'Неправильных ответов:');
+    this.falseList = new Component(falseBlock.element, 'ul', ['false-list']);
 
     this.buttonsContainer = new Component(this.element, 'div', ['audioChallenge-result__buttons']);
     const repeatButton = new Component(this.buttonsContainer.element, 'a', ['audioChallenge-repeat__button'], 'Играть еще');
@@ -89,7 +91,7 @@ class Result extends Component {
       };
       itemAudio.element.style.backgroundImage = `url(${audioIcon})`;
       const itemWord = new Component(listItem.element, 'span', ['list__item-word']);
-      itemWord.element.innerHTML = `${trueAnswers[words].word.word} - ${trueAnswers[words].word.wordTranslate}`;
+      itemWord.element.innerHTML = `${trueAnswers[words].word.word} - <i>${trueAnswers[words].word.wordTranslate}<i>`;
     }
     this.trueTitle.element.innerHTML = `Правильных ответов: ${trueAnswers.length}`;
   }
@@ -106,7 +108,7 @@ class Result extends Component {
         this.audio.play();
       };
       const itemWord = new Component(listItem.element, 'span', ['list__item-word']);
-      itemWord.element.innerHTML = `${falseAnswers[words].word.word} - ${falseAnswers[words].word.wordTranslate}`;
+      itemWord.element.innerHTML = `${falseAnswers[words].word.word} - <i>${falseAnswers[words].word.wordTranslate}<i>`;
     }
     this.falseTitle.element.innerHTML = `Неравильных ответов: ${falseAnswers.length}`;
   }

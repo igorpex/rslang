@@ -146,7 +146,7 @@ class AudioGameContainer extends Component {
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Enter') {
         e.preventDefault();
-        if (this.words.length > 0) {
+        if (this.words.length > 15) {
           this.staticsObjects.push(this.game!.staticsObject);
           this.startGame();
         } else {
@@ -348,7 +348,7 @@ class AudioGameContainer extends Component {
   }
 
   async startGame() {
-    if (this.words.length > 0) {
+    if (this.words.length > 15) {
       this.words = this.shuffleArray(this.words);
       this.prepareGame();
       this.clear();
@@ -356,7 +356,7 @@ class AudioGameContainer extends Component {
       this.game = new Game(this.element, this.gameObject);
 
       this.game.nextBtn.element.addEventListener('click', () => {
-        if (this.words.length > 0) {
+        if (this.words.length > 15) {
           this.staticsObjects.push(this.game!.staticsObject);
           this.startGame();
         } else {
