@@ -130,6 +130,7 @@ class Game extends Component {
   }
 
   checkRightAnswers(button: HTMLElement, answer: string) {
+    this.audioTranslate.element.style.opacity = '1';
     const btn = button;
     if (this.gameObj.word!.wordTranslate === answer) {
       btn.style.background = 'rgba(0, 128, 0, 0.476)';

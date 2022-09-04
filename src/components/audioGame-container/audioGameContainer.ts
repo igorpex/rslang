@@ -1,4 +1,4 @@
-import { getUserAggregatedWords, getWords } from '../../api/api';
+import { getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords } from '../../api/api';
 import {
   GameObj, IDataObj, StatisticsObject, Word,
 } from '../../interfaces';
@@ -146,7 +146,7 @@ class AudioGameContainer extends Component {
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Enter') {
         e.preventDefault();
-        if (this.words.length >= 18) {
+        if (this.words.length > 0) {
           this.staticsObjects.push(this.game!.staticsObject);
           this.startGame();
         } else {
@@ -202,7 +202,35 @@ class AudioGameContainer extends Component {
   }
 
   async createAggregatedArray() {
-    await this.createArraysQuestionsWithoutEasy();
+    if (this.group === 6) {
+      this.createDifficultArray();
+    } else {
+      await this.createArraysQuestionsWithoutEasy();
+
+      const wordsPerPage = 20;
+
+      // create array of answers
+      this.createArrayOfPage(29);
+      this.shuffleArray(this.arrayOfPage);
+      this.arrayOfPage = this.arrayOfPage.slice(0, 3);
+
+      const arrPromises = this.arrayOfPage.map(
+        (item: number) => this.getAggregatedWords(this.filter.all, wordsPerPage, item, this.group),
+      );
+      const arr: Word[] = await Promise.all(arrPromises);
+      const answers = [];
+      answers.push(this.words, arr.flat());
+      this.allAnswers = answers.flat();
+      // // this.prepareGame();
+      this.startGame();
+    }
+  }
+
+  async createDifficultArray() {
+    this.words = await this.getDifficultWords(this.filter.hard, this.page);
+    if (this.words.length > 20) {
+      this.words = this.words.slice(0, 20);
+    }
 
     const wordsPerPage = 20;
 
@@ -212,7 +240,7 @@ class AudioGameContainer extends Component {
     this.arrayOfPage = this.arrayOfPage.slice(0, 3);
 
     const arrPromises = this.arrayOfPage.map(
-      (item: number) => this.getAggregatedWords(this.filter.all, wordsPerPage, item, this.group),
+      (item: number) => this.getAggregatedWords(this.filter.all, wordsPerPage, item, 5),
     );
     const arr: Word[] = await Promise.all(arrPromises);
     const answers = [];
@@ -220,6 +248,18 @@ class AudioGameContainer extends Component {
     this.allAnswers = answers.flat();
     // // this.prepareGame();
     this.startGame();
+  }
+
+  async getDifficultWords(filter: {}, page: number, group?: number) {
+    const dataObj = this.getUserData();
+    const id = dataObj.userId;
+    const { token } = dataObj;
+    const wordsPerPage = 3600;
+    const data = await getUserAggregatedWordsWithoutGroup({
+      id, group, page, wordsPerPage, filter, token,
+    });
+
+    return data[0].paginatedResults;
   }
 
   async createArraysQuestionsWithoutEasy() {
@@ -267,7 +307,7 @@ class AudioGameContainer extends Component {
     const data = await getUserAggregatedWords({
       id, group, page, wordsPerPage, filter, token,
     });
-
+    console.log(data[0].paginatedResults);
     return data[0].paginatedResults;
   }
 
@@ -308,7 +348,7 @@ class AudioGameContainer extends Component {
   }
 
   async startGame() {
-    if (this.words.length >= 18) {
+    if (this.words.length > 0) {
       this.words = this.shuffleArray(this.words);
       this.prepareGame();
       this.clear();
@@ -316,7 +356,7 @@ class AudioGameContainer extends Component {
       this.game = new Game(this.element, this.gameObject);
 
       this.game.nextBtn.element.addEventListener('click', () => {
-        if (this.words.length >= 18) {
+        if (this.words.length > 0) {
           this.staticsObjects.push(this.game!.staticsObject);
           this.startGame();
         } else {
