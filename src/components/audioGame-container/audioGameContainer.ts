@@ -26,6 +26,8 @@ class AudioGameContainer extends Component {
 
   selectTitle: Component;
 
+  game: Game | null;
+
   private group = 1;
 
   private page = 0;
@@ -76,14 +78,15 @@ class AudioGameContainer extends Component {
       answers: [],
     };
     this.staticsObjects = [];
-    this.arrayOfName = ['Новичок', 'Ученик', 'Мыслитель', 'Кандидат', 'Мастер', 'Эксперт',
-      'Сложные'];
+    this.arrayOfName = ['Новичок', 'Ученик', 'Мыслитель', 'Кандидат', 'Мастер', 'Эксперт'];
 
     this.refererType = 'menu';
 
     this.isAuth = false;
     this.authorization = new Auth();
     this.checkAuthorization();
+
+    this.game = null;
 
     this.content = new Component(this.element, 'div', ['audioChallenge__content']);
     this.title = new Component(this.content.element, 'h2', ['audioChallenge__title'], 'Аудиовызов');
@@ -95,9 +98,11 @@ class AudioGameContainer extends Component {
     const pointTwo = new Component(list.element, 'li', ['audioChallenge-list__item']);
     pointTwo.element.innerHTML = 'Используйте цифровые клавиши от 1 до 5 для выбора ответа.';
     const pointThree = new Component(list.element, 'li', ['audioChallenge-list__item']);
-    pointThree.element.innerHTML = 'Используйте пробел для повтроного звучания слова.';
+    pointThree.element.innerHTML = 'Используйте Enter для перехода к следующему слову.';
     const pointFour = new Component(list.element, 'li', ['audioChallenge-list__item']);
-    pointFour.element.innerHTML = 'Используйте клавишу Enter для подсказки или для перехода к следующему слову.';
+    pointFour.element.innerHTML = 'Используйте клавишу 0 для подсказки.';
+    const pointFive = new Component(list.element, 'li', ['audioChallenge-list__item']);
+    pointFive.element.innerHTML = 'Используйте Shift для повтроного звучания слова.';
 
     const options = new Component(this.content.element, 'div', ['audioChallenge__options']);
     const selectBlock = new Component(options.element, 'div', ['options__select-block']);
@@ -137,6 +142,19 @@ class AudioGameContainer extends Component {
     startButton.onClickButton = () => {
       this.createGame();
     };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Enter') {
+        e.preventDefault();
+        if (this.words.length >= 18) {
+          this.staticsObjects.push(this.game!.staticsObject);
+          this.startGame();
+        } else {
+          this.staticsObjects.push(this.game!.staticsObject);
+          this.showResult(this.staticsObjects);
+        }
+      }
+    });
   }
 
   async checkAuthorization() {
@@ -184,7 +202,6 @@ class AudioGameContainer extends Component {
   }
 
   async createAggregatedArray() {
-    console.log('aggregated');
     await this.createArraysQuestionsWithoutEasy();
 
     const wordsPerPage = 20;
@@ -255,7 +272,6 @@ class AudioGameContainer extends Component {
   }
 
   async createGamesArray() {
-    console.log('unauth');
     // prepare array words hat we will use
     this.words = await this.getWords(this.group, this.page);
     this.words = this.shuffleArray(this.words);
@@ -292,23 +308,25 @@ class AudioGameContainer extends Component {
   }
 
   async startGame() {
-    console.log(this.group, this.page);
-    if (this.words.length >= 7) {
+    if (this.words.length >= 18) {
       this.words = this.shuffleArray(this.words);
       this.prepareGame();
       this.clear();
 
-      const game = new Game(this.element, this.gameObject);
-      game.nextBtn.element.addEventListener('click', () => {
-        if (this.words.length >= 7) {
-          this.staticsObjects.push(game.staticsObject);
+      this.game = new Game(this.element, this.gameObject);
+
+      this.game.nextBtn.element.addEventListener('click', () => {
+        if (this.words.length >= 18) {
+          this.staticsObjects.push(this.game!.staticsObject);
           this.startGame();
         } else {
-          this.staticsObjects.push(game.staticsObject);
+          // this.staticsObjects.push(game.staticsObject);
+          this.staticsObjects.push(this.game!.staticsObject);
           this.showResult(this.staticsObjects);
         }
       });
     } else {
+      this.staticsObjects.push(this.game!.staticsObject);
       this.showResult(this.staticsObjects);
     }
   }
@@ -326,7 +344,6 @@ class AudioGameContainer extends Component {
       word: wordObject,
       answers: newAnswers,
     };
-    console.log(this.gameObject);
   }
 
   showResult(result: StatisticsObject[]) {

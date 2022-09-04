@@ -16,6 +16,8 @@ class Game extends Component {
 
   staticsObject: StatisticsObject;
 
+  audioTranslate: Component;
+
   constructor(parentNode: HTMLElement, gameObj: GameObj) {
     super(parentNode, 'div', ['game']);
     this.gameObj = gameObj;
@@ -34,8 +36,8 @@ class Game extends Component {
 
     const audioButton = new UIButton(gameContent.element, ['game__audio-button'], '');
     audioButton.element.style.backgroundImage = `url(${audioIcon})`;
-    const audioTranslate = new Component(gameContent.element, 'p', ['game__translate'], `${gameObj.word!.word}`);
-    audioTranslate.element.style.opacity = '0';
+    this.audioTranslate = new Component(gameContent.element, 'p', ['game__translate'], `${gameObj.word!.word}`);
+    this.audioTranslate.element.style.opacity = '0';
     const answersButton = new Component(gameContent.element, 'div', ['game__answers']);
     const { answers } = this.gameObj;
     this.buttons = [];
@@ -45,34 +47,72 @@ class Game extends Component {
     answers.forEach((answer, i) => {
       const button = new UIButton(answersButton.element, ['answer__btn'], `${i + 1}. ${answer.wordTranslate}`);
       button.element.setAttribute('data-word', answer.wordTranslate);
+      button.element.setAttribute('data-num', i.toString());
 
       this.buttons.push(button);
       button.onClickButton = () => {
-        audioTranslate.element.style.opacity = '1';
-        if (this.gameObj.word!.wordTranslate === answer.wordTranslate) {
-          button.element.style.background = 'rgba(0, 128, 0, 0.476)';
-          this.staticsObject = {
-            word: this.gameObj.word!,
-            isAnswerTrue: true,
-          };
-          console.log(this.gameObj);
-          updateWordStatistics('audioChallenge', 'right', this.gameObj.word!);
-        } else {
-          button.element.style.background = 'rgba(255, 0, 0, 0.493)';
-          this.staticsObject = {
-            word: this.gameObj.word!,
-            isAnswerTrue: false,
-          };
-          this.findTrueAnswer();
-          console.log(this.gameObj);
-          updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
-        }
-        this.buttons.forEach((btn) => {
-          btn.setDisabled(true);
-        });
-        this.helpBtn.element.style.display = 'none';
-        this.nextBtn.element.style.display = 'block';
+        this.audioTranslate.element.style.opacity = '1';
+        this.checkRightAnswers(button.element, answer.wordTranslate);
       };
+    });
+
+    document.addEventListener('keydown', (e) => {
+      switch (e.code) {
+        case 'Numpad7':
+          this.playAudio();
+          break;
+        case 'ShiftLeft':
+          this.finishThisRound();
+          break;
+        case 'ShiftRight':
+          this.finishThisRound();
+          break;
+        case 'Numpad0':
+          this.audioTranslate.element.style.opacity = '1';
+          break;
+        case 'Numpad1':
+          e.preventDefault();
+          this.buttons.forEach((btn) => {
+            if (btn.element.getAttribute('data-num') === '0') {
+              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+            }
+          });
+          break;
+        case 'Numpad2':
+          e.preventDefault();
+          this.buttons.forEach((btn) => {
+            if (btn.element.getAttribute('data-num') === '1') {
+              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+            }
+          });
+          break;
+        case 'Numpad3':
+          e.preventDefault();
+          this.buttons.forEach((btn) => {
+            if (btn.element.getAttribute('data-num') === '2') {
+              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+            }
+          });
+          break;
+        case 'Numpad4':
+          e.preventDefault();
+          this.buttons.forEach((btn) => {
+            if (btn.element.getAttribute('data-num') === '3') {
+              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+            }
+          });
+          break;
+        case 'Numpad5':
+          e.preventDefault();
+          this.buttons.forEach((btn) => {
+            if (btn.element.getAttribute('data-num') === '4') {
+              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+            }
+          });
+          break;
+        default:
+          break;
+      }
     });
     this.helpBtn = new UIButton(gameContent.element, ['help__game-btn'], '');
     this.helpBtn.element.innerHTML = 'Не знаю';
@@ -85,16 +125,45 @@ class Game extends Component {
       this.playAudio();
     };
     this.helpBtn.onClickButton = () => {
-      audioTranslate.element.style.opacity = '1';
-      this.findTrueAnswer();
-
-      updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
-      this.buttons.forEach((button) => {
-        button.setDisabled(true);
-      });
-      this.helpBtn.element.style.display = 'none';
-      this.nextBtn.element.style.display = 'block';
+      this.finishThisRound();
     };
+  }
+
+  checkRightAnswers(button: HTMLElement, answer: string) {
+    const btn = button;
+    if (this.gameObj.word!.wordTranslate === answer) {
+      btn.style.background = 'rgba(0, 128, 0, 0.476)';
+      this.staticsObject = {
+        word: this.gameObj.word!,
+        isAnswerTrue: true,
+      };
+      updateWordStatistics('audioChallenge', 'right', this.gameObj.word!);
+    } else {
+      btn.style.background = 'rgba(255, 0, 0, 0.493)';
+      this.staticsObject = {
+        word: this.gameObj.word!,
+        isAnswerTrue: false,
+      };
+      this.findTrueAnswer();
+      updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
+    }
+    this.buttons.forEach((item) => {
+      item.setDisabled(true);
+    });
+    this.helpBtn.element.style.display = 'none';
+    this.nextBtn.element.style.display = 'block';
+  }
+
+  finishThisRound() {
+    this.audioTranslate.element.style.opacity = '1';
+    this.findTrueAnswer();
+
+    updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
+    this.buttons.forEach((button) => {
+      button.setDisabled(true);
+    });
+    this.helpBtn.element.style.display = 'none';
+    this.nextBtn.element.style.display = 'block';
   }
 
   playAudio() {

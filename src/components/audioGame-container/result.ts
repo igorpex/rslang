@@ -26,6 +26,7 @@ class Result extends Component {
     this.result = result;
 
     this.audio = new Audio();
+
     const resultContent = new Component(this.element, 'div', ['audioChallenge-result__content']);
     const resultTitle = new Component(resultContent.element, 'h2', ['audioChallenge-content__title']);
     resultTitle.element.innerHTML = 'Отличный результат!';
@@ -54,7 +55,6 @@ class Result extends Component {
     const params = new URLSearchParams(document.location.search);
     const ref = params.get('ref');
     if (ref !== null) {
-      console.log(ref);
       if (ref!.includes('ebook')) {
         const buttonsListGames = new Component(this.buttonsContainer.element, 'a', ['audioChallenge-return__button'], 'К СЛОВАРЮ');
         buttonsListGames.element.setAttribute('href', '#');
