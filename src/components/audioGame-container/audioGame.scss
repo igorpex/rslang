@@ -69,7 +69,7 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .audioChallenge__title{
     font-size: 10rem;
-    margin: 4rem;
+    padding: 4rem;
     color: $color-title;
 }
 
@@ -148,6 +148,7 @@ $color-header-bg: rgba(255, 198, 156, 1);
 }
 .game__content{
     max-width: 71.3rem;
+    height: 60rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -179,12 +180,14 @@ $color-header-bg: rgba(255, 198, 156, 1);
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2rem;
     flex-wrap: wrap;
-    margin-bottom: 8rem;
+    margin-bottom: 5rem;
   
 }
 .answer__btn {
+    padding: 0.5rem;
     background-color: inherit;
     font-weight: normal;
     border: none;
@@ -193,21 +196,72 @@ $color-header-bg: rgba(255, 198, 156, 1);
     color: $color-title;
     text-transform: none;
     font-weight: 400;
+    &:hover{
+        opacity: 0.8;
+        transition: all 0.3s;
+        color: whitesmoke;
+    }
 }
 .next__game-btn,
-.help__game-btn{
+.help__game-btn,
+.repeat-button,
+.return-button{
     @include mainButton();
     margin-bottom: 4rem;
 }
 
-.result__container{
+.audioChallenge-result__container{
     width: 100%;
+    margin: 0 auto;
     height: 100vh;
-    // position: absolute;
-    // top: 40%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
-    // height: 50%;
-    // z-index: 10;
+}
+.audioChallenge-result__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.audioChallenge-result__content{
+    background-color: $color-border;
+    padding: 4rem;
+    width: 92rem;
+    height: 52rem;
+    overflow: auto;
+    margin-bottom: 4rem;
+}
+.audioChallenge-content__title{
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 4rem;
+   
+}
+.true-title,
+.false-title{
+    font-size: 3rem;
+    margin-bottom: 2rem;
+}
+.result-list__item {
+    display: flex;
+    flex-direction: row;
+    gap: 2.3rem;
+    margin-bottom: 2rem;
+}
+.list__item-audio{
+    display: block;
     background-color: $color-title;
+    border-radius: 100%;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 0 0;
+}
+.list__item-word{
+    font-size: 2.2rem;
+    text-transform: none;
+}
+.audioChallenge-result__buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 8rem;
 }
