@@ -4,9 +4,14 @@ import { StatisticsObject } from '../../interfaces';
 import Component from '../../utils/component';
 import audioIcon from '../../assets/svg/audio-speaker.svg';
 import UIButton from '../UI/button/button';
+import { baseUrl } from '../../api/api';
 
 class Result extends Component {
   trueList: Component;
+
+  trueTitle: Component;
+
+  falseTitle: Component;
 
   result: StatisticsObject[];
 
@@ -14,18 +19,21 @@ class Result extends Component {
 
   buttonsContainer: Component;
 
+  audio: HTMLAudioElement;
+
   constructor(parentNode: HTMLElement, result: StatisticsObject[]) {
     super(parentNode, 'div', ['audioChallenge-result__container']);
     this.result = result;
 
+    this.audio = new Audio();
     const resultContent = new Component(this.element, 'div', ['audioChallenge-result__content']);
     const resultTitle = new Component(resultContent.element, 'h2', ['audioChallenge-content__title']);
     resultTitle.element.innerHTML = 'Отличный результат!';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const trueTitle = new Component(resultContent.element, 'p', ['true-title'], 'Правильныx ответов:');
+    this.trueTitle = new Component(resultContent.element, 'p', ['true-title'], 'Правильныx ответов:');
     this.trueList = new Component(resultContent.element, 'ul', ['true-list']);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const falseTitle = new Component(resultContent.element, 'p', ['false-title'], 'Неправильных ответов:');
+    this.falseTitle = new Component(resultContent.element, 'p', ['false-title'], 'Неправильных ответов:');
     this.falseList = new Component(resultContent.element, 'ul', ['false-list']);
 
     this.buttonsContainer = new Component(this.element, 'div', ['audioChallenge-result__buttons']);
@@ -35,20 +43,6 @@ class Result extends Component {
       e.preventDefault();
       window.location.reload();
     });
-    // const burger = document.querySelector('.header__burger');
-    // burger?.addEventListener('click', () => {
-    //     const params = new URLSearchParams(document.location.search);
-    //     const ref = params.get('ref');
-    //     let next = '';
-    //     if (ref) {
-    //         next = ref.slice(1);
-    //     }
-    //     const loc = window.location;
-    //     loc.hash = next;
-    //     const url = new URL(loc.href);
-    //     url.searchParams.delete('ref');
-    //     window.location.replace(url);
-    // })
 
     this.checkPreviousPage();
 
@@ -89,10 +83,15 @@ class Result extends Component {
     for (const words in trueAnswers) {
       const listItem = new Component(this.trueList.element, 'li', ['result-list__item']);
       const itemAudio = new UIButton(listItem.element, ['list__item-audio'], '');
+      itemAudio.onClickButton = () => {
+        this.audio.src = `${baseUrl}/${trueAnswers[words].word.audio}`;
+        this.audio.play();
+      };
       itemAudio.element.style.backgroundImage = `url(${audioIcon})`;
       const itemWord = new Component(listItem.element, 'span', ['list__item-word']);
       itemWord.element.innerHTML = `${trueAnswers[words].word.word} - ${trueAnswers[words].word.wordTranslate}`;
     }
+    this.trueTitle.element.innerHTML = `Правильных ответов: ${trueAnswers.length}`;
   }
 
   filterFalseAnswers() {
@@ -102,9 +101,14 @@ class Result extends Component {
       const listItem = new Component(this.falseList.element, 'li', ['result-list__item']);
       const itemAudio = new UIButton(listItem.element, ['list__item-audio'], '');
       itemAudio.element.style.backgroundImage = `url(${audioIcon})`;
+      itemAudio.onClickButton = () => {
+        this.audio.src = `${baseUrl}/${falseAnswers[words].word.audio}`;
+        this.audio.play();
+      };
       const itemWord = new Component(listItem.element, 'span', ['list__item-word']);
       itemWord.element.innerHTML = `${falseAnswers[words].word.word} - ${falseAnswers[words].word.wordTranslate}`;
     }
+    this.falseTitle.element.innerHTML = `Неравильных ответов: ${falseAnswers.length}`;
   }
 
   clear() {
