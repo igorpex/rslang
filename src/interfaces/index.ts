@@ -118,6 +118,7 @@ export interface WordPromise {
 export interface SprintWord extends ShortWord {
   correctFlag?: number;
   proposedTranslate?: string;
+  _id?: string; 
 }
 
 export interface ShortWord {

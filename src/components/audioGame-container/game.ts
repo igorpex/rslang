@@ -3,6 +3,7 @@ import { GameObj, StatisticsObject } from "../../interfaces";
 import Component from "../../utils/component";
 import UIButton from "../UI/button/button";
 import audioIcon from '../../assets/svg/audio-icon.svg';
+import updateWordStatistics from "../shared/updateUserWord/updateUserWord";
 
 class Game extends Component{
     gameObj: GameObj;
@@ -28,7 +29,7 @@ class Game extends Component{
         const audioTranslate = new Component(gameContent.element, 'p', ['game__translate'], `${gameObj.word!.word}`)
         audioTranslate.element.style.opacity = '0';
         const answersButton = new Component(gameContent.element, 'div', ['game__answers'] );
-        const answers = gameObj.answers;
+        const answers = this.gameObj.answers;
         this.buttons = [];
 
         this.playAudio();
@@ -36,23 +37,28 @@ class Game extends Component{
         answers.forEach((answer, i) => {
             const button = new UIButton(answersButton.element, ['answer__btn'], `${i+1}. ${answer.wordTranslate}`);
             button.element.setAttribute('data-word', answer.wordTranslate);
+            
             this.buttons.push(button);
             button.onClickButton = () => {
                 audioTranslate.element.style.opacity = '1';
                 if(this.gameObj.word!.wordTranslate === answer.wordTranslate){
-                    button.element.style.background = "green";
+                    button.element.style.background = "rgba(0, 128, 0, 0.476)";
                     this.staticsObject = {
                         word: this.gameObj.word!,
                         isAnswerTrue: true,
                     };
+                    console.log(this.gameObj)
+                    updateWordStatistics('audioChallenge', 'right', this.gameObj.word!);
 
                 } else {
-                    button.element.style.background = "red";
+                    button.element.style.background = "rgba(255, 0, 0, 0.493)";
                     this.staticsObject = {
                         word: this.gameObj.word!,
                         isAnswerTrue: false,
                     };
                     this.findTrueAnswer();
+                    console.log(this.gameObj)
+                    updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
 
                 }
                 this.buttons.forEach((button) => {
@@ -76,6 +82,8 @@ class Game extends Component{
         this.helpBtn.onClickButton = () => {
             audioTranslate.element.style.opacity = '1';
             this.findTrueAnswer();
+
+            updateWordStatistics('audioChallenge', 'wrong', this.gameObj.word!);
             this.buttons.forEach((button) => {
                 button.setDisabled(true);
             })
@@ -92,7 +100,7 @@ class Game extends Component{
         
         this.buttons.forEach((button) => {
             if(button.element.getAttribute('data-word') === this.gameObj.word!.wordTranslate){
-                button.element.style.background = "green";
+                button.element.style.background = "rgba(0, 128, 0, 0.476)";
             }
         });
     }

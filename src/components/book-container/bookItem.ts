@@ -371,7 +371,7 @@ class BookItem extends Component {
     const table = new Component(modalWindow, 'table', ['window-table']);
     const headArr = ['Мини-игра', 'Правильно', 'Неправильно'];
     const sprintArr = ['Спринт', `${this.card.userWord ? this.card.userWord.optional.sprint.successCounter : 0}`, `${this.card.userWord ? this.card.userWord.optional.sprint.failureCounter : 0} `];
-    const audioGameArr = ['Аудиовызов', '0', '0'];
+    const audioGameArr = ['Аудиовызов', `${this.card.userWord ? this.card.userWord.optional.audioChallenge.successCounter : 0}`, `${this.card.userWord ? this.card.userWord.optional.audioChallenge.failureCounter : 0} `];
     const firstRow = new Component(table.element, 'tr', ['main-row']);
     this.createRow(headArr, firstRow.element, 'th');
     const secondRow = new Component(table.element, 'tr', ['row']);
