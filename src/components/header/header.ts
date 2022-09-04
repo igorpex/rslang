@@ -216,6 +216,15 @@ class Header extends Component {
     this.loginButton.element.setAttribute('href', '#/login');
     this.loginButton.element.setAttribute('display', 'inline');
     this.loginButton.element.style.display = 'inline-block';
+    this.loginButton.element.addEventListener('click', (e) => {
+      e.preventDefault();
+      const loc = window.location;
+      const ref = loc.hash;
+      loc.hash = '/login';
+      const url = new URL(loc.href);
+      url.searchParams.set('ref', `${ref}`);
+      window.location.replace(url);
+    });
 
     this.logoutButton.element.setAttribute('href', '#/logout');
     this.logoutButton.element.style.display = 'none';
