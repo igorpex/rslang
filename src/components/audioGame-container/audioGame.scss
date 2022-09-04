@@ -121,9 +121,9 @@ $color-header-bg: rgba(255, 198, 156, 1);
     @include imageIcon();
 }
 .audioChallenge-level__list.open{
-    top: 100%;
+    bottom: 100%;
     @include list();
-    max-height: 8rem;
+    max-height: 15rem;
     overflow: auto;
 }
 .audioChallenge-level__list{

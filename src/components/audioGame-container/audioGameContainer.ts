@@ -1,6 +1,6 @@
 import { Compilation } from "webpack";
-import { getAllWords, getUserAggregatedWordsWithoutGroup, getWords, updateUser } from "../../api/api";
-import { GameObj, StatisticsObject, Word } from "../../interfaces";
+import { getAllWords, getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords, updateUser } from "../../api/api";
+import { GameObj, IDataObj, StatisticsObject, Word } from "../../interfaces";
 import Component from "../../utils/component";
 import ListItem from "../shared/list/list";
 import Sections from "../shared/section/section";
@@ -10,38 +10,44 @@ import Game from "./game";
 import Result from "./result";
 import arrowButton from '../../assets/svg/down-arrow.svg';
 import levelsIcon from '../../assets/svg/levels-icon.svg';
+import Auth from "../auth/auth/auth";
+import { authStorageKey } from "../../utils/config";
 
 class AudioGameContainer extends Component{
     updateGroup: (group: number) => void = () => {};
 
     private title: Component;
-
     private content: Component;
-
     select: Component;
-
     levelTitle: Component;
+    selectTitle: Component;
 
     private group = 1;
-
     private page = 0;
-
     private randomPage = 0;
-
     arrayOfPage: number[];
-
     gameObject: GameObj;
-
     count = 0;
-
     words: Word[];
-
     allAnswers: Word[];
-
     arrayOfName: string[];
+    refererType: String;
+    isAuth: boolean;
+    authorization: Auth;
+    filter = {
+        hard: { 'userWord.difficulty': 'hard' },
+        all: {
+          $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null }, { 'userWord.difficulty': 'easy' },
+            { 'userWord.difficulty': 'normal' }],
+        },
+        easy: { 'userWord.difficulty': 'easy' },
+        withoutEasy: {
+            $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null },
+            { 'userWord.difficulty': 'normal' }],
+        }
+      };
 
     staticsObjects: StatisticsObject[];
-    //statistics object
 
     constructor(parentNode: HTMLElement) {
         super(parentNode, 'div', ['audioChallange__container']);
@@ -56,7 +62,13 @@ class AudioGameContainer extends Component{
         this.staticsObjects = [];
         this.arrayOfName = ['Новичок', 'Ученик', 'Мыслитель', 'Кандидат', 'Мастер', 'Эксперт',
         'Сложные'];
+        
+        this.refererType = 'menu';
 
+        this.isAuth = false;
+        this.authorization = new Auth();
+        this.checkAuthorization();
+        
         this.content = new Component(this.element, 'div', ['audioChallenge__content']);
         this.title = new Component(this.content.element, 'h2', ['audioChallenge__title'], 'Аудиовызов');
         const description = new Component(this.content.element, 'p', ['content__list']);
@@ -70,15 +82,15 @@ class AudioGameContainer extends Component{
         pointThree.element.innerHTML = 'Используйте пробел для повтроного звучания слова.'
         const pointFour = new Component(list.element, 'li', ['audioChallenge-list__item']);
         pointFour.element.innerHTML = 'Используйте клавишу Enter для подсказки или для перехода к следующему слову.';
-        
-        
+
         const options = new Component(this.content.element, 'div', ['audioChallenge__options']);
         const selectBlock = new Component(options.element, 'div', ['options__select-block']);
-        const selectTitle = new Component(selectBlock.element, 'p', ['options__select-title'] );
-        selectTitle.element.innerHTML = 'Выберите сложность:'
+        this.selectTitle = new Component(selectBlock.element, 'p', ['options__select-title'] );
+        this.selectTitle.element.innerHTML = 'Выберите сложность:'
 
         //level-list
         this.select = new Component(selectBlock.element, 'div', ['audioChallenge__level']);
+        this.checkRefererType();
         const levelHeader = new Component(this.select.element, 'div', ['audioChallenge-level__header'])
         const levelIcon = new Component(levelHeader.element, 'span', ['audioChallenge-level__icon']);
         levelIcon.element.style.backgroundImage = `url(${levelsIcon})`;
@@ -99,7 +111,7 @@ class AudioGameContainer extends Component{
             };
             listItem.element.setAttribute('data-group', `${i}`);
         }
-        
+
         this.select.element.addEventListener('click', () => {
             levelList.element.classList.toggle('open');
         });
@@ -110,46 +122,124 @@ class AudioGameContainer extends Component{
             this.createGame()
         };
 
-        
-    // const params = new URLSearchParams(document.location.search);
-    //   const ref = params.get('ref');
-    //   let next = '';
-    //   if (ref) {
-    //     next = ref.slice(1);
-    //   }
-    //   const loc = window.location;
-    //   loc.hash = next;
-    //   const url = new URL(loc.href);
-    //   url.searchParams.delete('ref');
-    //   window.location.replace(url);
     }
-    redrawPage(target: HTMLElement) {
-        this.updateGroup(this.group);
-        this.levelTitle.element.innerHTML = `${target.innerHTML}`;
-      }
-    async createGame(){
+    async checkAuthorization(){
+        this.isAuth = await this.authorization.isLoggedIn();
+    }
+    checkRefererType(){
         const params = new URLSearchParams(document.location.search);
         const ref = params.get('ref');
         if(ref !== null) {
             if(ref!.includes('ebook')){
-                const userData = localStorage.getItem ("userData");
-                if(userData) {
-                    this.group = JSON.parse(userData!).group;
-                    this.page = JSON.parse(userData!).page;
-                    this.createGamesArray();
-                }
+                this.refererType = 'ebook';
+                this.selectTitle.element.style.display = 'none';
+                this.select.element.style.display = 'none';
             }
-        } else {
-            this.createRandomArray();
         }
     }
-    async createGamesArray() {
+    redrawPage(target: HTMLElement) {
+        this.updateGroup(this.group);
+        this.levelTitle.element.innerHTML = `${target.innerHTML}`;
+    }
+    async createGame(){
+        if(this.refererType === 'ebook'){
+            const userData = localStorage.getItem ("userData");
+            if(userData) {
+                this.group = JSON.parse(userData!).group;
+                this.page = JSON.parse(userData!).page;
+                const isExpired = this.authorization.JwtHasExpired();
+                if(this.isAuth && isExpired === false){
+                    this.createAggregatedArray();
+                } else {
+                    this.createGamesArray();
+                }
+                
+            }
+        } else {
+            const isExpired = this.authorization.JwtHasExpired();
+            if(this.isAuth && isExpired === false){
+                this.createRandomAggregatedArray();
+            } else {
+                this.createRandomArray();
+            }
+            
+        }
+    }
+    async createAggregatedArray(){
+        console.log('aggregated')
+        await this.createArraysQuestionsWithoutEasy();
 
+        const wordsPerPage = 20;
+        
+        // create array of answers
+        this.createArrayOfPage(29);
+        this.shuffleArray(this.arrayOfPage);
+        this.arrayOfPage = this.arrayOfPage.slice(0, 3);
+        
+        const arrPromises = this.arrayOfPage.map((item: number) => {
+            return this.getAggregatedWords(this.filter.all, wordsPerPage, item, this.group)
+        });
+        const arr: Word[]= await Promise.all(arrPromises);
+        const answers = [];
+        answers.push(this.words, arr.flat());
+        this.allAnswers = answers.flat();
+        // // this.prepareGame();
+        this.startGame();
+    }
+    async createArraysQuestionsWithoutEasy() {
+        let arrayOfPage = [];
+        
+        for(let i = 0; i <= this.page; i++) {
+            arrayOfPage.push(i);
+        }
+        arrayOfPage = arrayOfPage.reverse();
+        const wordsPerPage = 20;
+
+        const arrPromises = arrayOfPage.map((item: number) => {
+            return this.getAggregatedWords(this.filter.all, wordsPerPage, item, this.group)
+        });
+        const arr: Word[]= await Promise.all(arrPromises);
+        
+        let questions = [];
+        questions.push(arr.flat());
+        questions = questions.flat();
+        this.words = questions.filter((item) => {
+            if(item.userWord !== null && item.userWord !== undefined){
+                if(item.userWord.difficulty !== 'easy'){
+                    return item;
+                }
+            } else {
+                return item;
+            }
+        })
+       
+        if(this.words.length > 20) {
+            this.words = this.words.slice(0, 20)
+        }
+    }
+    createRandomAggregatedArray(){
+        this.page = this.getRandomPage(0, 29);
+        this.createAggregatedArray();
+    }
+
+    async getAggregatedWords(filter: {}, wordsPerPage: number, page: number, group?: number){
+        const dataObj = this.getUserData();
+        const id = dataObj.userId;
+        const { token } = dataObj;
+        const data = await getUserAggregatedWords({
+        id, group, page, wordsPerPage, filter, token,
+        });
+        
+        return data[0].paginatedResults;
+    }
+    async createGamesArray() {
+        console.log('unauth');
         //prepare array words hat we will use
         this.words = await this.getWords(this.group, this.page);
+        this.words = this.shuffleArray(this.words);
 
         // create array of answers
-        this.createArrayOfPage();
+        this.createArrayOfPage(29);
         this.shuffleArray(this.arrayOfPage);
         this.arrayOfPage = this.arrayOfPage.slice(0, 3);
         const arrPromises = this.arrayOfPage.map((item: number) => {
@@ -165,13 +255,13 @@ class AudioGameContainer extends Component{
     }
     createRandomArray(){
         this.page = this.getRandomPage(0, 29);
-        this.createArrayOfPage();
+        this.createArrayOfPage(29);
         this.createGamesArray();
 
     }
-    createArrayOfPage(){
-        const amountOfPage = 30;
-        for(let i = 0; i < 30; i++){
+    createArrayOfPage(max: number){
+        const amountOfPage = max;
+        for(let i = 0; i <= max; i++){
             this.arrayOfPage.push(i);
         }
         this.arrayOfPage = this.arrayOfPage.filter((page) => page !== this.page);
@@ -182,14 +272,14 @@ class AudioGameContainer extends Component{
     }
     async startGame(){
         console.log(this.group, this.page);
-        if(this.words.length >= 15) {
+        if(this.words.length >= 7) {
             this.words = this.shuffleArray(this.words);
             this.prepareGame();
             this.clear();
 
             const game = new Game(this.element, this.gameObject);
             game.nextBtn.element.addEventListener('click', () => {
-                if(this.words.length >= 15) {
+                if(this.words.length >= 7) {
                     this.staticsObjects.push(game.staticsObject);
                     this.startGame();
                 } else {
@@ -215,6 +305,7 @@ class AudioGameContainer extends Component{
             word: wordObject,
             answers: newAnswers,
         }
+        console.log(this.gameObject);
     }
     showResult(result: StatisticsObject[]){
         this.element.innerHTML = '';
@@ -239,6 +330,16 @@ class AudioGameContainer extends Component{
         }
         return arr;
     }
+    getUserData() {
+        const userAuthData = localStorage.getItem(authStorageKey);
+        const { userId } = JSON.parse(userAuthData!);
+        const { token } = JSON.parse(userAuthData!);
+        const dataObj: IDataObj = {
+          userId,
+          token,
+        };
+        return dataObj;
+      }
 }
 
 export default AudioGameContainer;
