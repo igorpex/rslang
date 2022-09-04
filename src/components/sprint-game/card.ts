@@ -2,7 +2,7 @@ import Component from '../../utils/component';
 import UIButton from '../UI/button/button';
 import { SprintCounts, SprintWord } from '../../interfaces';
 import { baseUrl } from '../../api/api';
-import playBtn from '../../assets/svg/play.svg';
+import playButtonImg from '../../assets/svg/play-button.svg';
 
 class SprintCard extends Component {
   private cardWord: Component | undefined;
@@ -38,7 +38,7 @@ class SprintCard extends Component {
     // this.playAudioBtn = new Component(this.element, 'div', ['sprint__card-audio-btn']);
     // this.playAudioBtn.element.style.backgroundImage = '../assets/images/play.svg';
     this.playAudioBtn = new Component(this.element, 'img', ['sprint__card-audio-btn']);
-    this.playAudioBtn.element.setAttribute('src', playBtn);
+    this.playAudioBtn.element.setAttribute('src', playButtonImg);
     // "h-8 w-8 text-red-500"
 
     this.playAudioBtn.element.addEventListener('click', () => wordAudio.play());

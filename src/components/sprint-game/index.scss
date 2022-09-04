@@ -71,7 +71,7 @@
     &-img {
       width: 2.5rem;
       height: 2.5rem;
-      background-image: url('../../assets/svg/levels-svgrepo-com\ 1.svg');
+      background-image: url('../../assets/svg/levels-icon.svg');
       background-repeat: no-repeat;
     }
 
@@ -82,7 +82,7 @@
     &-arrow {
       width: 2.5rem;
       height: 2.5rem;
-      background-image: url('../../assets/svg/arrow.svg');
+      background-image: url('../../assets/svg/down-arrow.svg');
       background-repeat: no-repeat;
     }
 
@@ -329,7 +329,17 @@
     border: 1px solid rgba(255, 198, 156, 1);
   }
 
-  &__wrong-btn {
+  &__right-btn.active:disabled {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__wrong-btn.active:disabled {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__right-btn {
     background-color: rgba(255, 244, 217, 1);
   }
   

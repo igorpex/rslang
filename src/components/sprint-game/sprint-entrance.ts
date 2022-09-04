@@ -22,7 +22,7 @@ class SprintEntrance extends Component {
       (document.querySelector('.sprint__select-options') as HTMLElement).classList.toggle('active');
       if ((e.target as HTMLElement).className.includes('difficulty')) {
         (document.querySelector('.sprint__select-current-option') as HTMLElement).innerHTML = (e.target as HTMLElement).innerHTML;
-        this.levelDifficulty = Number((e.target as HTMLElement).getAttribute('difficulty'));
+        this.levelDifficulty = Number((e.target as HTMLElement).getAttribute('data-difficulty'));
       }
     });
 
@@ -54,12 +54,12 @@ class SprintEntrance extends Component {
                 <div class='sprint__select-arrow'></div>
               </div>
               <div id='sprint__select-options' class='sprint__select-options'>
-                  <p class='sprint__select-option difficulty' difficulty='1'>НОВИЧОК</p>
-                  <p class='sprint__select-option difficulty' difficulty='2'>УЧЕНИК</p>
-                  <p class='sprint__select-option difficulty' difficulty='3'>МЫСЛИТЕЛЬ</p>
-                  <p class='sprint__select-option difficulty' difficulty='4'>КАНДИДАТ</p>
-                  <p class='sprint__select-option difficulty' difficulty='5'>МАСТЕР</p>
-                  <p class='sprint__select-option difficulty' difficulty='6'>ЭКСПЕРТ</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='1'>НОВИЧОК</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='2'>УЧЕНИК</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='3'>МЫСЛИТЕЛЬ</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='4'>КАНДИДАТ</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='5'>МАСТЕР</p>
+                  <p class='sprint__select-option difficulty' data-difficulty='6'>ЭКСПЕРТ</p>
               </div>
             </div>
             

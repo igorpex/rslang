@@ -1,6 +1,6 @@
 import Component from '../../utils/component';
 import { ShortWord, SprintCounts } from '../../interfaces';
-import playBtn from '../../assets/svg/play.svg';
+import playButtonImg from '../../assets/svg/play-button.svg';
 
 import './index.scss';
 import { baseUrl } from '../../api/api';
@@ -31,7 +31,7 @@ class SprintResults extends Component {
     this.rightAnsweredWords!.forEach((word: ShortWord) => {
       const wordBox = new Component(rightContainer.element, 'div', ['sprint-results-word-box']);
       const playAudioBtn = new Component(wordBox.element, 'img', ['sprint-results__card-audio-btn']);
-      playAudioBtn.element.setAttribute('src', playBtn);
+      playAudioBtn.element.setAttribute('src', playButtonImg);
       const wordAudio = new Audio(`${baseUrl}/${word.audio}`);
       playAudioBtn.element.addEventListener('click', () => {
         wordAudio.play();
@@ -46,7 +46,7 @@ class SprintResults extends Component {
     this.wrongAnsweredWords!.forEach((word: ShortWord) => {
       const wordBox = new Component(wrongContainer.element, 'div', ['sprint-results-word-box']);
       const playAudioBtn = new Component(wordBox.element, 'img', ['sprint-results__card-audio-btn']);
-      playAudioBtn.element.setAttribute('src', playBtn);
+      playAudioBtn.element.setAttribute('src', playButtonImg);
       const wordAudio = new Audio(`${baseUrl}/${word.audio}`);
       playAudioBtn.element.addEventListener('click', () => {
         wordAudio.play();

@@ -1,7 +1,7 @@
 const path = require('path');
 const { merge } = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
   entry: path.resolve(__dirname, './src/index.ts'),
@@ -50,7 +50,15 @@ const baseConfig = {
       template: path.resolve(__dirname, './src/index.html'),
       filename: 'index.html',
     }),
-    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+            from: './src/assets/audio',
+            to: path.resolve(__dirname, './dist/audio'),
+            noErrorOnMissing: true,
+        },
+      ],
+    }),
   ],
 };
 

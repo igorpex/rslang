@@ -7,6 +7,7 @@ import { authStorageKey } from '../../utils/config';
 import Auth from '../auth/auth/auth';
 import UIButton from '../UI/button/button';
 import './bookContainer.scss';
+import playButtonImg from '../../assets/svg/play-button.svg';
 
 class BookItem extends Component {
   // addToLearned: (cardId: number) => void = () => {};
@@ -58,7 +59,7 @@ class BookItem extends Component {
     const groupIcon = new Component(rightItemHeader.element, 'span', ['item__icon', `group-${this.card.group + 1}`], `${this.card.group + 1}`);
     const cardName = new Component(rightItemHeader.element, 'p', ['item__name'], `${this.card.word} - ${this.card.transcription}`);
     this.audioButton = new UIButton(rightItemHeader.element, ['item__audio-button'], '', false);
-    this.audioButton.element.style.backgroundImage = 'url(./play-button.svg)';
+    this.audioButton.element.style.backgroundImage = `url(${playButtonImg})`;
     this.isPlay = false;
     this.audio = new Audio();
     this.audioButton.onClickButton = () => { this.loadAudio(); };
