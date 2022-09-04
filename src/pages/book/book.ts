@@ -18,7 +18,10 @@ class Book extends Component {
 
   filter = {
     hard: { 'userWord.difficulty': 'hard' },
-    all: { $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null }, { 'userWord.difficulty': 'easy' }] },
+    all: {
+      $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null }, { 'userWord.difficulty': 'easy' },
+        { 'userWord.difficulty': 'normal' }],
+    },
     easy: { 'userWord.difficulty': 'easy' },
   };
 

@@ -25,7 +25,7 @@ class GameOptions extends Component {
 
     const sprintBtn = new Component(gameList.element, 'li', ['list__item']);
     const sprintLink = new Component(sprintBtn.element, 'a', ['sprint__link'], 'Спринт');
-    sprintLink.element.setAttribute('href', '#/sprint');
+    sprintLink.element.setAttribute('href', '?ref=%23%2Febook#/games/sprint');
     const audioGameBtn = new Component(gameList.element, 'li', ['list__item'], '');
     const audioGameLink = new Component(audioGameBtn.element, 'a', ['audio-game__link'], 'Аудиовызов');
     audioGameLink.element.setAttribute('href', '#/audioGame');

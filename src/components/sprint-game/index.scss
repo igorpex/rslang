@@ -62,7 +62,7 @@
     @extend %box;
     cursor: pointer;
     z-index: 0;
-  
+    
     &-wrapper {
       @extend %flex;
       padding: 7px 10px;
@@ -561,7 +561,3 @@
     width: 280px;
   }
 }
-
-
-
-

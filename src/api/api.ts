@@ -175,6 +175,27 @@ export const getUserWordById = async (id: string, wordId: string, token: string)
 })).json();
 
 /**
+ * Gets a user word by id with status code.
+ * @param {string} id - userId.
+ * @param {string} wordId - wordId.
+ * @param {string} token - user token.
+ */
+export const getUserWordByIdWithStatus = async (id: string, wordId: string, token: string) => {
+  const response = await fetch(`${users}/${id}/words/${wordId}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status === 200) {
+    return { status: 200, data: await response.json() };
+  }
+  return { status: response.status, data: undefined };
+};
+
+/**
  * Updates a user word by id.
  * @param {string} id - userId.
  * @param {string} wordId - wordId.

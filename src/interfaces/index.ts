@@ -18,10 +18,7 @@ export interface UpdateUser {
 export interface Word {
   id: string,
   _id: string,
-  userWord: {
-    difficulty: string,
-    optional: {},
-  }
+  userWord: UserWord,
   group: 0,
   page: 0,
   word: string,
@@ -37,10 +34,30 @@ export interface Word {
   textExampleTranslate: string
 }
 
+export type Difficulty = 'easy' | 'hard' | 'normal';
 export type WordId = string;
+
 export interface UserWord {
-  difficulty: string;
-  optional?: {}
+  difficulty: Difficulty;
+  optional: WordOptional
+}
+
+export type Game = 'sprint' | 'audioChallenge';
+
+export interface GameCounters {
+  successCounter: number;
+  failureCounter: number;
+  [key: string]: number;
+}
+
+export interface WordOptional {
+  dateNew: number;
+  gameNew?: Game;
+  dateEasy: number;
+  rightInARow: number;
+  sprint: GameCounters;
+  audioChallenge: GameCounters;
+  [key: string]: string | GameCounters | number | Game | undefined;
 }
 
 export interface UserAggregatedWordsParams {
@@ -99,8 +116,8 @@ export interface WordPromise {
 }
 
 export interface SprintWord extends ShortWord {
-  correctFlag: number;
-  proposedTranslate: string;
+  correctFlag?: number;
+  proposedTranslate?: string;
 }
 
 export interface ShortWord {
@@ -123,7 +140,8 @@ export interface ShortWord {
 export interface SprintCounts {
   totalPoints: number;
   pointsPerCorrectAnswer: number;
-  rightInTheRow: number
+  rightInTheRow: number;
+  maxRightInTheRow: number;
   dots: number;
   birds: number;
 }
