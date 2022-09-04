@@ -108,14 +108,6 @@ class Router {
         },
       },
       {
-        name: '/games/audio-challenge',
-        component: () => {
-          console.log('audio');
-          this.audioGamePage = new AudioGame(this.rootElement);
-          this.rootElement.append(this.audioGamePage.element);
-        },
-      },
-      {
         name: '/test',
         component: () => {
           this.testPage = new AuthTestContainer(this.rootElement);
