@@ -35,8 +35,10 @@ class GameOptions extends Component {
       gameList.element.classList.toggle('hidden');
     });
     sprintBtn.element.addEventListener('click', () => {
+      sessionStorage.setItem('gameReffer', 'ebook');
     });
     audioGameBtn.element.addEventListener('click', () => {
+      sessionStorage.setItem('gameReffer', 'ebook');
     });
     // sprintBtn.onClickButton = () => {
     //     this.startSprintGame();
