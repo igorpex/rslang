@@ -1,16 +1,65 @@
-
-.statistics-container{
+.statistics-container {
   display: flex;
   flex-direction: column;
+  padding: 40px;
+  background-color: rgb(255, 227, 156);
+  border: 1px solid rgb(255, 198, 156);
+  box-sizing: border-box;
 }
 
 .statistics__short-time {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
+
 .statistics__short-time-group {
   display: flex;
   flex-direction: column;
+  gap: 160px;
+  position: relative;
+  padding: 40px;
+  width: 47%;
+  background-color: rgb(255, 244, 217);
+  border: 1px solid rgb(255, 198, 156);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
+.statistics__divided-line {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 5px;
+  background-color: #FFC69C;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.statistics__game-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.statistics__game-stat-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.statistics__game-title,
+.statistics__word-title {
+  font-size: 4rem;
+  line-height: 4.8rem;
+  letter-spacing: 0.15em;
+  text-align: center;
+}
+
+.statistics__game-stat-param-name {
+  font-size: 2.2rem;
+  line-height: 2.7rem;
+}
+
 .statistics__game-stat-card{
   display: flex;
   flex-direction: column;
@@ -24,36 +73,21 @@
   display: flex;
 }
 
-.statistics__long-table {
+.statistics__short-time-group.statistics__short-time-words {
+  gap: 20px;
+}
+
+.statistics__word-stat-item {
   display: flex;
+  justify-content: space-between;
 }
 
-.statistics-container,
-.statistics__short-time,
-.statistics__short-time-group,
-.statistics__game-stat-card,
-.statistics__game-stat-item,
-.statistics__word-stat-item,
-.statistics__long-table,
-.statistics__long-table-item,
-statistics__long-table-num,
-statistics__long-table-date {
-  margin: 0px;
-  padding: 3px;
+.statistics__word-stat-param-name {
+  font-size: 2.2rem;
+  line-height: 2.7rem;
 }
 
-.statistics__long-table,
-//.statistics__long-table-item-num,
-//.statistics__long-table-item-date
-{
-  border: black 1px solid;
-}
-.statistics__long-table-item {
-  border-left: black 1px solid;
-  border-right: black 1px solid;
-}
-.statistics__long-table-item-num {
-  border-bottom: black 1px solid;
-}
-.statistics__long-table-item-date {
+.statistics__word-stat-param-value {
+  font-size: 2.2rem;
+  line-height: 2.7rem;
 }
