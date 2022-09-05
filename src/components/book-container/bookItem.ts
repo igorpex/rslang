@@ -328,9 +328,7 @@ class BookItem extends Component {
   }
 
   checkBackgroundColor() {
-    console.log('check');
     const bookItem = document.querySelectorAll('.book-item');
-    console.log(bookItem);
     let count = 0;
     bookItem.forEach((item) => {
       if (item.getAttribute('data-word') === 'learned') {
