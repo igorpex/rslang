@@ -135,45 +135,30 @@ class Router {
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
         },
       },
-      /*{
+      {
         name: '/statistics',
         component: () => {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
           (document.querySelector('.nav__item.statistics') as HTMLElement).classList.add('active');
-
+          
           this.statisticsPage = new Statistics(this.rootElement);
           this.rootElement.append(this.statisticsPage.element);
-          (document.querySelector('.footer') as HTMLDivElement).style.display = 'none'
-        },
-      },*/
-      /*{
-        name: '/games/audio-challenge',
-        component: () => {
-          document.querySelectorAll('.nav__item.active').forEach((item) => {
-            item.classList.remove('active');
-          });
-          (document.querySelector('.nav__item.games') as HTMLElement).classList.add('active');
-
-          this.audioGamePage = new AudioGame(this.rootElement);
-          this.rootElement.append(this.audioGamePage.element);
-        },
-      },*/
-      {
-        name: '/statistics',
-        component: () => {
-          this.statisticsPage = new Statistics(this.rootElement);
-          this.rootElement.append(this.statisticsPage.element);
-          (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
       },
       {
         name: '/games/audio-challenge',
         component: () => {
-          console.log('audio');
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+          
           this.audioGamePage = new AudioGame(this.rootElement);
           this.rootElement.append(this.audioGamePage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
         },
       },
       {
