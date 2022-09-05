@@ -1,0 +1,59 @@
+
+.statistics-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics__short-time {
+  display: flex;
+}
+.statistics__short-time-group {
+  display: flex;
+  flex-direction: column;
+}
+.statistics__game-stat-card{
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics__game-stat-item{
+  display: flex;
+}
+
+.statistics__word-stat-item{
+  display: flex;
+}
+
+.statistics__long-table {
+  display: flex;
+}
+
+.statistics-container,
+.statistics__short-time,
+.statistics__short-time-group,
+.statistics__game-stat-card,
+.statistics__game-stat-item,
+.statistics__word-stat-item,
+.statistics__long-table,
+.statistics__long-table-item,
+statistics__long-table-num,
+statistics__long-table-date {
+  margin: 0px;
+  padding: 3px;
+}
+
+.statistics__long-table,
+//.statistics__long-table-item-num,
+//.statistics__long-table-item-date
+{
+  border: black 1px solid;
+}
+.statistics__long-table-item {
+  border-left: black 1px solid;
+  border-right: black 1px solid;
+}
+.statistics__long-table-item-num {
+  border-bottom: black 1px solid;
+}
+.statistics__long-table-item-date {
+}

@@ -34,6 +34,10 @@ export interface Word {
   textExampleTranslate: string
 }
 
+export interface AggregatedWord extends Word {
+  userWord: UserWord;
+}
+
 export type Difficulty = 'easy' | 'hard' | 'normal';
 export type WordId = string;
 
@@ -69,9 +73,36 @@ export interface UserAggregatedWordsParams {
   token: string
 }
 
+export interface UserAggregatedWordsParamsFiltered {
+  id: string;
+  filter: Object;
+  token: string
+}
+
 export interface UserStatistics {
   learnedWords: number;
-  optional: {}
+  optional: StatisticsOptional;
+}
+
+export interface StatisticsOptional {
+  dateToday: string;
+  sprint: GameStatistics;
+  audioChallenge: GameStatistics
+}
+
+export interface GameStatistics {
+  maxRightInARowToday: number;
+  successCounterToday: number;
+  failureCounterToday: number;
+  maxRightInARowTotal: number;
+  successCounterTotal: number;
+  failureCounterTotal: number;
+}
+
+export interface GameResult {
+  right: number;
+  wrong: number;
+  maxRightInARow: number;
 }
 
 export interface DifficultWord {
