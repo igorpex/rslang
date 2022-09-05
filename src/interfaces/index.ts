@@ -97,6 +97,7 @@ export interface GameStatistics {
   maxRightInARowTotal: number;
   successCounterTotal: number;
   failureCounterTotal: number;
+  dateToday: string;
 }
 
 export interface GameResult {
@@ -149,7 +150,7 @@ export interface WordPromise {
 export interface SprintWord extends ShortWord {
   correctFlag?: number;
   proposedTranslate?: string;
-  _id?: string; 
+  _id?: string;
 }
 
 export interface ShortWord {
@@ -182,7 +183,7 @@ export interface GameObj {
   answers: Word[];
 }
 
-export interface StatisticsObject{
+export interface StatisticsObject {
   word: Word;
   isAnswerTrue: boolean;
 }

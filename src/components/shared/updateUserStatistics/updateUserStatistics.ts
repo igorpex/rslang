@@ -16,7 +16,7 @@ function updateUserStatisticsObject(
 ) {
   const updatedUserStatistics = userStatistics;
   const today = getDateNowString();
-  if (updatedUserStatistics.optional.dateToday === today) {
+  if (updatedUserStatistics.optional[game].dateToday === today) {
     updatedUserStatistics.optional[game].successCounterToday += gameResult.right;
     updatedUserStatistics.optional[game].failureCounterToday += gameResult.wrong;
     updatedUserStatistics.optional[game].maxRightInARowToday = Math.max(
@@ -24,7 +24,7 @@ function updateUserStatisticsObject(
       gameResult.maxRightInARow,
     );
   } else {
-    updatedUserStatistics.optional.dateToday = today;
+    updatedUserStatistics.optional[game].dateToday = today;
     updatedUserStatistics.optional[game].successCounterToday = gameResult.right;
     updatedUserStatistics.optional[game].failureCounterToday = gameResult.wrong;
     updatedUserStatistics.optional[game].maxRightInARowToday = gameResult.maxRightInARow;
