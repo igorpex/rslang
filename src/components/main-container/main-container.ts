@@ -38,7 +38,7 @@ class MainContainer extends Component {
     const texts = ['Электронный учебник', 'Мини-игры', 'Статистика', 'О команде'];
     const src = [ebookImg, gameImg, statisticsImg, teamImg];
 
-    for (let i = 0; i < linkNames.length; i++) {
+    for (let i = 0; i < linkNames.length; i += 1) {
       const linkContainer = document.createElement('a');
       linkContainer.classList.add('main-container__menu-window__link-container');
       linkContainer.setAttribute('href', `#/${linkNames[i]}`);
@@ -57,7 +57,7 @@ class MainContainer extends Component {
   }
 
   private clear() {
-    //this.content.element.innerHTML = '';
+    // this.content.element.innerHTML = '';
   }
 }
 
