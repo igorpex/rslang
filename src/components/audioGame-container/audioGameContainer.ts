@@ -1,4 +1,6 @@
-import { getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords } from '../../api/api';
+import {
+  getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords,
+} from '../../api/api';
 import {
   GameObj, IDataObj, StatisticsObject, Word,
 } from '../../interfaces';
@@ -12,6 +14,7 @@ import arrowButton from '../../assets/svg/down-arrow.svg';
 import levelsIcon from '../../assets/svg/levels-icon.svg';
 import Auth from '../auth/auth/auth';
 import { authStorageKey } from '../../utils/config';
+import updateUserStatistics from '../shared/updateUserStatistics/updateUserStatistics';
 
 class AudioGameContainer extends Component {
   updateGroup: (group: number) => void = () => {};
@@ -51,6 +54,17 @@ class AudioGameContainer extends Component {
   isAuth: boolean;
 
   authorization: Auth;
+
+  rows = {
+    rightInTheRow: 0,
+    maxRightInTheRow: 0,
+  };
+
+  gameResult = {
+    right: 0,
+    wrong: 0,
+    maxRightInARow: 0,
+  };
 
   filter = {
     hard: { 'userWord.difficulty': 'hard' },
@@ -98,11 +112,11 @@ class AudioGameContainer extends Component {
     const pointTwo = new Component(list.element, 'li', ['audioChallenge-list__item']);
     pointTwo.element.innerHTML = 'Используйте цифровые клавиши от 1 до 5 для выбора ответа.';
     const pointThree = new Component(list.element, 'li', ['audioChallenge-list__item']);
-    pointThree.element.innerHTML = 'Используйте Enter для перехода к следующему слову.';
+    pointThree.element.innerHTML = 'Используйте клавишу 0 для подсказки, 7 для повторного воспроизведения.';
     const pointFour = new Component(list.element, 'li', ['audioChallenge-list__item']);
-    pointFour.element.innerHTML = 'Используйте клавишу 0 для подсказки.';
+    pointFour.element.innerHTML = 'Используйте Shift если не знаете слова.';
     const pointFive = new Component(list.element, 'li', ['audioChallenge-list__item']);
-    pointFive.element.innerHTML = 'Используйте Shift для повтроного звучания слова.';
+    pointFive.element.innerHTML = 'Используйте Enter для перехода к следующему слову.';
 
     const options = new Component(this.content.element, 'div', ['audioChallenge__options']);
     const selectBlock = new Component(options.element, 'div', ['options__select-block']);
@@ -148,9 +162,11 @@ class AudioGameContainer extends Component {
         e.preventDefault();
         if (this.words.length > 15) {
           this.staticsObjects.push(this.game!.staticsObject);
+          this.checkRows(this.game!.staticsObject.isAnswerTrue);
           this.startGame();
         } else {
           this.staticsObjects.push(this.game!.staticsObject);
+          this.checkRows(this.game!.staticsObject.isAnswerTrue);
           this.showResult(this.staticsObjects);
         }
       }
@@ -358,15 +374,18 @@ class AudioGameContainer extends Component {
       this.game.nextBtn.element.addEventListener('click', () => {
         if (this.words.length > 15) {
           this.staticsObjects.push(this.game!.staticsObject);
+          this.checkRows(this.game!.staticsObject.isAnswerTrue);
           this.startGame();
         } else {
           // this.staticsObjects.push(game.staticsObject);
           this.staticsObjects.push(this.game!.staticsObject);
+          this.checkRows(this.game!.staticsObject.isAnswerTrue);
           this.showResult(this.staticsObjects);
         }
       });
     } else {
       this.staticsObjects.push(this.game!.staticsObject);
+      this.checkRows(this.game!.staticsObject.isAnswerTrue);
       this.showResult(this.staticsObjects);
     }
   }
@@ -390,6 +409,23 @@ class AudioGameContainer extends Component {
     this.element.innerHTML = '';
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resultPage = new Result(this.element, result);
+    this.sendToUsersStatistics();
+  }
+
+  checkRows(answer: boolean) {
+    if (answer === true) {
+      this.gameResult.right += 1;
+      this.rows.rightInTheRow += 1;
+    } else if (answer === false) {
+      this.gameResult.wrong += 1;
+      this.rows.rightInTheRow = 0;
+    }
+    this.rows.maxRightInTheRow = Math.max(this.rows.maxRightInTheRow, this.rows.rightInTheRow);
+  }
+
+  async sendToUsersStatistics() {
+    this.gameResult.maxRightInARow = this.rows.maxRightInTheRow;
+    await updateUserStatistics('audioChallenge', this.gameResult);
   }
 
   clear() {
