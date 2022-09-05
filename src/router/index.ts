@@ -143,7 +143,7 @@ class Router {
             item.classList.remove('active');
           });
           (document.querySelector('.nav__item.header__nav-statistics') as HTMLElement).classList.add('active');
-          
+
           this.statisticsPage = new Statistics(this.rootElement);
           this.rootElement.append(this.statisticsPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -156,7 +156,7 @@ class Router {
             item.classList.remove('active');
           });
           (document.querySelector('.nav__item.header__nav-games') as HTMLElement).classList.add('active');
-          
+
           this.audioGamePage = new AudioGame(this.rootElement);
           this.rootElement.append(this.audioGamePage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
@@ -184,6 +184,9 @@ class Router {
   updateRouter(): void {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
+    if (currentRouteName !== '/games/sprint' && currentRouteName !== '/games/audio-challenge') {
+      sessionStorage.removeItem('gameRefferer');
+    }
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
     );
