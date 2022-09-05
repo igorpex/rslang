@@ -104,7 +104,7 @@ class Book extends Component {
         words = words.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
       }
       
-      this.saveInLocalStorage(words);
+      this.saveInLocalStorage();
       this.bookContainer.addWords(words, this.group, this.isAuth);
     } else {
       this.isAuth = false;
@@ -125,7 +125,7 @@ class Book extends Component {
         const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
         cardsArr = cardsArr.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
       }
-      this.saveInLocalStorage(cardsArr);
+      this.saveInLocalStorage();
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
   }
@@ -138,7 +138,7 @@ class Book extends Component {
       const pageSearch = 0;
       const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
       const words = data[0].paginatedResults;
-      this.saveInLocalStorage(words);
+      this.saveInLocalStorage();
       this.bookContainer.addWords(words, group, this.isAuth);
     } else {
       this.bookContainer.bookOptions.pagination.makeButtonDissabled();
