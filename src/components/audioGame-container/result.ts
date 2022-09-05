@@ -54,7 +54,7 @@ class Result extends Component {
   }
 
   checkPreviousPage() {
-    const gameRefferer = sessionStorage.getItem('gameRefferer');
+    const gameRefferer = sessionStorage.getItem('gameRef');
     if (gameRefferer !== null && gameRefferer !== undefined) {
       if (gameRefferer === 'ebook') {
         const buttonsListGames = new Component(this.buttonsContainer.element, 'a', ['audioChallenge-return__button'], 'К СЛОВАРЮ');

@@ -184,7 +184,7 @@ class AudioGameContainer extends Component {
   }
 
   checkRefererType() {
-    const gameRefferer = sessionStorage.getItem('gameRefferer');
+    const gameRefferer = sessionStorage.getItem('gameRef');
     console.log(gameRefferer);
     // const ref = params.get('ref');
     if (gameRefferer !== null && gameRefferer !== undefined) {
