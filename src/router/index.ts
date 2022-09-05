@@ -185,7 +185,7 @@ class Router {
     this.rootElement.innerHTML = '';
     const currentRouteName = window.location.hash.slice(1);
     if (currentRouteName !== '/games/sprint' && currentRouteName !== '/games/audio-challenge') {
-      sessionStorage.removeItem('gameRefferer');
+      sessionStorage.removeItem('gameRef');
     }
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
