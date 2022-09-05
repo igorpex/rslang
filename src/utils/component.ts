@@ -22,7 +22,7 @@ class Component {
     tagName: keyof HTMLElementTagNameMap = 'div',
     // eslint-disable-next-line @typescript-eslint/default-param-last
     styles: string[] = [],
-    content: string,
+    content = '',
   ) {
     const element = document.createElement(tagName);
     element.classList.add(...styles);
