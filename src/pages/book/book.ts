@@ -29,6 +29,10 @@ class Book extends Component {
 
   group = 0;
 
+  input: HTMLInputElement;
+
+  cross: HTMLElement;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['book']);
     this.isAuth = false;
@@ -45,6 +49,26 @@ class Book extends Component {
 
     this.updateGroup();
     this.updatePage();
+
+    // search input functionality
+    this.input = document.querySelector('.book-options__search-input') as HTMLInputElement;
+    this.input.placeholder = 'Найти слово на странице...';
+    this.cross = (document.querySelector('.book-options__search-cross') as HTMLElement);
+
+    this.input.addEventListener('input', () => {
+      if (this.input.value.length !== 0) {
+        this.cross.classList.add('active');
+      } else {
+        this.cross.classList.remove('active');
+      }
+      this.checkAuthorization();
+    });
+
+    this.cross.addEventListener('click', () => {
+      this.input.value = '';
+      this.cross.classList.remove('active');
+      this.checkAuthorization();
+    });
   }
 
   async checkAuthorization() {
@@ -74,7 +98,12 @@ class Book extends Component {
       const { group } = this;
 
       const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
-      const words = data[0].paginatedResults;
+      let words = data[0].paginatedResults;
+      if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
+        const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
+        words = words.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
+      }
+      
       this.saveInLocalStorage(words);
       this.bookContainer.addWords(words, this.group, this.isAuth);
     } else {
@@ -91,7 +120,11 @@ class Book extends Component {
   private async getCards(group: number, page: number, isAuth: boolean) {
     const data = await getWords({ group, page });
     if (data) {
-      const cardsArr: Word[] = data.items;
+      let cardsArr: Word[] = data.items;
+      if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
+        const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
+        cardsArr = cardsArr.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
+      }
       this.saveInLocalStorage(cardsArr);
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
@@ -149,6 +182,7 @@ class Book extends Component {
     this.bookContainer.updatePage = (page) => {
       this.page = page;
       if (this.isAuth) {
+        console.log(true);
         this.createForAuthUser();
       } else {
         this.getCards(this.group, this.page, this.isAuth);
@@ -207,6 +241,16 @@ class Book extends Component {
       this.isAuth = true;
     }
   }
+
+  /*async createByNameForAnonymous(value: string, group: number, page: number) {
+    const data = await getWords({ group, page });
+    const cards: Word[] = data.items;
+    console.log(cards);
+    if (data) {
+      const cardsArr: Word = data.items[0];
+      this.bookContainer.addWord(cardsArr, this.isAuth);
+    }
+  }*/
 }
 
 export default Book;

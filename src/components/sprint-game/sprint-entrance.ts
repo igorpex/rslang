@@ -26,6 +26,7 @@ class SprintEntrance extends Component {
     let next = '';
     if (ref) {
       next = ref.slice(1);
+      console.log(next);
       refererType = 'ebook';
     }
     this.refererType = refererType;
@@ -69,7 +70,7 @@ class SprintEntrance extends Component {
   // form2 = new Component(this.element, 'form', ['difficulty__form']);
   getForm = () => {
     const formCont = new Component(null, 'div', ['sprint__form-cont']);
-    const dificultyText = new Component(formCont.element, 'p', ['sprint__difficulty-text'], 'Выберите сложность');
+    const difficultyText = new Component(formCont.element, 'p', ['sprint__difficulty-text'], 'Выберите сложность');
     const form = new Component(formCont.element, 'form', ['sprint__difficulty-form']);
     form.element.id = 'sprint__difficulty-form';
     const select = new Component(form.element, 'div', ['sprint__select']);
@@ -90,7 +91,7 @@ class SprintEntrance extends Component {
     difficultyBtn.element.setAttribute('type', 'submit');
     if (this.refererType === 'ebook') {
       select.element.style.display = 'none';
-      dificultyText.element.style.display = 'none';
+      difficultyText.element.style.display = 'none';
       select.element.style.display = 'none';
       difficultyBtn.element.style.display = 'flex';
     }

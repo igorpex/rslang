@@ -3,6 +3,7 @@ import Pagination from '../shared/pagination/pagination';
 import BookInput from './bookInput';
 import GameOptions from './gameOptions';
 import './options.scss';
+import SearchOptions from './searchOptions';
 
 class BookOptions extends Component {
   updatePage: (page: number) => void = () => {};
@@ -14,6 +15,8 @@ class BookOptions extends Component {
   pagination: Pagination;
 
   private gameOptions: GameOptions;
+
+  private searchOptions: SearchOptions;
 
   group = 0;
 
@@ -28,6 +31,7 @@ class BookOptions extends Component {
     this.input = new BookInput(this.element, 'text', ['book-input']);
     this.pagination = new Pagination(this.element);
     this.gameOptions = new GameOptions(this.element);
+    this.searchOptions = new SearchOptions(this.element);
 
     this.pagination.updatePage = (page) => this.updatePage(page);
     this.input.updateGroup = (group) => {

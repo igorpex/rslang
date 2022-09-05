@@ -99,7 +99,7 @@ class Header extends Component {
     this.linkToMain = new Component(
       this.nav.element,
       'a',
-      ['nav__item'],
+      ['nav__item', 'main'],
     );
 
     const linkToMainImg = document.createElement('div');

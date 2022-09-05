@@ -20,6 +20,11 @@
     min-width: 5rem;
     min-height: 5rem;
     background-image: url('../../assets/svg/logo.svg');
+    transition: 0.5s;
+  }
+
+  &__logo:hover {
+    box-shadow: 0 7px 7px rgb(255, 227, 156);
   }
 
   &__login-burger-container {
@@ -34,7 +39,9 @@
       margin-right: 20px;
       width: 5rem;
       height: 5rem;
+      border-radius: 50%;
       cursor: pointer;
+      transition: 0.5s;
     }
 
     .header__login {
@@ -43,6 +50,11 @@
 
     .header__logout {
       background-image: url('../../assets/svg/exit.svg');
+    }
+
+    .header__login:hover,
+    .header__logout:hover {
+      box-shadow: 0 7px 7px rgb(255, 227, 156);
     }
 
     .header__burger {
@@ -74,12 +86,18 @@
 
     .header__burger-span {
       position: absolute;
-      left: 0;
+      right: 0;
       top: 46%;
-      width: 100%;
+      width: 70%;
       height: 3px;
       background: black;
       transition: 0.5s;
+    }
+
+    .header__burger:hover {
+      .header__burger-span {
+        width: 100%;
+      }
     }
 
     .header__burger.active:before {
@@ -90,6 +108,21 @@
     .header__burger.active:after {
       bottom: 45%;
       transform: rotate(-45deg);
+    }
+    
+
+    .header__burger.active:hover {
+      .header__burger-span.active {
+        width: 0;
+      }
+    }
+
+    .header__burger.active:hover:before {
+      transform: rotate(-45deg);
+    }
+
+    .header__burger.active:hover:after {
+      transform: rotate(45deg);
     }
     
     .header__burger-span.active {
@@ -135,6 +168,7 @@
     font-size: 2rem;
     color: black;
     text-decoration: none;
+    transition: 0.5s;
 
     &-img {
       width: 5rem;
@@ -144,6 +178,10 @@
 
   .nav__item.active {
     text-decoration: underline;
+  }
+
+  .nav__item:hover {
+    background-color: rgb(255, 227, 156);
   }
 
   .dark {

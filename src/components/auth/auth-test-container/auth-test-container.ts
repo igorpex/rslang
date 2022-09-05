@@ -30,7 +30,7 @@ class AuthTestContainer extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['test__container']);
     this.loginForm = new Component(this.element, 'form', ['login__form']);
-    this.title = new Component(this.loginForm.element, 'h2', ['login__title'], 'Login');
+    this.title = new Component(this.loginForm.element, 'h2', ['login__title'], 'Вход в аккаунт');
     this.usernameInput = new Component(this.loginForm.element, 'input', ['login__username-input']);
     this.usernameInput.element.setAttribute('value', '12@12.ru');
     this.usernameInput.element.setAttribute('type', 'text');
