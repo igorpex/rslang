@@ -27,6 +27,8 @@
     },
     "rules": {
         "no-debugger": "off",
+//        "max-len": ["warn", { "code": 130 }],
+        "max-len": "off",
         "no-console": 0,
 //        "import/extensions": [
 //            "error",
