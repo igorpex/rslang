@@ -49,7 +49,12 @@ class StatisticsContainer extends Component {
   async start() {
     const auth = new Auth();
     if (auth.JwtHasExpired()) {
-      Component.add(this.element, 'h2', ['statistics__login-message'], 'Please login to view statistics');
+      Component.add(
+        this.element,
+        'h2',
+        ['statistics__login-message'],
+        'Пожалуйста, войдите в учетную запись для просмотра статистики.',
+      );
       return;
     }
     const userWords = await this.getUserWordsSimple();
@@ -75,7 +80,7 @@ class StatisticsContainer extends Component {
     this.newWordsToday = this.newWordTodaySprint + this.newWordTodayAudioChallenge;
 
     // изученных слов за день
-    this.learnedWordsToday = this.getLearnedWordsToday(userWords);
+    this.learnedWordsToday = this.getLearnedWordsToday(userWords) || 0;
 
     // сегодняшняя статистика по играм
     const sprintStatToday = await this.getGamesStatToday('sprint');
