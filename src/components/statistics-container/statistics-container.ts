@@ -8,6 +8,8 @@ import {
 } from '../../api/api';
 import { Game, UserWord } from '../../interfaces';
 import { dateMsToStrDate, getDateNowString } from '../../utils/dates';
+// eslint-disable-next-line import/order
+import Chart from 'chart.js/auto';
 
 class StatisticsContainer extends Component {
   private shortTime: Component | undefined;
@@ -45,6 +47,11 @@ class StatisticsContainer extends Component {
   }
 
   async start() {
+    const auth = new Auth();
+    if (auth.JwtHasExpired()) {
+      Component.add(this.element, 'h2', ['statistics__login-message'], 'Please login to view statistics');
+      return;
+    }
     const userWords = await this.getUserWordsSimple();
 
     // график, отображающий количество новых слов за каждый день изучения
@@ -54,7 +61,7 @@ class StatisticsContainer extends Component {
 
     // увеличение общего количества изученных слов за весь период обучения по дням
     this.learnedTotalWordsByDays = this.getTotalLearnedWords(userWords);
-    // console.log('learnedTotalWordsByDays', this.learnedTotalWordsByDays);
+    console.log('learnedTotalWordsByDays', this.learnedTotalWordsByDays);
 
     // новых слов за день в игре Спринт
     this.newWordTodaySprint = this.getNewWordToday(userWords, 'sprint') || 0;
@@ -179,9 +186,7 @@ class StatisticsContainer extends Component {
   };
 
   getLearnedWordsToday = (userWords: UserWord[]) => {
-    const todayMs = new Date(JSON.parse(JSON.stringify(Date.now())));
-    const todayStr = dateMsToStrDate(todayMs);
-
+    const todayStr = getDateNowString();
     const learnedWordsPerDaysObj = userWords
       .filter((userWord: UserWord) => userWord.optional.dateEasy > 0)
       .map((userWord: UserWord) => {
@@ -216,7 +221,7 @@ class StatisticsContainer extends Component {
       }
       if (userStatisticsWStatus.status === 200) {
         const userStatistics = userStatisticsWStatus.data;
-        const statisticsToday = userStatistics.optional.dateToday;
+        const statisticsToday = userStatistics.optional[game].dateToday;
         const today = getDateNowString();
         if (statisticsToday !== today) {
           return {
@@ -259,6 +264,7 @@ class StatisticsContainer extends Component {
 
     this.shortTimeGames = new Component(this.shortTime.element, 'div', ['statistics__short-time-group', 'statistics__short-time-games']);
     this.shortTimeWords = new Component(this.shortTime.element, 'div', ['statistics__short-time-group', 'statistics__short-time-words']);
+    const devidevLine1 = new Component(this.shortTimeGames.element, 'div', ['statistics__divided-line']);
 
     const games = ['audioChallenge', 'sprint'];
     // const gameNamesDict = { audioChallenge: 'Аудиовызов', sprint: 'Спринт' };
@@ -300,44 +306,100 @@ class StatisticsContainer extends Component {
 
     const longStatCard1 = new Component(this.longTime.element, 'div', ['statistics__long-stat-card']);
     Component.add(longStatCard1.element, 'h2', ['statistics__long-title'], 'Новые слова по дням');
-    const newByDateTable = new Component(longStatCard1.element, 'div', ['statistics__long-table']);
-    this.newWordByDays!.forEach((day) => {
-      const dayItem = new Component(newByDateTable.element, 'div', ['statistics__long-table-item']);
-      const number = new Component(
-        dayItem.element,
-        'div',
-        ['statistics__long-table-item-num'],
-        // @ts-ignore
-        `${day[1]}`,
-      );
-      const date = new Component(
-        dayItem.element,
-        'div',
-        ['statistics__long-table-item-date'],
-        // @ts-ignore
-        `${day[0]}`,
-      );
-    });
 
     const longStatCard2 = new Component(this.longTime.element, 'div', ['statistics__long-stat-card']);
     Component.add(longStatCard2.element, 'h2', ['statistics__long-title'], 'Общее кол-во изученных слов по дням');
-    const learnedTotalByDateTable = new Component(longStatCard2.element, 'div', ['statistics__long-table']);
-    this.learnedTotalWordsByDays!.forEach((day) => {
-      const dayItem = new Component(learnedTotalByDateTable.element, 'div', ['statistics__long-table-item']);
-      const number = new Component(
-        dayItem.element,
-        'div',
-        ['statistics__long-table-item-num'],
-        // @ts-ignore
-        `${day[1]}`,
-      );
-      const date = new Component(
-        dayItem.element,
-        'div',
-        ['statistics__long-table-item-date'],
-        // @ts-ignore
-        `${day[0]}`,
-      );
+
+    const newWordsByDayObjects = this.newWordByDays!.map((elem) => {
+      // @ts-ignore
+      const x = elem[0];
+      // @ts-ignore
+      const y = elem[1];
+      return { x, y };
+    });
+
+    const learnedTotalWordsByDaysData = this.learnedTotalWordsByDays!.map((elem) => {
+      // @ts-ignore
+      const x = elem[0];
+      // @ts-ignore
+      const y = elem[1];
+      return { x, y };
+    });
+
+    const myChart1 = new Component(longStatCard1.element, 'canvas', ['statistics__long-stat-chart']);
+
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
+    const chart1 = new Chart(myChart1.element as HTMLCanvasElement, {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            type: 'line',
+            yAxisID: 'y1',
+            label: 'Новых слов в день',
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            data: newWordsByDayObjects,
+          },
+        ],
+      },
+      options: {
+        animations: {
+          tension: {
+            duration: 5000,
+            easing: 'linear',
+            from: 0.5,
+            to: 0,
+            loop: true,
+          },
+        },
+        scales: {
+          x: {
+            min: `${newWordsByDayObjects[0].x}`,
+            bounds: 'ticks',
+          },
+        },
+      },
+
+    });
+
+    const myChart2 = new Component(longStatCard2.element, 'canvas', ['statistics__long-stat-chart']);
+
+    // @ts-ignore
+    // @ts-ignore
+    // @ts-ignore
+    const chart2 = new Chart(myChart2.element as HTMLCanvasElement, {
+      type: 'line',
+      data: {
+        datasets: [
+          {
+            type: 'line',
+            label: 'Всего изучено слов',
+            borderColor: 'rgb(54, 162, 235)',
+            order: 1,
+            data: learnedTotalWordsByDaysData,
+          },
+        ],
+      },
+      options: {
+        animations: {
+          tension: {
+            duration: 5000,
+            easing: 'linear',
+            from: 0.5,
+            to: 0,
+            loop: true,
+          },
+        },
+        scales: {
+          x: {
+            min: `${newWordsByDayObjects[0].x}`,
+          },
+        },
+      },
+
     });
   }
 }
