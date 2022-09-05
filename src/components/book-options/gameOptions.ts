@@ -1,6 +1,7 @@
-import { Word } from '../../interfaces';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// import { Word } from '../../interfaces';
 import Component from '../../utils/component';
-import UIButton from '../UI/button/button';
+// import UIButton from '../UI/button/button';
 import downArrowImg from '../../assets/svg/down-arrow.svg';
 import videoGameImg from '../../assets/svg/video-game-icon.svg';
 

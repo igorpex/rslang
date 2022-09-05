@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   baseUrl, createUserWord, getUserWordById, getUserWordByIdWithStatus, updateUserWord,
 } from '../../api/api';
@@ -90,7 +92,9 @@ class BookItem extends Component {
     this.addToDifficultButton.element.style.display = 'none';
 
     this.statisticsButton = new UIButton(buttonContainer.element, ['item__statistics-button'], 'Статистика');
-    if (!this.card.userWord || this.card.userWord.optional.dateNew === 0) { this.statisticsButton.setDisabled(true); } else {
+    if (!this.card.userWord || this.card.userWord.optional.dateNew === 0) {
+      this.statisticsButton.setDisabled(true);
+    } else {
       this.statisticsButton.element.textContent = '';
       this.statisticsButton.element.innerHTML = `
       ${this.card.userWord.optional.sprint.successCounter
@@ -128,6 +132,7 @@ class BookItem extends Component {
       if (isExpired === false) {
         if (this.isEasy === false) {
           this.makeWordDisabled();
+          this.checkBackgroundColor();
           if (this.isDifficult) {
             await this.updateWord();
             this.isEasy = true;
@@ -306,17 +311,36 @@ class BookItem extends Component {
   }
 
   makeWordDisabled() {
+    this.element.setAttribute('data-word', 'learned');
     this.element.style.opacity = '0.6';
     this.learnButton.element.innerHTML = 'удалить из изученных';
     this.addToDifficultButton.setDisabled(true);
-    this.statisticsButton.setDisabled(true);
+    // this.statisticsButton.setDisabled(true);
   }
 
   removeWordDisabled() {
+    this.element.setAttribute('data-word', 'normal');
     this.element.style.opacity = '1.0';
     this.learnButton.element.innerHTML = 'изучено';
     this.addToDifficultButton.setDisabled(false);
-    this.statisticsButton.setDisabled(false);
+    this.checkBackgroundColor();
+    // this.statisticsButton.setDisabled(false);
+  }
+
+  checkBackgroundColor() {
+    const bookItem = document.querySelectorAll('.book-item');
+    let count = 0;
+    bookItem.forEach((item) => {
+      if (item.getAttribute('data-word') === 'learned') {
+        count += 1;
+      }
+    });
+    const bookContainer = document.querySelector('.book-container');
+    if (count === 20 && !bookContainer?.classList.contains('changed')) {
+      bookContainer!.classList.add('changed');
+    } else if (count < 20 && bookContainer?.classList.contains('changed')) {
+      bookContainer.classList.remove('changed');
+    }
   }
 
   async createOrUpdateUserWord(difficulty: 'hard' | 'easy' | 'normal') {
@@ -382,7 +406,7 @@ class BookItem extends Component {
   }
 
   createRow(arr: string[], element: HTMLElement, tag: keyof HTMLElementTagNameMap) {
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i += 1) {
       const td = new Component(element, tag, ['table-header'], `${arr[i]}`);
     }
   }

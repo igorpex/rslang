@@ -13,6 +13,7 @@ export class UserStatisticsClass implements UserStatistics {
     this.optional = {
       dateToday: getDateNowString(),
       sprint: {
+        dateToday: getDateNowString(),
         maxRightInARowToday: 0,
         successCounterToday: 0,
         failureCounterToday: 0,
@@ -21,6 +22,7 @@ export class UserStatisticsClass implements UserStatistics {
         failureCounterTotal: 0,
       },
       audioChallenge: {
+        dateToday: getDateNowString(),
         maxRightInARowToday: 0,
         successCounterToday: 0,
         failureCounterToday: 0,

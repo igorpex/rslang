@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 import Pagination from '../shared/pagination/pagination';
 import BookInput from './bookInput';

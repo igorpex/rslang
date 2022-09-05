@@ -46,10 +46,11 @@ class Router {
       {
         name: '/',
         component: () => {
+          console.log(true);
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.main') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-main') as HTMLElement).classList.add('active');
 
           this.rootElement.append(this.mainPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -61,7 +62,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.team') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-team') as HTMLElement).classList.add('active');
 
           this.rootElement.append(this.teamPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -73,7 +74,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.ebook') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-ebook') as HTMLElement).classList.add('active');
 
           this.bookPage = new Book(this.rootElement);
           this.rootElement.append(this.bookPage.element);
@@ -116,7 +117,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-games') as HTMLElement).classList.add('active');
 
           this.rootElement.append(this.gamesPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -128,7 +129,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-games') as HTMLElement).classList.add('active');
 
           this.sprintPage = new Sprint(this.rootElement);
           this.rootElement.append(this.sprintPage.element);
@@ -141,7 +142,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.statistics') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-statistics') as HTMLElement).classList.add('active');
           
           this.statisticsPage = new Statistics(this.rootElement);
           this.rootElement.append(this.statisticsPage.element);
@@ -154,7 +155,7 @@ class Router {
           document.querySelectorAll('.nav__item.active').forEach((item) => {
             item.classList.remove('active');
           });
-          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+          (document.querySelector('.nav__item.header__nav-games') as HTMLElement).classList.add('active');
           
           this.audioGamePage = new AudioGame(this.rootElement);
           this.rootElement.append(this.audioGamePage.element);

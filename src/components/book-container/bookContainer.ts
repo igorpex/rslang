@@ -1,6 +1,6 @@
-import { IDataObj, IDifficulWord, Word } from '../../interfaces';
+import { Word } from '../../interfaces';
 import Component from '../../utils/component';
-import { authStorageKey } from '../../utils/config';
+// import { authStorageKey } from '../../utils/config';
 import BookOptions from '../book-options/bookOptions';
 import UIButton from '../UI/button/button';
 import './bookContainer.scss';
