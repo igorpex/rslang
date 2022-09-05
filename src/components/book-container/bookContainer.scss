@@ -14,6 +14,10 @@ $color-group-7: grey;
     width: 100%;
     padding: 4rem;
 }
+.book-container.changed{
+    background-color: rgba(177, 242, 177, 0.576);
+    transition: background-color 0.3s ease;
+}
 .book__title{
     font-size: 4rem;
     margin-bottom: 2rem;
