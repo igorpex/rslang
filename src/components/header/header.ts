@@ -1,6 +1,6 @@
 import Component from '../../utils/component';
 import Auth from '../auth/auth/auth';
-import logoImg from '../../assets/svg/logo.svg';
+import logoImg from '../../assets/img/main-icon.png';
 import ebookImg from '../../assets/svg/book.svg';
 import gameImg from '../../assets/svg/game.svg';
 import statisticsImg from '../../assets/svg/statistics.svg';
@@ -244,7 +244,10 @@ class Header extends Component {
     this.updateLogin();
   }
 
-  // 1.open/close burger panel 2.change cross animation 3.add/remove span line from the middle of burger 4. open/close dark background
+  // 1.open/close burger panel
+  // 2.change cross animation
+  // 3.add/remove span line from the middle of burger
+  // 4. open/close dark background
   public openBurger() {
     this.burgerPanel.element.classList.toggle('active');
     this.burger.element.classList.toggle('active');

@@ -17,14 +17,13 @@
 
   &__logo {
     margin-right: 20px;
-    min-width: 5rem;
-    min-height: 5rem;
-    background-image: url('../../assets/svg/logo.svg');
+    min-width: 6rem;
+    min-height: 6rem;
+    background-image: url('../../assets/img/main-icon.png');
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    background-size: contain;
     transition: 0.5s;
-  }
-
-  &__logo:hover {
-    box-shadow: 0 7px 7px rgb(255, 227, 156);
   }
 
   &__login-burger-container {

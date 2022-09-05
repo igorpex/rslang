@@ -18,6 +18,8 @@ class Game extends Component {
 
   audioTranslate: Component;
 
+  volume: boolean;
+
   constructor(parentNode: HTMLElement, gameObj: GameObj) {
     super(parentNode, 'div', ['game']);
     this.gameObj = gameObj;
@@ -32,6 +34,7 @@ class Game extends Component {
       ['game__title'],
       'Выберите правильный ответ',
     );
+    this.volume = true;
     const gameContent = new Component(this.element, 'div', ['game__content']);
 
     const audioButton = new UIButton(gameContent.element, ['game__audio-button'], '');
@@ -57,61 +60,113 @@ class Game extends Component {
     });
 
     document.addEventListener('keydown', (e) => {
-      switch (e.code) {
-        case 'Numpad7':
-          this.playAudio();
-          break;
-        case 'ShiftLeft':
-          this.finishThisRound();
-          break;
-        case 'ShiftRight':
-          this.finishThisRound();
-          break;
-        case 'Numpad0':
-          this.audioTranslate.element.style.opacity = '1';
-          break;
-        case 'Numpad1':
-          e.preventDefault();
-          this.buttons.forEach((btn) => {
-            if (btn.element.getAttribute('data-num') === '0') {
-              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
-            }
-          });
-          break;
-        case 'Numpad2':
-          e.preventDefault();
-          this.buttons.forEach((btn) => {
-            if (btn.element.getAttribute('data-num') === '1') {
-              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
-            }
-          });
-          break;
-        case 'Numpad3':
-          e.preventDefault();
-          this.buttons.forEach((btn) => {
-            if (btn.element.getAttribute('data-num') === '2') {
-              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
-            }
-          });
-          break;
-        case 'Numpad4':
-          e.preventDefault();
-          this.buttons.forEach((btn) => {
-            if (btn.element.getAttribute('data-num') === '3') {
-              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
-            }
-          });
-          break;
-        case 'Numpad5':
-          e.preventDefault();
-          this.buttons.forEach((btn) => {
-            if (btn.element.getAttribute('data-num') === '4') {
-              this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
-            }
-          });
-          break;
-        default:
-          break;
+      if (this.volume === true) {
+        switch (e.code) {
+          case 'Numpad7':
+            e.preventDefault();
+            this.playAudio();
+            break;
+          case 'Digit7':
+            e.preventDefault();
+            this.playAudio();
+            break;
+          case 'ShiftLeft':
+            e.preventDefault();
+            this.finishThisRound();
+            break;
+          case 'ShiftRight':
+            e.preventDefault();
+            this.finishThisRound();
+            break;
+          case 'Numpad0':
+            this.audioTranslate.element.style.opacity = '1';
+            break;
+          case 'Digit0':
+            this.audioTranslate.element.style.opacity = '1';
+            break;
+          case 'Numpad1':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '0') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit1':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '0') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Numpad2':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '1') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit2':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '1') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Numpad3':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '2') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit3':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '2') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Numpad4':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '3') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit4':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '3') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Numpad5':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '4') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit5':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '4') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          default:
+            break;
+        }
       }
     });
     this.helpBtn = new UIButton(gameContent.element, ['help__game-btn'], '');

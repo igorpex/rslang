@@ -9,9 +9,9 @@ class Main extends Component {
     super(parentNode, 'div', ['main']);
 
     this.mainContainer = new MainContainer(this.element);
-    //const content = document.createElement('p');
-    //content.innerHTML = 'This is content added via "pages/main/main.ts"';
-    //this.mainContainer.element.append(content);
+    // const content = document.createElement('p');
+    // content.innerHTML = 'This is content added via "pages/main/main.ts"';
+    // this.mainContainer.element.append(content);
   }
 }
 
