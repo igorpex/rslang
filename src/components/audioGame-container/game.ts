@@ -60,10 +60,13 @@ class Game extends Component {
     });
 
     document.addEventListener('keydown', (e) => {
-      console.log(this.volume);
       if (this.volume === true) {
         switch (e.code) {
           case 'Numpad7':
+            e.preventDefault();
+            this.playAudio();
+            break;
+          case 'Digit7':
             e.preventDefault();
             this.playAudio();
             break;
@@ -78,7 +81,18 @@ class Game extends Component {
           case 'Numpad0':
             this.audioTranslate.element.style.opacity = '1';
             break;
+          case 'Digit0':
+            this.audioTranslate.element.style.opacity = '1';
+            break;
           case 'Numpad1':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '0') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit1':
             e.preventDefault();
             this.buttons.forEach((btn) => {
               if (btn.element.getAttribute('data-num') === '0') {
@@ -94,7 +108,23 @@ class Game extends Component {
               }
             });
             break;
+          case 'Digit2':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '1') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
           case 'Numpad3':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '2') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit3':
             e.preventDefault();
             this.buttons.forEach((btn) => {
               if (btn.element.getAttribute('data-num') === '2') {
@@ -110,7 +140,23 @@ class Game extends Component {
               }
             });
             break;
+          case 'Digit4':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '3') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
           case 'Numpad5':
+            e.preventDefault();
+            this.buttons.forEach((btn) => {
+              if (btn.element.getAttribute('data-num') === '4') {
+                this.checkRightAnswers(btn.element, btn.element.getAttribute('data-word')!);
+              }
+            });
+            break;
+          case 'Digit5':
             e.preventDefault();
             this.buttons.forEach((btn) => {
               if (btn.element.getAttribute('data-num') === '4') {
@@ -177,7 +223,6 @@ class Game extends Component {
   }
 
   playAudio() {
-    console.log('play');
     const audio = new Audio();
     audio.src = `${baseUrl}/${this.gameObj.word!.audio}`;
     audio.play();
