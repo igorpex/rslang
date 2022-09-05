@@ -99,7 +99,7 @@ class Header extends Component {
     this.linkToMain = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'main'],
+      ['nav__item', 'header__nav-main'],
     );
 
     const linkToMainImg = document.createElement('div');
@@ -116,16 +116,16 @@ class Header extends Component {
     this.linkToEbook = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'ebook'],
+      ['nav__item', 'header__nav-ebook'],
     );
 
     const linkToEbookImg = document.createElement('div');
-    linkToEbookImg.classList.add('nav__item-img', 'ebook');
+    linkToEbookImg.classList.add('nav__item-img');
     linkToEbookImg.style.backgroundImage = `url(${ebookImg})`;
     this.linkToEbook.element.appendChild(linkToEbookImg);
 
     const linkToEbookText = document.createElement('p');
-    linkToEbookText.classList.add('nav__item-text', 'ebook');
+    linkToEbookText.classList.add('nav__item-text');
     linkToEbookText.innerHTML = 'Электронный учебник';
     linkToEbookText.style.width = '146px';
     this.linkToEbook.element.appendChild(linkToEbookText);
@@ -134,16 +134,16 @@ class Header extends Component {
     this.linkToMiniGames = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'game'],
+      ['nav__item', 'header__nav-games'],
     );
 
     const linkToMiniGamesImg = document.createElement('div');
-    linkToMiniGamesImg.classList.add('nav__item-img', 'game');
+    linkToMiniGamesImg.classList.add('nav__item-img');
     linkToMiniGamesImg.style.backgroundImage = `url(${gameImg})`;
     this.linkToMiniGames.element.appendChild(linkToMiniGamesImg);
 
     const linkToMiniGamesText = document.createElement('p');
-    linkToMiniGamesText.classList.add('nav__item-text', 'game');
+    linkToMiniGamesText.classList.add('nav__item-text');
     linkToMiniGamesText.innerHTML = 'Мини-игры';
     this.linkToMiniGames.element.appendChild(linkToMiniGamesText);
 
@@ -151,16 +151,16 @@ class Header extends Component {
     this.linkToStatistics = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'statistics'],
+      ['nav__item', 'header__nav-statistics'],
     );
 
     const linkToStatisticsImg = document.createElement('div');
-    linkToStatisticsImg.classList.add('nav__item-img', 'statistics');
+    linkToStatisticsImg.classList.add('nav__item-img');
     linkToStatisticsImg.style.backgroundImage = `url(${statisticsImg})`;
     this.linkToStatistics.element.appendChild(linkToStatisticsImg);
 
     const linkToStatisticsText = document.createElement('p');
-    linkToStatisticsText.classList.add('nav__item-text', 'statistics');
+    linkToStatisticsText.classList.add('nav__item-text');
     linkToStatisticsText.innerHTML = 'Статистика';
     this.linkToStatistics.element.appendChild(linkToStatisticsText);
 
@@ -168,16 +168,16 @@ class Header extends Component {
     this.linkToTeam = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'team'],
+      ['nav__item', 'header__nav-team'],
     );
 
     const linkToTeamImg = document.createElement('div');
-    linkToTeamImg.classList.add('nav__item-img', 'team');
+    linkToTeamImg.classList.add('nav__item-img');
     linkToTeamImg.style.backgroundImage = `url(${teamImg})`;
     this.linkToTeam.element.appendChild(linkToTeamImg);
 
     const linkToTeamText = document.createElement('p');
-    linkToTeamText.classList.add('nav__item-text', 'team');
+    linkToTeamText.classList.add('nav__item-text');
     linkToTeamText.innerHTML = 'О команде';
     this.linkToTeam.element.appendChild(linkToTeamText);
 
