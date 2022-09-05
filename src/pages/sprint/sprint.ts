@@ -132,11 +132,17 @@ class Sprint extends Component {
     const wordsPages = (await Promise.allSettled(wordsPagesPromises));
     const filteredPages = wordsPages
       .filter(({ status }) => status === 'fulfilled')
+      // eslint-disable-next-line max-len
       .map((fulfilledPromise) => (fulfilledPromise as unknown as PromiseFulfilledResult<WordPromise>).value)
       .map((page) => page.items)
       .flat()
       .map((word) => ({
-        audio: word.audio, id: word.id, word: word.word, wordTranslate: word.wordTranslate, group: word.group, page: word.page,
+        audio: word.audio,
+        id: word.id,
+        word: word.word,
+        wordTranslate: word.wordTranslate,
+        group: word.group,
+        page: word.page,
       }));
     return filteredPages;
   }
@@ -154,11 +160,20 @@ class Sprint extends Component {
     const wordsPages = (await Promise.allSettled(wordsPagesPromises));
     const filteredPages = wordsPages
       .filter(({ status }) => status === 'fulfilled')
-      .map((fulfilledPromise) => (fulfilledPromise as unknown as PromiseFulfilledResult<WordPromise>).value)
+      .map(
+        // eslint-disable-next-line max-len
+        (fulfilledPromise) => (fulfilledPromise as unknown as PromiseFulfilledResult<WordPromise>).value,
+      )
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       .map((page) => page.items)
       .flat()
       .map((word) => ({
-        audio: word.audio, id: word.id, word: word.word, wordTranslate: word.wordTranslate, group: word.group, page: word.page,
+        audio: word.audio,
+        id: word.id,
+        word: word.word,
+        wordTranslate: word.wordTranslate,
+        group: word.group,
+        page: word.page,
       }));
     return filteredPages;
   }
@@ -192,7 +207,9 @@ class Sprint extends Component {
     this.sprintGame?.destroy();
 
     this.sprintResults = new SprintResults(this.element);
-
+    if (this.sprintGame !== undefined) {
+      this.sprintGame.volume = false;
+    }
     // Prepare results
     this.sprintResults.rightAnsweredWords = this.sprintGame!.rightAnsweredWords;
     this.sprintResults.wrongAnsweredWords = this.sprintGame!.wrongAnsweredWords;

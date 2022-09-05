@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 import {
   GameResult, ShortWord, SprintCounts,

@@ -2,11 +2,13 @@ import Component from '../../utils/component';
 
 class Timer extends Component {
   x: NodeJS.Timer | undefined;
+
   clear() {
     if (this.x) {
       clearInterval(this.x);
     }
   }
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-game__timer'], '60');
     this.element.id = 'sprint-game-timer';
@@ -14,7 +16,7 @@ class Timer extends Component {
 
   public start(finishCallback: Function) {
     // const countDownDate = new Date().getTime() + 61000;
-    const countDownDate = new Date().getTime() + 10000;
+    const countDownDate = new Date().getTime() + 61000;
     this.x = setInterval(() => {
       const now = new Date().getTime();
       const distance = countDownDate - now;

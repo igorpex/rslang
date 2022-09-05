@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 
 import './index.scss';
 
-type GameType = 'menu' | 'ebook';
+// type GameType = 'menu' | 'ebook';
 
 class SprintEntrance extends Component {
   private content:Component;

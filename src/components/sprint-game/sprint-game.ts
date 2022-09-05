@@ -52,6 +52,8 @@ class SprintGame extends Component {
 
   private title: Component;
 
+  volume: boolean;
+
   soundCloseContainer: Component;
 
   constructor(parentNode: HTMLElement) {
@@ -65,7 +67,7 @@ class SprintGame extends Component {
     this.maxPointsPerCorrectAnswer = 80;
     this.rightAnsweredWords = [];
     this.wrongAnsweredWords = [];
-
+    this.volume = true;
     this.sprintCounts = {
       pointsPerCorrectAnswer: 10,
       totalPoints: 0,
@@ -98,6 +100,12 @@ class SprintGame extends Component {
           this.clear();
         }
       });
+    });
+    document.addEventListener('keydown', (e) => {
+      if (this.volume !== undefined && this.volume !== null && this.volume === true) {
+        this.checkKey(e.code);
+        e.preventDefault();
+      }
     });
   }
 
@@ -133,24 +141,32 @@ class SprintGame extends Component {
       this.sprintCounts,
     );
     this.card.cardWrongBtn.onClickButton = () => {
-      this.card?.cardWrongBtn.setDisabled(true);
-      this.card?.cardRightBtn.setDisabled(true);
-      this.card?.cardRightBtn.element.classList.add('active');
-      if (!this.card?.sprintWord.correctFlag) {
-        this.processCorrectAnswer();
-      } else this.processWrongAnswer();
+      this.chooseWrongButton();
     };
 
     this.card.cardRightBtn.onClickButton = () => {
-      this.card?.cardRightBtn.setDisabled(true);
-      this.card?.cardWrongBtn.setDisabled(true);
-      this.card?.cardWrongBtn.element.classList.add('active');
-      if (this.card?.sprintWord.correctFlag === 1) {
-        this.processCorrectAnswer();
-      } else this.processWrongAnswer();
+      this.chooseRightButton();
     };
   }
-  
+
+  chooseWrongButton() {
+    this.card?.cardWrongBtn.setDisabled(true);
+    this.card?.cardRightBtn.setDisabled(true);
+    this.card?.cardRightBtn.element.classList.add('active');
+    if (!this.card?.sprintWord.correctFlag) {
+      this.processCorrectAnswer();
+    } else this.processWrongAnswer();
+  }
+
+  chooseRightButton() {
+    this.card?.cardRightBtn.setDisabled(true);
+    this.card?.cardWrongBtn.setDisabled(true);
+    this.card?.cardWrongBtn.element.classList.add('active');
+    if (this.card?.sprintWord.correctFlag === 1) {
+      this.processCorrectAnswer();
+    } else this.processWrongAnswer();
+  }
+
   private async processCorrectAnswer() {
     this.card?.element.classList.add('sprint__card_right-answer');
     // this.updateWordStatistics('right', this.sprintWords![this.activeWordIndex]);
@@ -194,7 +210,7 @@ class SprintGame extends Component {
     this.wrongAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
     this.activeWordIndex += 1;
-    
+
     // update counts on wrong
     this.sprintCounts.rightInTheRow = 0;
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
@@ -241,6 +257,19 @@ class SprintGame extends Component {
       };
       return newWord;
     });
+  }
+
+  checkKey(key: string) {
+    switch (key) {
+      case 'ArrowLeft':
+        this.chooseWrongButton();
+        break;
+      case 'ArrowRight':
+        this.chooseRightButton();
+        break;
+      default:
+        break;
+    }
   }
 
   private clear() {

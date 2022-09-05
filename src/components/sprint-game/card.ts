@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 import UIButton from '../UI/button/button';
 import { SprintCounts, SprintWord } from '../../interfaces';
@@ -41,6 +42,7 @@ class SprintCard extends Component {
 
     // dots showing correct answers after mulpiplier upgrade
     this.cardDotsContainer = new Component(this.element, 'div', ['sprint__card-dots-container']);
+    // eslint-disable-next-line max-len
     // const cardDotsCount = new Component(this.element, 'p', ['sprint__card-dots-count'], `Закрашенных точек (от 0 до 3, означают правильные ответы с этим множителем): ${sprintCounts.dots}`); // TODO Delete
     for (let i = 1; i <= 3; i += 1) {
       const cardDot = new Component(this.cardDotsContainer.element, 'div', ['sprint__card-dot']);
@@ -49,6 +51,7 @@ class SprintCard extends Component {
       }
     }
     if (sprintCounts.birds >= 2) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const cardBirdsCount = new Component(this.element, 'p', ['sprint__card-per-answer-count'], `+${sprintCounts.pointsPerCorrectAnswer} очков за слово`);
     } else {
       const cardBirdsCount = new Component(this.element, 'p', ['sprint__card-per-answer-count']);
