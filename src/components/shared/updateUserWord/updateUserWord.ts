@@ -1,5 +1,5 @@
 import {
-  Game, SprintWord, UserWord, Word, WordOptional
+  Game, SprintWord, UserWord, Word,
 } from '../../../interfaces';
 import Auth from '../../auth/auth/auth';
 import { authStorageKey } from '../../../utils/config';
@@ -60,7 +60,9 @@ function updateUserWordObject(game: Game, result: 'right' | 'wrong', userWord: U
 }
 
 async function updateWordStatistics(game: Game, result: 'right' | 'wrong', word: SprintWord | Word) {
-  if(word._id !== undefined) {
+  // eslint-disable-next-line no-underscore-dangle
+  if (word._id !== undefined) {
+    // eslint-disable-next-line no-param-reassign, no-underscore-dangle
     word.id = word._id;
   }
   const auth = new Auth();
