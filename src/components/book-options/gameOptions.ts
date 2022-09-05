@@ -1,6 +1,8 @@
 import { Word } from '../../interfaces';
 import Component from '../../utils/component';
 import UIButton from '../UI/button/button';
+import downArrowImg from '../../assets/svg/down-arrow.svg';
+import videoGameImg from '../../assets/svg/video-game-icon.svg';
 
 class GameOptions extends Component {
   startSprintGame: () => void = () => {};
@@ -14,10 +16,10 @@ class GameOptions extends Component {
 
     const gameHeader = new Component(this.element, 'div', ['game__header']);
     const headerIcon = new Component(gameHeader.element, 'span', ['game-header__icon']);
-    headerIcon.element.style.backgroundImage = 'url(./video-game-icon.svg)';
+    headerIcon.element.style.backgroundImage = `url(${videoGameImg})`;
     const headerTitle = new Component(gameHeader.element, 'p', ['game-header__title'], 'Мини-игры');
     const headerBtn = new Component(gameHeader.element, 'span', ['game-header__btn']);
-    headerBtn.element.style.backgroundImage = 'url(./down-arrow.svg)';
+    headerBtn.element.style.backgroundImage = `url(${downArrowImg})`;
     const gameList = new Component(this.element, 'ul', ['game__list']);
     gameList.element.classList.add('hidden');
 

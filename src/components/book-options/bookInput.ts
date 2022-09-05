@@ -1,6 +1,8 @@
 import Component from '../../utils/component';
 import ListItem from '../shared/list/list';
 import UIInput from '../UI/input/input';
+import downArrowImg from '../../assets/svg/down-arrow.svg';
+import levelsIconImg from '../../assets/svg/levels-icon.svg';
 
 class BookInput extends Component {
   // input: UIInput;
@@ -27,12 +29,12 @@ class BookInput extends Component {
     this.savedGroup = 0;
     const levelHeader = new Component(this.element, 'div', ['level__header']);
     const levelIcon = new Component(levelHeader.element, 'span', ['level__icon']);
-    levelIcon.element.style.backgroundImage = 'url(./levels-icon.svg)';
+    levelIcon.element.style.backgroundImage = `url(${levelsIconImg})`;
     this.levelTitle = new Component(levelHeader.element, 'div', ['level__title']);
     this.getLocalStorage();
     // this.levelTitle.element.innerHTML = 'Новичок';
     const levelBtn = new Component(levelHeader.element, 'span', ['level__btn']);
-    levelBtn.element.style.backgroundImage = 'url(./down-arrow.svg)';
+    levelBtn.element.style.backgroundImage = `url(${downArrowImg})`;
 
     const levelList = new Component(this.element, 'ul', ['level__list']);
     for (let i = 0; i < this.nameArray.length; i++) {

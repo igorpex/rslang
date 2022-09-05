@@ -17,8 +17,8 @@
 
   &__logo {
     margin-right: 20px;
-    min-width: 3.13rem;
-    min-height: 3.13rem;
+    min-width: 5rem;
+    min-height: 5rem;
     background-image: url('../../assets/svg/logo.svg');
   }
 
@@ -32,8 +32,8 @@
     .header__login,
     .header__logout {
       margin-right: 20px;
-      width: 3.13rem;
-      height: 3.13rem;
+      width: 5rem;
+      height: 5rem;
       cursor: pointer;
     }
 
@@ -42,15 +42,15 @@
     }
 
     .header__logout {
-      background-image: url('../../assets/svg/exit-svgrepo-com.svg');
+      background-image: url('../../assets/svg/exit.svg');
     }
 
     .header__burger {
       position: relative;
-      width: 3.13rem;
-      height: 2.1rem;
-      z-index: 2;
+      width: 5rem;
+      height: 3.3rem;
       cursor: pointer;
+      z-index: 3;
     }
 
     .header__burger:before,
@@ -103,13 +103,13 @@
     height: 100vh;
     top: -100vh;
     right: -1px;
-    padding: 0 60px;
+    padding: 0 40px;
     background: rgb(255, 198, 156);
     border: 1px solid black;
     box-sizing: border-box;
     visibility: hidden;
     transition: 0.5s;
-    z-index: 1;
+    z-index: 2;
 
     &__nav {
       display: flex;
@@ -125,19 +125,20 @@
   &__burger-panel.active {
     visibility: visible;
     top: -1px;
+    z-index: 2;
   }
 
   .nav__item {
     display: flex;
     align-items: center;
     gap: 20px;
-    font-size: 1.3rem;
+    font-size: 2rem;
     color: black;
     text-decoration: none;
 
     &-img {
-      width: 3.13rem;
-      height: 3.13rem;
+      width: 5rem;
+      height: 5rem;
     }
   }
 
@@ -153,11 +154,13 @@
     left: -1px;
     background-color: rgba(0, 0, 0, 0.5);
     transition: 0.5s;
+    z-index: 1;
   }
 
   .dark.active {
     top: -1px;
     cursor: pointer;
+    z-index: 1;
   }
 }
 

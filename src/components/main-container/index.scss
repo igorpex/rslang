@@ -26,7 +26,7 @@
 
   &__divided-line {
     margin: 0 20px;
-    width: 0.3rem;
+    width: 0.5rem;
     height: 468px;
     background-color: rgb(255, 198, 156);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -49,7 +49,7 @@
       width: 100%;
       max-width: 45%;
       height: 214px;
-      font-size: 1.4rem;
+      font-size: 2.2rem;
       color: black;
       text-decoration: none;
       background-color: rgb(255, 244, 217);
@@ -101,7 +101,7 @@
   }
 }
 
-@media (max-width: 785px) {
+@media (max-width: 810px) {
   .main-container {
 
     &__hello-window {
@@ -132,7 +132,7 @@
   .main-container {
     &__menu-window {
       &__link-container {
-        font-size: 1rem;
+        font-size: 1.5rem;
         text-align:center;
         height: 150px;
       }
