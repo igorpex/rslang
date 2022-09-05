@@ -2,11 +2,13 @@ import Component from '../../utils/component';
 
 class Timer extends Component {
   x: NodeJS.Timer | undefined;
+
   clear() {
     if (this.x) {
       clearInterval(this.x);
     }
   }
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-game__timer'], '60');
     this.element.id = 'sprint-game-timer';

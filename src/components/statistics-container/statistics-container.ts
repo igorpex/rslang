@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 import './statistics-container.scss';
 import Auth from '../auth/auth/auth';
