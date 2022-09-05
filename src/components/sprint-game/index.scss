@@ -16,6 +16,21 @@
   align-items: center;
 }
 
+#sprint__difficulty-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend %box;
+}
+
+#sprint__difficulty-btn:hover {
+  background-color: rgba(236, 226, 200, 0.5);
+}
+
+#sprint__difficulty-btn:active {
+  transform: translate(3px, 3px);
+}
+
 .sprint {
   width: 100%;
   padding: 40px;
@@ -26,7 +41,7 @@
   &-entrance {
     width: 100%;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(0, 0, 0)), url("../../assets/img/sprint-entrance.jpg");
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
@@ -34,20 +49,25 @@
 
   &__title {
     font-weight: bold;
-    font-size: 8rem;
-    line-height: 10.2rem;
+    font-size: 10rem;
+    line-height: 12.1rem;
     letter-spacing: 0.1em;
     color: rgb(255, 244, 217);
   }
 
+  &__description {
+    padding-top: 40px;
+  }
+
   &__description,
   &__difficulty-text {
-    padding-top: 50px;
     @extend %text;
   }
 
   &__description2 {
     padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 140px;
     @extend %text;
   }
 
@@ -103,6 +123,11 @@
       text-align: center;
       font-size: 2.2rem;
       padding: 0.4rem 0;
+      transition: 0.5s;
+    }
+
+    &-option:hover {
+      background-color: #FFE39C;
     }
   }
 
@@ -116,12 +141,21 @@
     letter-spacing: 0.15em;
     @extend %box;
     cursor: pointer;
+    transition: 0.5s;
+  }
+
+  &__difficulty-btn:hover {
+    background-color: rgba(236, 226, 200, 0.5);
+  }
+
+  &__difficulty-btn:active {
+    transform: translate(3px, 3px);
   }
 
   &-game {
     width: 100%;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(0, 0, 0)), url("../../assets/img/sprint-entrance.jpg");
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
@@ -130,7 +164,7 @@
       width: 100%;
       height: 75vh;
       padding: 40px;
-      background-image: url('../../assets/img/sprint-entrance.jpg');
+      background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(0, 0, 0)), url("../../assets/img/sprint-entrance.jpg");
       background-position: top right;
       border: 1px solid #FFC69C;
       box-sizing: border-box;
@@ -170,9 +204,9 @@
     }
 
     &__beep-sound-icon {
-      width: 3rem;
+      width: 4rem;
       background-image: url('../../assets/svg/note-muted.svg');
-      background-size: contain;
+      background-size: 3rem;
       background-repeat: no-repeat;
       cursor: pointer;
     }
@@ -196,6 +230,7 @@
       width: 100%;
       height: 3px;
       background: black;
+      transition: 0.5s;
     }
     
     &__close-btn::before {
@@ -206,6 +241,14 @@
     &__close-btn::after {
       bottom: 47%;
       transform: rotate(-45deg);
+    }
+
+    &__close-btn:hover:before {
+      transform: rotate(-45deg);
+    }
+
+    &__close-btn:hover:after {
+      transform: rotate(45deg);
     }
   }
 
@@ -230,6 +273,11 @@
       width: 7rem;
       height: 7rem;
       cursor: pointer;
+      transition: 0.5s;
+    }
+
+    &-audio-btn:active {
+      transform: translate(3px, 3px);
     }
     
     &_right-answer{
@@ -327,6 +375,12 @@
     color: black;
     text-transform: capitalize;
     border: 1px solid rgba(255, 198, 156, 1);
+    transition: 0.5s;
+  }
+
+  &__right-btn:hover,
+  &__wrong-btn:hover {
+    background-color: rgba(236, 226, 200, 0.5);
   }
 
   &__right-btn.active:disabled {
@@ -344,14 +398,14 @@
   }
   
   &__wrong-btn {
-    background-color: rgba(255, 244, 217, 0.5);
+    background-color: rgba(255, 198, 156, 1);
   }
   
   &-results {
     width: 100%;
     height: 75vh;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient(rgba(255, 255, 255, 0), rgb(0, 0, 0)), url("../../assets/img/sprint-entrance.jpg");
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
@@ -392,6 +446,11 @@
       width: 2.5rem;
       height: 2.5rem;
       cursor: pointer;
+      transition: 0.5s;
+    }
+
+    &__card-audio-btn:active {
+      transform: translate(3px, 3px);
     }
     
     &-word,
@@ -419,6 +478,15 @@
       color: black;
       text-decoration: none;
       @extend %box;
+      transition: 0.5s;
+    }
+
+    &__button:hover {
+      background-color: rgba(236, 226, 200, 0.5);
+    }
+
+    &__button:active {
+      transform: translate(3px, 3px);
     }
   }
 }
@@ -481,8 +549,6 @@
   .sprint__select,
   .sprint__difficulty-btn {
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   .sprint__wrong-btn,
@@ -541,7 +607,8 @@
   .sprint__difficulty-btn {
     width: 215px;
     height: 50px;
-    font-size: 2.2rem;
+    font-size: 4rem;
+    text-align: center;
   }
 
   .sprint-results {
