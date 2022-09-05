@@ -24,7 +24,7 @@ class LoginContainer extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['login__container']);
     this.loginForm = new Component(this.element, 'form', ['login__form']);
-    this.title = new Component(this.loginForm.element, 'h2', ['login__title'], 'Login');
+    this.title = new Component(this.loginForm.element, 'h2', ['login__title'], 'Вход в аккаунт');
     this.usernameInput = new Component(this.loginForm.element, 'input', ['login__username-input']);
     this.usernameInput.element.setAttribute('value', '12@12.ru');
     this.usernameInput.element.setAttribute('type', 'text');
@@ -37,13 +37,13 @@ class LoginContainer extends Component {
     this.passwordInput.element.setAttribute('name', 'password');
     this.passwordInput.element.setAttribute('id', 'login-password');
 
-    this.signUpLink = new Component(this.loginForm.element, 'a', ['login__signup-link'], 'Sign Up');
-    this.signUpLink.element.setAttribute('href', './#/signup');
-
-    this.loginButton = new UIButton(this.loginForm.element, ['btn-small'], 'Log In');
+    this.loginButton = new UIButton(this.loginForm.element, ['login__btn-small'], 'ВОЙТИ');
     this.loginButton.element.setAttribute('type', 'submit');
 
     this.loginForm.element.addEventListener('submit', (e) => this.handleLogin(e));
+
+    this.signUpLink = new Component(this.loginForm.element, 'a', ['login__signup-link'], 'Регистрация');
+    this.signUpLink.element.setAttribute('href', './#/signup');
 
     this.logOutButton = new UIButton(this.element, ['btn-small', 'logout-btn'], 'Log Out');
     this.loginButton!.element.style.display = 'block';
