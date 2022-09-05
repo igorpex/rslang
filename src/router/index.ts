@@ -9,6 +9,7 @@ import SignupContainer from '../components/auth/signup-container/signup-containe
 import Sprint from '../pages/sprint/sprint';
 import Games from '../pages/games/games';
 import Statistics from '../pages/statisctics/statistics';
+import AudioGame from '../pages/audio-game/audioGame';
 
 class Router {
   private readonly routes: Array<IRoute>;
@@ -29,6 +30,8 @@ class Router {
   gamesPage: Component;
 
   sprintPage: Component | undefined;
+
+  audioGamePage: Component | undefined;
 
   testPage: Component | undefined;
 
@@ -105,6 +108,14 @@ class Router {
           this.statisticsPage = new Statistics(this.rootElement);
           this.rootElement.append(this.statisticsPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
+        },
+      },
+      {
+        name: '/games/audio-challenge',
+        component: () => {
+          console.log('audio');
+          this.audioGamePage = new AudioGame(this.rootElement);
+          this.rootElement.append(this.audioGamePage.element);
         },
       },
       {

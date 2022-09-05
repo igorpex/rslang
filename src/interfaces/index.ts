@@ -149,6 +149,7 @@ export interface WordPromise {
 export interface SprintWord extends ShortWord {
   correctFlag?: number;
   proposedTranslate?: string;
+  _id?: string; 
 }
 
 export interface ShortWord {
@@ -175,4 +176,13 @@ export interface SprintCounts {
   maxRightInTheRow: number;
   dots: number;
   birds: number;
+}
+export interface GameObj {
+  word: Word | null;
+  answers: Word[];
+}
+
+export interface StatisticsObject{
+  word: Word;
+  isAnswerTrue: boolean;
 }
