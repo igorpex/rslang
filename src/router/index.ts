@@ -40,6 +40,11 @@ class Router {
       {
         name: '/',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.main') as HTMLElement).classList.add('active');
+
           this.rootElement.append(this.mainPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
@@ -47,6 +52,11 @@ class Router {
       {
         name: '/team',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.team') as HTMLElement).classList.add('active');
+
           this.rootElement.append(this.teamPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
@@ -54,6 +64,11 @@ class Router {
       {
         name: '/ebook',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.ebook') as HTMLElement).classList.add('active');
+
           this.bookPage = new Book(this.rootElement);
           this.rootElement.append(this.bookPage.element);
         },
@@ -68,6 +83,10 @@ class Router {
       {
         name: '/login',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+
           this.loginPage = new Login(this.rootElement);
           this.rootElement.append(this.loginPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -76,6 +95,10 @@ class Router {
       {
         name: '/signup',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+
           this.signupPage = new SignupContainer(this.rootElement);
           this.rootElement.append(this.signupPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
@@ -84,6 +107,11 @@ class Router {
       {
         name: '/games',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+
           this.rootElement.append(this.gamesPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'flex';
         },
@@ -91,11 +119,41 @@ class Router {
       {
         name: '/games/sprint',
         component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.game') as HTMLElement).classList.add('active');
+
           this.sprintPage = new Sprint(this.rootElement);
           this.rootElement.append(this.sprintPage.element);
           (document.querySelector('.footer') as HTMLDivElement).style.display = 'none';
         },
       },
+      /*{
+        name: '/statistics',
+        component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.statistics') as HTMLElement).classList.add('active');
+
+          this.statisticsPage = new Statistics(this.rootElement);
+          this.rootElement.append(this.statisticsPage.element);
+          (document.querySelector('.footer') as HTMLDivElement).style.display = 'none'
+        },
+      },*/
+      /*{
+        name: '/games/audio-challenge',
+        component: () => {
+          document.querySelectorAll('.nav__item.active').forEach((item) => {
+            item.classList.remove('active');
+          });
+          (document.querySelector('.nav__item.games') as HTMLElement).classList.add('active');
+
+          this.audioGamePage = new AudioGame(this.rootElement);
+          this.rootElement.append(this.audioGamePage.element);
+        },
+      },*/
       {
         name: '/test',
         component: () => {
