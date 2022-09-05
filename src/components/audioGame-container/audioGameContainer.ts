@@ -164,6 +164,7 @@ class AudioGameContainer extends Component {
         if (e.code === 'Enter') {
           e.preventDefault();
           if (this.words.length > 0) {
+            console.log('enter');
             this.game!.volume = false;
             this.staticsObjects.push(this.game!.staticsObject);
             this.checkRows(this.game!.staticsObject.isAnswerTrue);
@@ -183,10 +184,11 @@ class AudioGameContainer extends Component {
   }
 
   checkRefererType() {
-    const params = new URLSearchParams(document.location.search);
-    const ref = params.get('ref');
-    if (ref !== null) {
-      if (ref!.includes('ebook')) {
+    const gameRefferer = sessionStorage.getItem('gameRefferer');
+    console.log(gameRefferer);
+    // const ref = params.get('ref');
+    if (gameRefferer !== null && gameRefferer !== undefined) {
+      if (gameRefferer === 'ebook') {
         this.refererType = 'ebook';
         this.selectTitle.element.style.display = 'none';
         this.select.element.style.display = 'none';
