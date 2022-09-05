@@ -26,7 +26,7 @@
   &-entrance {
     width: 100%;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
@@ -121,7 +121,7 @@
   &-game {
     width: 100%;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
@@ -130,7 +130,7 @@
       width: 100%;
       height: 75vh;
       padding: 40px;
-      background-image: url('../../assets/img/sprint-entrance.jpg');
+      background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
       background-position: top right;
       border: 1px solid #FFC69C;
       box-sizing: border-box;
@@ -351,7 +351,7 @@
     width: 100%;
     height: 75vh;
     padding: 40px;
-    background-image: url('../../assets/img/sprint-entrance.jpg');
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
     background-position: top right;
     border: 1px solid #FFC69C;
     box-sizing: border-box;
