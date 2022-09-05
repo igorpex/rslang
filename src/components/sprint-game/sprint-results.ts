@@ -2,7 +2,7 @@ import Component from '../../utils/component';
 import {
   GameResult, ShortWord, SprintCounts,
 } from '../../interfaces';
-import ButtonImg from '../../assets/svg/play-button.svg';
+import playButtonImg from '../../assets/svg/play-button.svg';
 
 import './index.scss';
 import {
