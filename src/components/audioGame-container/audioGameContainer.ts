@@ -79,6 +79,8 @@ class AudioGameContainer extends Component {
     },
   };
 
+  checkEnterEvent: boolean;
+
   staticsObjects: StatisticsObject[];
 
   constructor(parentNode: HTMLElement) {
@@ -99,7 +101,7 @@ class AudioGameContainer extends Component {
     this.isAuth = false;
     this.authorization = new Auth();
     this.checkAuthorization();
-
+    this.checkEnterEvent = true;
     this.game = null;
 
     this.content = new Component(this.element, 'div', ['audioChallenge__content']);
@@ -158,16 +160,19 @@ class AudioGameContainer extends Component {
     };
 
     document.addEventListener('keydown', (e) => {
-      if (e.code === 'Enter') {
-        e.preventDefault();
-        if (this.words.length > 0) {
-          this.staticsObjects.push(this.game!.staticsObject);
-          this.checkRows(this.game!.staticsObject.isAnswerTrue);
-          this.startGame();
-        } else {
-          this.staticsObjects.push(this.game!.staticsObject);
-          this.checkRows(this.game!.staticsObject.isAnswerTrue);
-          this.showResult(this.staticsObjects);
+      if (this.checkEnterEvent === true) {
+        if (e.code === 'Enter') {
+          e.preventDefault();
+          if (this.words.length > 0) {
+            this.game!.volume = false;
+            this.staticsObjects.push(this.game!.staticsObject);
+            this.checkRows(this.game!.staticsObject.isAnswerTrue);
+            this.startGame();
+          } else {
+            this.staticsObjects.push(this.game!.staticsObject);
+            this.checkRows(this.game!.staticsObject.isAnswerTrue);
+            this.showResult(this.staticsObjects);
+          }
         }
       }
     });
@@ -372,6 +377,7 @@ class AudioGameContainer extends Component {
 
       this.game.nextBtn.element.addEventListener('click', () => {
         if (this.words.length > 0) {
+          this.game!.volume = false;
           this.staticsObjects.push(this.game!.staticsObject);
           this.checkRows(this.game!.staticsObject.isAnswerTrue);
           this.startGame();
@@ -406,6 +412,7 @@ class AudioGameContainer extends Component {
 
   showResult(result: StatisticsObject[]) {
     this.element.innerHTML = '';
+    this.checkEnterEvent = false;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resultPage = new Result(this.element, result);
     this.sendToUsersStatistics();
