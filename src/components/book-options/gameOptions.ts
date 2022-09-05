@@ -28,22 +28,19 @@ class GameOptions extends Component {
     sprintLink.element.setAttribute('href', '?ref=%23%2Febook#/games/sprint');
     const audioGameBtn = new Component(gameList.element, 'li', ['list__item'], '');
     const audioGameLink = new Component(audioGameBtn.element, 'a', ['audio-game__link'], 'Аудиовызов');
-    audioGameLink.element.setAttribute('href', '#/audioGame');
+    audioGameLink.element.setAttribute('href', '?ref=%23%2Febook#/games/audio-challenge');
 
     this.element.addEventListener('click', () => {
       gameList.element.classList.toggle('hidden');
     });
     sprintBtn.element.addEventListener('click', () => {
-      gameList.element.classList.remove('hidden');
     });
     audioGameBtn.element.addEventListener('click', () => {
-      gameList.element.classList.remove('hidden');
     });
     // sprintBtn.onClickButton = () => {
     //     this.startSprintGame();
     //     console.log('start');
     // }
-    // audioGameBtn.onClickButton = () => this.startAudioGame();
     // dictionaryBtn.onClickButton = () => this.openDictionary();
   }
 }

@@ -1,5 +1,10 @@
 import {
-  UpdateUser, User, UserAggregatedWordsParams, UserSettings, UserStatistics, UserWord,
+  UpdateUser,
+  User,
+  UserAggregatedWordsParams,
+  UserSettings,
+  UserStatistics,
+  UserWord,
 } from '../interfaces';
 
 export const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
@@ -321,6 +326,29 @@ export const getUserStatistics = async ({
     Authorization: `Bearer ${token}`,
   },
 })).json();
+
+/**
+ * Gets statistics with status.
+ * Returns statistics object: {learnedWords: number, optional: {}}
+ * @param {string} id - userId.
+ * @param {string} token - user token.
+ */
+export const getUserStatisticsWithStatus = async ({
+  id, token,
+}: { id: string, token: string }) => {
+  const response = await fetch(`${users}/${id}/statistics`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status === 200) {
+    return { status: response.status, data: await response.json() };
+  }
+  return { status: response.status, data: undefined };
+};
 
 /**
  * Sets new statistics for user.

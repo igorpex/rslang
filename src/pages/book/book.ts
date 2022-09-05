@@ -125,6 +125,7 @@ class Book extends Component {
         const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
         cardsArr = cardsArr.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
       }
+      this.saveInLocalStorage(cardsArr);
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
   }

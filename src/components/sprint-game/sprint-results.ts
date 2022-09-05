@@ -1,9 +1,15 @@
 import Component from '../../utils/component';
-import { ShortWord, SprintCounts } from '../../interfaces';
-import playButtonImg from '../../assets/svg/play-button.svg';
+import {
+  GameResult, ShortWord, SprintCounts,
+} from '../../interfaces';
+import ButtonImg from '../../assets/svg/play-button.svg';
 
 import './index.scss';
-import { baseUrl } from '../../api/api';
+import {
+  baseUrl,
+} from '../../api/api';
+
+import updateUserStatistics from '../shared/updateUserStatistics/updateUserStatistics';
 
 class SprintResults extends Component {
   rightAnsweredWords: ShortWord[] | undefined;
@@ -20,14 +26,18 @@ class SprintResults extends Component {
     super(parentNode, 'div', ['sprint-results']);
   }
 
-  public start() {
+  public async start() {
     const answersContainer = new Component(this.element, 'div', ['sprint-results__container']);
 
     // the amount of right and wrong answers
     let rightCount = 0;
     let wrongCount = 0;
-    if (this.rightAnsweredWords) { rightCount = this.rightAnsweredWords.length; }
-    if (this.wrongAnsweredWords) { wrongCount = this.wrongAnsweredWords.length; }
+    if (this.rightAnsweredWords) {
+      rightCount = this.rightAnsweredWords.length;
+    }
+    if (this.wrongAnsweredWords) {
+      wrongCount = this.wrongAnsweredWords.length;
+    }
 
     // right and wrong words
     const rightContainer = new Component(answersContainer.element, 'div', ['sprint-results__answers']);
@@ -90,6 +100,13 @@ class SprintResults extends Component {
       const buttonsListGames = new Component(buttonsContainer.element, 'a', ['sprint-results__button'], 'К СПИСКУ ИГР');
       buttonsListGames.element.setAttribute('href', '#/games');
     }
+
+    const gameResult: GameResult = {
+      right: rightCount,
+      wrong: wrongCount,
+      maxRightInARow: this.sprintCounts!.maxRightInTheRow,
+    };
+    await updateUserStatistics('sprint', gameResult);
   }
 }
 export default SprintResults;

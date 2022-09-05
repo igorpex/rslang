@@ -1,5 +1,5 @@
 import {
-  Game, SprintWord, UserWord, Word,
+  Game, SprintWord, UserWord, Word, WordOptional
 } from '../../../interfaces';
 import Auth from '../../auth/auth/auth';
 import { authStorageKey } from '../../../utils/config';
@@ -60,13 +60,16 @@ function updateUserWordObject(game: Game, result: 'right' | 'wrong', userWord: U
 }
 
 async function updateWordStatistics(game: Game, result: 'right' | 'wrong', word: SprintWord | Word) {
+  if(word._id !== undefined) {
+    word.id = word._id;
+  }
   const auth = new Auth();
   if (!auth.JwtHasExpired()) {
     const userAuthData = localStorage.getItem(authStorageKey);
     const { userId, token } = JSON.parse(userAuthData!);
     // case if user word does exist - when get curren user word info, update it and PUT to server
     const userWordWStatus = await getUserWordByIdWithStatus(userId, word.id, token);
-
+    console.log(userWordWStatus);
     if (userWordWStatus.status === 404) {
       console.log('word is new, not in userWords');
       const newUserWord = createEmptyUserWord();
