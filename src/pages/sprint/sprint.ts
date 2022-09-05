@@ -192,7 +192,9 @@ class Sprint extends Component {
     this.sprintGame?.destroy();
 
     this.sprintResults = new SprintResults(this.element);
-
+    if (this.sprintGame !== undefined) {
+      this.sprintGame.volume = false;
+    }
     // Prepare results
     this.sprintResults.rightAnsweredWords = this.sprintGame!.rightAnsweredWords;
     this.sprintResults.wrongAnsweredWords = this.sprintGame!.wrongAnsweredWords;
