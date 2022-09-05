@@ -244,7 +244,10 @@ class Header extends Component {
     this.updateLogin();
   }
 
-  // 1.open/close burger panel 2.change cross animation 3.add/remove span line from the middle of burger 4. open/close dark background
+  // 1.open/close burger panel
+  // 2.change cross animation
+  // 3.add/remove span line from the middle of burger
+  // 4. open/close dark background
   public openBurger() {
     this.burgerPanel.element.classList.toggle('active');
     this.burger.element.classList.toggle('active');
