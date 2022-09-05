@@ -43,7 +43,7 @@ class SprintEntrance extends Component {
       (document.querySelector('.sprint__select-options') as HTMLElement).classList.toggle('active');
       if ((e.target as HTMLElement).className.includes('difficulty')) {
         (document.querySelector('.sprint__select-current-option') as HTMLElement).innerHTML = (e.target as HTMLElement).innerHTML;
-        this.levelDifficulty = Number((e.target as HTMLElement).getAttribute('difficulty'));
+        this.levelDifficulty = Number((e.target as HTMLElement).getAttribute('data-difficulty'));
       }
     });
     // this.loginForm.element.addEventListener('submit', (e) => this.handleChoose(e));
@@ -67,7 +67,6 @@ class SprintEntrance extends Component {
   }
 
   // form2 = new Component(this.element, 'form', ['difficulty__form']);
-
   getForm = () => {
     const formCont = new Component(null, 'div', ['sprint__form-cont']);
     const dificultyText = new Component(formCont.element, 'p', ['sprint__difficulty-text'], 'Выберите сложность');
@@ -101,11 +100,11 @@ class SprintEntrance extends Component {
   private pageContent = `
     <div class='sprint__description-container'>
       <h2 class='sprint__title'>Спринт</h2>
-      <div>
+      <div class='sprint__description-container'>
           <p class='sprint__description'>«Спринт» - это тренировка для повторения заученных слов из вашего словаря.</p>
           <ul class='sprint__description2'>
-              <li>Используйте мышь, чтобы выбрать;</li>
-              <li>Используйте клавиши влево или вправо.</li>
+              <li>- используйте мышь, чтобы выбрать;</li>
+              <li>- используйте клавиши влево или вправо.</li>
           </ul>
       </div>
     </div>

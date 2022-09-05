@@ -1,6 +1,12 @@
 import Component from '../../../utils/component';
 import UIButton from '../../UI/button/button';
 import ListItem from '../list/list';
+import doubleNextArrowsImg from '../../../assets/svg/double-next-arrows.svg';
+import doublePrevArrowsImg from '../../../assets/svg/double-prev-arrows.svg';
+import nextArrowImg from '../../../assets/svg/next-arrow.svg';
+import prevArrowImg from '../../../assets/svg/prev-arrow.svg';
+import downArrowImg from '../../../assets/svg/down-arrow.svg';
+import fileImg from '../../../assets/svg/file-icon.svg';
 
 import './pagination.scss';
 
@@ -30,20 +36,20 @@ class Pagination extends Component {
     super(parentNode, 'div', ['pagination']);
 
     this.doublePrevButton = new UIButton(this.element, ['btn-double-prev'], '', true);
-    this.doublePrevButton.element.style.backgroundImage = 'url(./double-prev-arrows.svg)';
+    this.doublePrevButton.element.style.backgroundImage = `url(${doublePrevArrowsImg})`;
     this.doublePrevButton.onClickButton = () => this.showPage('first');
     this.prevButton = new UIButton(this.element, ['btn-prev'], '', true);
-    this.prevButton.element.style.backgroundImage = 'url(./prev-arrow.svg)';
+    this.prevButton.element.style.backgroundImage = `url(${prevArrowImg})`;
     this.prevButton.onClickButton = () => this.switchPage('prev');
 
     this.wrapper = new Component(this.element, 'div', ['select__wrapper']);
     const wrapperHeader = new Component(this.wrapper.element, 'div', ['select__header']);
     const wrapperIcon = new Component(wrapperHeader.element, 'span', ['select__icon']);
-    wrapperIcon.element.style.backgroundImage = 'url(./file-icon.svg)';
+    wrapperIcon.element.style.backgroundImage = `url(${fileImg})`;
     this.selectTitle = new Component(wrapperHeader.element, 'p', ['select__title']);
     this.selectTitle.element.innerHTML = `Страница ${this.page + 1}`;
     const selectBtn = new Component(wrapperHeader.element, 'span', ['select__btn']);
-    selectBtn.element.style.backgroundImage = 'url(./down-arrow.svg)';
+    selectBtn.element.style.backgroundImage = `url(${downArrowImg})`;
 
     this.titleBlock = new Component(this.wrapper.element, 'ul', ['select__list']);
 
@@ -62,11 +68,11 @@ class Pagination extends Component {
     });
 
     this.nextButton = new UIButton(this.element, ['btn-next'], '', false);
-    this.nextButton.element.style.backgroundImage = 'url(./next-arrow.svg)';
+    this.nextButton.element.style.backgroundImage = `url(${nextArrowImg})`;
     this.nextButton.onClickButton = () => this.switchPage('next');
 
     this.doubleNextButton = new UIButton(this.element, ['btn-double-next'], '', false);
-    this.doubleNextButton.element.style.backgroundImage = 'url(./double-next-arrows.svg)';
+    this.doubleNextButton.element.style.backgroundImage = `url(${doubleNextArrowsImg})`;
     this.doubleNextButton.onClickButton = () => this.showPage('last');
     this.getLocalStorage();
   }

@@ -16,7 +16,7 @@ class SprintPrepare extends Component {
   }
 
   public prepare(callback: Function) {
-    setTimeout(callback, 0);
+    setTimeout(callback, 3200);
   }
 }
 

@@ -134,16 +134,16 @@ class Header extends Component {
     this.linkToMiniGames = new Component(
       this.nav.element,
       'a',
-      ['nav__item', 'games'],
+      ['nav__item', 'game'],
     );
 
     const linkToMiniGamesImg = document.createElement('div');
-    linkToMiniGamesImg.classList.add('nav__item-img', 'games');
+    linkToMiniGamesImg.classList.add('nav__item-img', 'game');
     linkToMiniGamesImg.style.backgroundImage = `url(${gameImg})`;
     this.linkToMiniGames.element.appendChild(linkToMiniGamesImg);
 
     const linkToMiniGamesText = document.createElement('p');
-    linkToMiniGamesText.classList.add('nav__item-text', 'games');
+    linkToMiniGamesText.classList.add('nav__item-text', 'game');
     linkToMiniGamesText.innerHTML = 'Мини-игры';
     this.linkToMiniGames.element.appendChild(linkToMiniGamesText);
 

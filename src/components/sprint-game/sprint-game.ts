@@ -134,6 +134,8 @@ class SprintGame extends Component {
     );
     this.card.cardWrongBtn.onClickButton = () => {
       this.card?.cardWrongBtn.setDisabled(true);
+      this.card?.cardRightBtn.setDisabled(true);
+      this.card?.cardRightBtn.element.classList.add('active');
       if (!this.card?.sprintWord.correctFlag) {
         this.processCorrectAnswer();
       } else this.processWrongAnswer();
@@ -141,21 +143,23 @@ class SprintGame extends Component {
 
     this.card.cardRightBtn.onClickButton = () => {
       this.card?.cardRightBtn.setDisabled(true);
+      this.card?.cardWrongBtn.setDisabled(true);
+      this.card?.cardWrongBtn.element.classList.add('active');
       if (this.card?.sprintWord.correctFlag === 1) {
         this.processCorrectAnswer();
       } else this.processWrongAnswer();
     };
   }
-
+  
   private async processCorrectAnswer() {
-    console.log('Correct answer!');
     this.card?.element.classList.add('sprint__card_right-answer');
     // this.updateWordStatistics('right', this.sprintWords![this.activeWordIndex]);
     await updateWordStatistics('sprint', 'right', this.sprintWords![this.activeWordIndex]);
 
     setTimeout(this.createCard.bind(this), 800);
     if (this.beepSoundEnabled) {
-      console.log('play Correct Sound');
+      const audio = new Audio('./audio/audioRightAnswer.mp3');
+      audio.play();
     }
     this.rightAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
     this.activeWordIndex += 1;
@@ -183,12 +187,14 @@ class SprintGame extends Component {
     // this.updateWordStatistics('wrong', this.sprintWords![this.activeWordIndex]);
     await updateWordStatistics('sprint', 'wrong', this.sprintWords![this.activeWordIndex]);
     setTimeout(this.createCard.bind(this), 800);
+    if (this.beepSoundEnabled) {
+      const audio = new Audio('./audio/audioWrongAnswer.mp3');
+      audio.play();
+    }
     this.wrongAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
     this.activeWordIndex += 1;
-    if (this.beepSoundEnabled) {
-      console.log('play Wrong Sound'); // TODO add sound
-    }
+    
     // update counts on wrong
     this.sprintCounts.rightInTheRow = 0;
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
