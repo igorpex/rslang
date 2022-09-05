@@ -1,10 +1,9 @@
-import { ids } from 'webpack';
 import {
-  getAllWords, getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getUserAllAggregatedWords, getUserWordById, getUserWords, getWordById, getWords,
+  getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords,
 } from '../../api/api';
 import Auth from '../../components/auth/auth/auth';
 import BookContainer from '../../components/book-container/bookContainer';
-import { DifficultWord, IDataObj, Word } from '../../interfaces';
+import { IDataObj, Word } from '../../interfaces';
 import Component from '../../utils/component';
 import { authStorageKey } from '../../utils/config';
 import './book.scss';
@@ -101,10 +100,12 @@ class Book extends Component {
       let words = data[0].paginatedResults;
       this.checkIsAllWordsEasy(words);
       if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
-        const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
-        words = words.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
+        const { value } = document.querySelector('.book-options__search-input') as HTMLInputElement;
+        words = words.filter(
+          (item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value),
+        );
       }
-      
+
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, this.group, this.isAuth);
     } else {
@@ -123,21 +124,24 @@ class Book extends Component {
     if (data) {
       let cardsArr: Word[] = data.items;
       if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
-        const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
-        cardsArr = cardsArr.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
+        const { value } = document.querySelector('.book-options__search-input') as HTMLInputElement;
+        cardsArr = cardsArr.filter(
+          (item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value),
+        );
       }
       this.saveInLocalStorage();
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
   }
 
-  private async getDifficultWords(group: number, page: number) {
+  private async getDifficultWords(group: number) {
     const isExpired = this.authorization.JwtHasExpired();
     if (this.isAuth === true && isExpired === false) {
       this.bookContainer.clear();
       const wordsPerPage = 3600;
       const pageSearch = 0;
-      const data = await this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
+      const data = await
+      this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
       const words = data[0].paginatedResults;
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, group, this.isAuth);
@@ -157,7 +161,11 @@ class Book extends Component {
     return data;
   }
 
-  async getAggregatedWordsWithoutGroup(filter: {}, wordsPerPage: number, page: number, group?: number) {
+  async getAggregatedWordsWithoutGroup(
+    filter: {},
+    wordsPerPage: number,
+    page: number,
+  ) {
     const dataObj = this.getUserData();
     const id = dataObj.userId;
     const { token } = dataObj;
@@ -205,7 +213,7 @@ class Book extends Component {
         this.bookContainer.bookOptions.pagination.makeButtonDissabled();
         this.group = group;
         if (this.isAuth === true) {
-          this.getDifficultWords(group, this.page);
+          this.getDifficultWords(group);
         } else if (this.isAuth === false) {
           this.bookContainer.mainContent.element.innerHTML = '';
           this.bookContainer.mainContent.element.innerHTML = 'Вы должны авторизоваться!';
@@ -216,6 +224,7 @@ class Book extends Component {
 
   checkIsAllWordsEasy(words: Word[]) {
     console.log('check');
+    // eslint-disable-next-line array-callback-return, consistent-return
     const filteredWords = words.filter((word) => {
       if (word.userWord !== undefined && word.userWord !== null) {
         if (word.userWord.difficulty === 'easy') {
@@ -247,7 +256,7 @@ class Book extends Component {
       this.group = JSON.parse(userData!).group;
       if (this.group === 6) {
         await this.reOpenDifficult();
-        this.getDifficultWords(this.group, this.page);
+        this.getDifficultWords(this.group);
       }
     }
   }
@@ -260,7 +269,7 @@ class Book extends Component {
     }
   }
 
-  /*async createByNameForAnonymous(value: string, group: number, page: number) {
+  /* async createByNameForAnonymous(value: string, group: number, page: number) {
     const data = await getWords({ group, page });
     const cards: Word[] = data.items;
     console.log(cards);
@@ -268,7 +277,7 @@ class Book extends Component {
       const cardsArr: Word = data.items[0];
       this.bookContainer.addWord(cardsArr, this.isAuth);
     }
-  }*/
+  } */
 }
 
 export default Book;

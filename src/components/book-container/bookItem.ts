@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   baseUrl, createUserWord, getUserWordById, getUserWordByIdWithStatus, updateUserWord,
 } from '../../api/api';
@@ -90,7 +92,9 @@ class BookItem extends Component {
     this.addToDifficultButton.element.style.display = 'none';
 
     this.statisticsButton = new UIButton(buttonContainer.element, ['item__statistics-button'], 'Статистика');
-    if (!this.card.userWord || this.card.userWord.optional.dateNew === 0) { this.statisticsButton.setDisabled(true); } else {
+    if (!this.card.userWord || this.card.userWord.optional.dateNew === 0) {
+      this.statisticsButton.setDisabled(true);
+    } else {
       this.statisticsButton.element.textContent = '';
       this.statisticsButton.element.innerHTML = `
       ${this.card.userWord.optional.sprint.successCounter
@@ -404,7 +408,7 @@ class BookItem extends Component {
   }
 
   createRow(arr: string[], element: HTMLElement, tag: keyof HTMLElementTagNameMap) {
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i += 1) {
       const td = new Component(element, tag, ['table-header'], `${arr[i]}`);
     }
   }

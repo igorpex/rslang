@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Component from '../../utils/component';
 import ListItem from '../shared/list/list';
-import UIInput from '../UI/input/input';
 import downArrowImg from '../../assets/svg/down-arrow.svg';
 import levelsIconImg from '../../assets/svg/levels-icon.svg';
 
@@ -37,7 +37,7 @@ class BookInput extends Component {
     levelBtn.element.style.backgroundImage = `url(${downArrowImg})`;
 
     const levelList = new Component(this.element, 'ul', ['level__list']);
-    for (let i = 0; i < this.nameArray.length; i++) {
+    for (let i = 0; i < this.nameArray.length; i += 1) {
       const listItem = new ListItem(levelList.element, i, this.nameArray[i]);
       if (this.group === i) {
         this.levelTitle.element.innerHTML = listItem.element.innerHTML;
