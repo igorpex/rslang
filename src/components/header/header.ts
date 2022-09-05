@@ -1,6 +1,6 @@
 import Component from '../../utils/component';
 import Auth from '../auth/auth/auth';
-import logoImg from '../../assets/svg/logo.svg';
+import logoImg from '../../assets/img/main-icon.png';
 import ebookImg from '../../assets/svg/book.svg';
 import gameImg from '../../assets/svg/game.svg';
 import statisticsImg from '../../assets/svg/statistics.svg';
