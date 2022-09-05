@@ -99,6 +99,7 @@ class Book extends Component {
 
       const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
       let words = data[0].paginatedResults;
+      this.checkIsAllWordsEasy(words);
       if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
         const value = (document.querySelector('.book-options__search-input') as HTMLInputElement).value;
         words = words.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
@@ -211,6 +212,23 @@ class Book extends Component {
         }
       }
     };
+  }
+
+  checkIsAllWordsEasy(words: Word[]) {
+    console.log('check');
+    const filteredWords = words.filter((word) => {
+      if (word.userWord !== undefined && word.userWord !== null) {
+        if (word.userWord.difficulty === 'easy') {
+          return word;
+        }
+      }
+    });
+    console.log(filteredWords.length);
+    if (filteredWords.length === 20) {
+      this.bookContainer.element.classList.add('changed');
+    } else {
+      this.bookContainer.element.classList.remove('changed');
+    }
   }
 
   saveInLocalStorage(words?: Word[]) {
