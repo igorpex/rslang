@@ -77,7 +77,18 @@ class SignupContainer extends Component {
     try {
       const signedInUser = await signinUser(user);
       localStorage.setItem(authStorageKey, JSON.stringify(signedInUser));
-      window.location.reload();
+
+      let next = '';
+      const authRef = sessionStorage.getItem('authRef');
+      if (authRef) {
+        next = authRef;
+      }
+      const loc = window.location;
+      loc.hash = next;
+      const url = new URL(loc.href);
+      window.location.replace(url);
+
+      // window.location.reload();
     } catch {
       alert('error logging in');
     }
@@ -95,12 +106,13 @@ class SignupContainer extends Component {
     const signedUpUser = await createUser({ email: username, password });
     if (signedUpUser.statusCode) {
       console.log('statusCode:', signedUpUser.statusCode);
+      console.log('res:', signedUpUser.res);
       const { statusCode } = signedUpUser;
       if (statusCode === 417) {
         alert('Такой пользователь уже существует, залогиньтесь');
       }
       if (statusCode === 422) {
-        alert('Incorrect e-mail or password');
+        alert('Логин или пароль не соответствуют требованиям');
       }
       return;
     }

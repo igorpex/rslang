@@ -1,6 +1,5 @@
 import { authStorageKey } from '../../../utils/config';
 import { UserAuthData } from '../../../interfaces';
-import { getUser } from '../../../api/api';
 
 class Auth {
   private _userAuthData: UserAuthData | undefined | null;

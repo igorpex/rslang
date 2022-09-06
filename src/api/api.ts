@@ -115,6 +115,28 @@ export const signinUser = async (user: User) => (await fetch(`${signin}`, {
   },
 })).json();
 
+/**
+ * Logins a user and returns a JWT-tokens (token and refreshToken) with status.
+ * Return { "message": "string",
+ * "token": "string", "refreshToken": "string","userId": "string", "name": "string"}
+ * @param {string} id - userId.
+ * @param {object} user - user object: {"email": "string","password": "string"};
+ */
+export const signinUserWithStatus = async (user: User) => {
+  const response = await fetch(`${signin}`, {
+    method: 'POST',
+    // credentials: 'include',
+    body: JSON.stringify(user),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.status === 200) {
+    return { status: 200, data: await response.json() };
+  }
+  return { status: response.status, data: undefined };
+};
+
 // Get NewPair of tokens for the user. Requires refreshToken.
 /**
  * Gets new user tokens using REFRESH token.

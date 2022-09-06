@@ -42,6 +42,11 @@
       cursor: pointer;
       transition: 0.5s;
     }
+    .header__logout {
+      background-size: 4rem;
+      background-repeat: no-repeat;
+      background-position: right;
+    }
 
     .header__login {
       background-image: url('../../assets/svg/user.svg');
@@ -108,7 +113,7 @@
       bottom: 45%;
       transform: rotate(-45deg);
     }
-    
+
 
     .header__burger.active:hover {
       .header__burger-span.active {
@@ -123,7 +128,7 @@
     .header__burger.active:hover:after {
       transform: rotate(45deg);
     }
-    
+
     .header__burger-span.active {
       width: 0;
     }
