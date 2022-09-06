@@ -21,12 +21,11 @@ class SprintEntrance extends Component {
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-entrance']);
 
-    const params = new URLSearchParams(document.location.search);
-    const ref = params.get('ref');
     let refererType = 'menu';
     let next = '';
-    if (ref) {
-      next = ref.slice(1);
+    const gameRefferer = sessionStorage.getItem('gameRef');
+    if (gameRefferer && gameRefferer === 'ebook') {
+      next = '/ebook';
       console.log(next);
       refererType = 'ebook';
     }

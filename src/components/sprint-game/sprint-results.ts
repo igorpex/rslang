@@ -85,16 +85,9 @@ class SprintResults extends Component {
       buttonsListGames.element.setAttribute('href', '#');
       buttonsListGames.element.addEventListener('click', (e) => {
         e.preventDefault();
-        const params = new URLSearchParams(document.location.search);
-        const ref = params.get('ref');
-        let next = '';
-        if (ref) {
-          next = ref.slice(1);
-        }
         const loc = window.location;
-        loc.hash = next;
+        loc.hash = `/${this.refererType}`;
         const url = new URL(loc.href);
-        url.searchParams.delete('ref');
         window.location.replace(url);
       });
     } else {

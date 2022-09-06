@@ -54,24 +54,11 @@ class Result extends Component {
   }
 
   checkPreviousPage() {
-    const params = new URLSearchParams(document.location.search);
-    const ref = params.get('ref');
-    if (ref !== null) {
-      if (ref!.includes('ebook')) {
+    const gameRefferer = sessionStorage.getItem('gameRef');
+    if (gameRefferer !== null && gameRefferer !== undefined) {
+      if (gameRefferer === 'ebook') {
         const buttonsListGames = new Component(this.buttonsContainer.element, 'a', ['audioChallenge-return__button'], 'К СЛОВАРЮ');
-        buttonsListGames.element.setAttribute('href', '#');
-        buttonsListGames.element.addEventListener('click', (e) => {
-          e.preventDefault();
-          let next = '';
-          if (ref) {
-            next = ref.slice(1);
-          }
-          const loc = window.location;
-          loc.hash = next;
-          const url = new URL(loc.href);
-          url.searchParams.delete('ref');
-          window.location.replace(url);
-        });
+        buttonsListGames.element.setAttribute('href', '#/ebook');
       }
     } else {
       const buttonsListGames = new Component(this.buttonsContainer.element, 'a', ['audioChallenge-return__button'], 'К СПИСКУ ИГР');
