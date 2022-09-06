@@ -4,7 +4,9 @@ import SprintEntrance from '../../components/sprint-game/sprint-entrance';
 import SprintGame from '../../components/sprint-game/sprint-game';
 import SprintPrepare from '../../components/sprint-game/sprint-prepare';
 import Auth from '../../components/auth/auth/auth';
-import { getUserAggregatedWords, getWords } from '../../api/api';
+import {
+  getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getUserWords, getWords,
+} from '../../api/api';
 import {
   ShortWord, SprintCounts, Word, WordPromise,
 } from '../../interfaces';
@@ -32,6 +34,19 @@ class Sprint extends Component {
   private refererType: string | undefined;
 
   private next: string | undefined;
+
+  filter = {
+    hard: { 'userWord.difficulty': 'hard' },
+    all: {
+      $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null }, { 'userWord.difficulty': 'easy' },
+        { 'userWord.difficulty': 'normal' }],
+    },
+    easy: { 'userWord.difficulty': 'easy' },
+    withoutEasy: {
+      $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null },
+        { 'userWord.difficulty': 'normal' }],
+    },
+  };
 
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint']);
@@ -70,9 +85,7 @@ class Sprint extends Component {
     console.log('Работает функция getWords');
     console.log('Sprint this.refererType:', this.refererType);
     console.log('Sprint this.auth:', this.auth);
-    // const params = new URLSearchParams(document.location.search);
-    // const ref = params.get('ref');
-    // console.log('ref:', ref);
+
     if (this.refererType === 'ebook' && this.auth) {
       return this.getAuthWordsByGroupAndPage();
     }
@@ -80,45 +93,50 @@ class Sprint extends Component {
       return this.getNoAuthWordsByGroupAndPage();
     }
     return this.getWordsByDifficulty();
-    // return this.getUserWordsByGroupPage();
-    // return this.getWordsByDifficulty();
-    // id, group, page, wordsPerPage, filter, token
-    // getUserAggregatedWords();
   }
 
   private async getAuthWordsByGroupAndPage() {
-    // this.refererType = this.sprintEntrance.refererType!;
-    // this.next = this.sprintEntrance.refererType!;
-    // console.log('Работает функция getAuthWordsByGroupAndPage');
+    console.log('Работает функция getAuthWordsByGroupAndPage');
     const userData = localStorage.getItem('userData');
     const { group, page } = JSON.parse(userData!);
-    // console.log('group:', group, 'page:', page);
-    const filters = {
-      hard: { 'userWord.difficulty': 'hard' },
-      all: { $or: [{ 'userWord.difficulty': 'hard' }, { userWord: null }, { 'userWord.difficulty': 'easy' }] },
-      easy: { 'userWord.difficulty': 'easy' },
-      gameable: { $or: [{ 'userWord.difficulty': 'hard' }, { 'userWord.difficulty': 'normal' }, { userWord: null }] },
-    };
     const userAuthData = localStorage.getItem(authStorageKey);
     const { userId, token } = JSON.parse(userAuthData!);
-    const wordsPerPage = 20;
-    const filter = filters.gameable;
-    const data = await getUserAggregatedWords({
-      id: userId, group, page, wordsPerPage, filter, token,
-    });
-    const words = data[0].paginatedResults.map((elem: Word) => {
-      const newElem = JSON.parse(JSON.stringify(elem));
-      // eslint-disable-next-line no-underscore-dangle
-      newElem.id = elem._id;
-      return newElem;
-    });
-    // console.log('data:', data);
+    let words;
+    if (group === 6) {
+      const wordsPerPage = 3600;
+      const filter = this.filter.hard;
+      const data = await getUserAggregatedWordsWithoutGroup({
+        id: userId, group, page, wordsPerPage, filter, token,
+      });
+      words = data[0].paginatedResults.map((elem: Word) => {
+        const newElem = JSON.parse(JSON.stringify(elem));
+        // eslint-disable-next-line no-underscore-dangle
+        newElem.id = elem._id;
+        return newElem;
+      });
+    } else {
+      // get pages from current to 0; so user starts from current and if it is not enough, get next;
+      const pagesArr = Array.from(Array(page + 1).keys()).reverse().slice(0, 10);
+      const wordsPerPage = 3600;
+      const filter = this.filter.withoutEasy;
+      const data = await getUserAggregatedWords({
+        id: userId, group, page, wordsPerPage, filter, token,
+      });
+      words = data[0].paginatedResults
+        .map((elem: Word) => {
+          const newElem = JSON.parse(JSON.stringify(elem));
+          // eslint-disable-next-line no-underscore-dangle
+          newElem.id = elem._id;
+          return newElem;
+        })
+        .filter((elem: Word) => pagesArr.includes(elem.page));
+    }
+
     console.log('words:', words);
     return words;
   }
 
   private async getWordsByDifficulty() {
-    // this.refererType = this.sprintEntrance.refererType!;
     console.log('Работает функция getWordsByDifficulty');
     const group = this.sprintEntrance.difficulty!;
     // this.refererType = this.sprintEntrance.refererType!;
