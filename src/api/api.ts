@@ -303,8 +303,8 @@ export const getUserAggregatedWordsWithoutGroup = async ({
  * @param {string} token - user token.
  */
 export const getUserAllAggregatedWords = async ({
-  id, token,
-}: { id: string, token: string }) => (await fetch(`${users}/${id}/aggregatedWords`, {
+  id, token, wordsPerPage = 3600,
+}: { id: string, token: string, wordsPerPage?: number }) => (await fetch(`${users}/${id}/aggregatedWords?&wordsPerPage=${wordsPerPage}`, {
   method: 'GET',
   // credentials: 'include',
   headers: {
