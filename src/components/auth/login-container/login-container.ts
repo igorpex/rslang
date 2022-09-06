@@ -2,7 +2,7 @@ import Component from '../../../utils/component';
 
 import './login-container.scss';
 import UIButton from '../../UI/button/button';
-import { signinUser } from '../../../api/api';
+import { signinUser, signinUserWithStatus } from '../../../api/api';
 import { authStorageKey } from '../../../utils/config';
 import Auth from '../auth/auth';
 
@@ -26,13 +26,15 @@ class LoginContainer extends Component {
     this.loginForm = new Component(this.element, 'form', ['login__form']);
     this.title = new Component(this.loginForm.element, 'h2', ['login__title'], 'Вход в аккаунт');
     this.usernameInput = new Component(this.loginForm.element, 'input', ['login__username-input']);
-    this.usernameInput.element.setAttribute('value', '12@12.ru');
+    // this.usernameInput.element.setAttribute('value', '12@12.ru for user with stat');
+    this.usernameInput.element.setAttribute('placeholder', 'email');
     this.usernameInput.element.setAttribute('type', 'text');
     this.usernameInput.element.setAttribute('name', 'username');
     this.usernameInput.element.setAttribute('id', 'login-username');
 
     this.passwordInput = new Component(this.loginForm.element, 'input', ['login__password-input']);
-    this.passwordInput.element.setAttribute('value', '12121212');
+    // this.passwordInput.element.setAttribute('value', '12121212');
+    this.passwordInput.element.setAttribute('placeholder', 'password');
     this.passwordInput.element.setAttribute('type', 'password');
     this.passwordInput.element.setAttribute('name', 'password');
     this.passwordInput.element.setAttribute('id', 'login-password');
@@ -81,22 +83,30 @@ class LoginContainer extends Component {
     if (username === '') return;
     const password = (form.querySelector('#login-password') as HTMLInputElement).value;
     if (password === '') return;
-    const user = await signinUser({ email: username, password });
-    if (user) {
+
+    const userWStatus = await signinUserWithStatus({ email: username, password });
+    if (userWStatus.status === 200) {
+      const user = userWStatus.data;
       localStorage.setItem(authStorageKey, JSON.stringify(user));
-      const params = new URLSearchParams(document.location.search);
-      const ref = params.get('ref');
+
       let next = '';
-      if (ref) {
-        next = ref.slice(1);
+      const authRef = sessionStorage.getItem('authRef');
+      if (authRef) {
+        next = authRef;
       }
       const loc = window.location;
       loc.hash = next;
       const url = new URL(loc.href);
-      url.searchParams.delete('ref');
       window.location.replace(url);
+    } else if (userWStatus.status === 403) {
+      console.log('user:', userWStatus);
+      alert('неверный пароль');
+    } else if (userWStatus.status === 404) {
+      console.log('user:', userWStatus);
+      alert('пользователь не существует');
     } else {
-      alert('error logging in');
+      console.log('user:', userWStatus);
+      alert('ошибка входа');
     }
     // console.log('user:', user);
   }

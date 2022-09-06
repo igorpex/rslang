@@ -219,11 +219,13 @@ class Header extends Component {
     this.loginButton.element.addEventListener('click', (e) => {
       e.preventDefault();
       const loc = window.location;
-      const ref = loc.hash;
+      sessionStorage.setItem('authRef', window.location.hash.slice(1));
+      // const ref = loc.hash;
       loc.hash = '/login';
       const url = new URL(loc.href);
-      url.searchParams.set('ref', `${ref}`);
+      // url.searchParams.set('ref', `${ref}`);
       window.location.replace(url);
+      // window.location.reload();
     });
 
     this.logoutButton.element.setAttribute('href', '#/logout');
@@ -276,6 +278,7 @@ class Header extends Component {
 
       return item;
     });
+    this.updateLogin();
   }
 }
 
