@@ -82,7 +82,7 @@
     @extend %box;
     cursor: pointer;
     z-index: 0;
-    
+
     &-wrapper {
       @extend %flex;
       padding: 7px 10px;
@@ -213,6 +213,7 @@
 
     &__beep-sound-icon.sprint-game__beep-sound_active {
       background-image: url('../../assets/svg/note-active.svg');
+      background-size: 2.4rem;
     }
 
     &__close-btn {
@@ -221,7 +222,7 @@
       height: 4rem;
       cursor: pointer;
     }
-    
+
     &__close-btn:before,
     &__close-btn:after {
       content: "";
@@ -232,12 +233,12 @@
       background: black;
       transition: 0.5s;
     }
-    
+
     &__close-btn::before {
       top: 46%;
       transform: rotate(45deg);
     }
-    
+
     &__close-btn::after {
       bottom: 47%;
       transform: rotate(-45deg);
@@ -262,7 +263,7 @@
     width: 100%;
     margin-top: 0;
     border: 3px solid rgba(255, 244, 217, 0);
-    
+
     &-total-points {
       font-size: 2.6rem;
       color: #FFF4D9;
@@ -279,19 +280,19 @@
     &-audio-btn:active {
       transform: translate(3px, 3px);
     }
-    
+
     &_right-answer{
       border: #2fe928 2px solid;
     }
     &_wrong-answer {
       border: #d34160 2px solid;
     }
-    
+
     &-dots-container {
       display: flex;
       gap: 30px;
     }
-    
+
     &-dot {
       display: inline-block;
       width: 2.5rem;
@@ -304,11 +305,11 @@
     &-dot_active {
       background-color: #FFC69C;
     }
-    
+
     &-per-answer-count {
       height: 0rem;
     }
-    
+
     &-birds-container {
       display: flex;
       justify-content: flex-start;
@@ -318,7 +319,7 @@
       background-repeat: no-repeat;
       background-position: bottom;
     }
-    
+
     &-bird {
       width: 24%;
       height: 40px;
@@ -326,11 +327,11 @@
       background-repeat: no-repeat;
       background-size: 40px auto;
     }
-    
+
     &-bird-1 {
       background-image: url('../../assets/img/bird1.png');
     }
-    
+
     &-bird-2 {
       background-image: url('../../assets/img/bird2.png');
     }
@@ -340,24 +341,24 @@
     &-bird-4 {
       background-image: url('../../assets/img/bird4.png');
     }
-    
+
     &-bird-5 {
       background-image: url('../../assets/img/bird1.png');
     }
-    
+
     &-word {
       font-size: 3rem;
       font-weight: bold;
       color: #FFF4D9;
     }
-    
+
     &-translation {
       font-style: italic;
       font-size: 2.5rem;
       font-weight: normal;
       color: #FFF4D9;
     }
-    
+
     &-buttons {
       display: flex;
       justify-content: center;
@@ -396,11 +397,11 @@
   &__right-btn {
     background-color: rgba(255, 244, 217, 1);
   }
-  
+
   &__wrong-btn {
     background-color: rgba(255, 198, 156, 1);
   }
-  
+
   &-results {
     width: 100%;
     height: 75vh;
@@ -422,26 +423,26 @@
       margin: 0 auto;
       overflow: auto;
     }
-    
+
     &__answers {
       display: flex;
       flex-direction: column;
       width: 100%;
       gap: 0.5rem;
     }
-    
+
     &__title {
       font-weight: bold;
       font-size: 2.5rem;
     }
-    
+
     &-word-box {
       display: flex;
       align-items: center;
       gap: 1rem;
       width: 100px;
     }
-    
+
     &__card-audio-btn {
       width: 2.5rem;
       height: 2.5rem;
@@ -452,23 +453,23 @@
     &__card-audio-btn:active {
       transform: translate(3px, 3px);
     }
-    
+
     &-word,
     &-dash {
       font-weight: bold;
     }
-    
+
     &-translate {
       font-style: italic;
     }
-    
+
     &__buttons-container {
       display: flex;
       justify-content: space-between;
       margin: 0 auto;
       width: 50%;
     }
-    
+
     &__button {
       margin-top: 3vh;
       padding: 1rem;
@@ -501,8 +502,8 @@
     font-size: 4rem;
   }
 
-  .sprint-game__beep-sound-icon 
-  .sprint-game__beep-sound_active.sprint-game__beep-sound_active {
+  .sprint-game__beep-sound-icon
+  .sprint-game__beep-sound.sprint-game__beep-sound_active {
     width: 1rem;
   }
 
@@ -543,7 +544,11 @@
     width: 4rem;
     height: 4rem;
   }
-  
+
+  p.sprint__card-per-answer-count {
+    color: #FFF4D9;
+  }
+
   .sprint__title,
   .sprint__difficulty-text,
   .sprint__select,

@@ -61,7 +61,9 @@ class SprintGame extends Component {
 
     this.topContainer = new Component(this.element, 'div', ['sprint-game__top']);
     this.content = new Component(this.element, 'div', ['sprint-game__content']);
-    this.beepSoundEnabled = true; // TODO add changer
+    this.beepSoundEnabled = localStorage.getItem('beepSoundEnabled')
+      ? JSON.parse(localStorage.getItem('beepSoundEnabled')!)
+      : true;
     this.activeWordIndex = 0;
     this.minPointsPerCorrectAnswer = 10;
     this.maxPointsPerCorrectAnswer = 80;
@@ -111,6 +113,7 @@ class SprintGame extends Component {
 
   private toggleBeepSoundStatus = () => {
     this.beepSoundEnabled = !this.beepSoundEnabled;
+    localStorage.setItem('beepSoundEnabled', JSON.stringify(this.beepSoundEnabled));
     this.updateBeepSoundIcon();
   };
 
@@ -172,9 +175,10 @@ class SprintGame extends Component {
     // this.updateWordStatistics('right', this.sprintWords![this.activeWordIndex]);
     await updateWordStatistics('sprint', 'right', this.sprintWords![this.activeWordIndex]);
 
-    setTimeout(this.createCard.bind(this), 800);
+    setTimeout(this.createCard.bind(this), 400);
     if (this.beepSoundEnabled) {
       const audio = new Audio('./audio/audioRightAnswer.mp3');
+      audio.volume = 0.5;
       audio.play();
     }
     this.rightAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
