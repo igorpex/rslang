@@ -12,6 +12,7 @@ import {
 } from '../../interfaces';
 import SprintResults from '../../components/sprint-game/sprint-results';
 import { authStorageKey } from '../../utils/config';
+import getUserWordsToNPages from '../../api/api-related-services';
 
 class Sprint extends Component {
   // private sprintContainer: SprintContainer;
@@ -108,6 +109,7 @@ class Sprint extends Component {
       const data = await getUserAggregatedWordsWithoutGroup({
         id: userId, group, page, wordsPerPage, filter, token,
       });
+      // getUserAllAggregatedWords
       words = data[0].paginatedResults.map((elem: Word) => {
         const newElem = JSON.parse(JSON.stringify(elem));
         // eslint-disable-next-line no-underscore-dangle
@@ -115,24 +117,11 @@ class Sprint extends Component {
         return newElem;
       });
     } else {
-      // get pages from current to 0; so user starts from current and if it is not enough, get next;
-      const pagesArr = Array.from(Array(page + 1).keys()).reverse().slice(0, 10);
-      const wordsPerPage = 3600;
-      const filter = this.filter.withoutEasy;
-      const data = await getUserAggregatedWords({
-        id: userId, group, page, wordsPerPage, filter, token,
-      });
-      words = data[0].paginatedResults
-        .map((elem: Word) => {
-          const newElem = JSON.parse(JSON.stringify(elem));
-          // eslint-disable-next-line no-underscore-dangle
-          newElem.id = elem._id;
-          return newElem;
-        })
-        .filter((elem: Word) => pagesArr.includes(elem.page));
+      const unfilteredWords = await getUserWordsToNPages();
+      words = unfilteredWords
+        .filter((word) => (!word.userWord || word.userWord.difficulty !== 'easy'));
     }
-
-    console.log('words:', words);
+    console.log('getAuthWordsByGroupAndPage words:', words);
     return words;
   }
 
@@ -173,8 +162,8 @@ class Sprint extends Component {
     // get pages from current to 0; so user starts from current and if it is not enough, get next;
     const pagesArr = Array.from(Array(page + 1).keys()).reverse().slice(0, 10);
     console.log('pagesArr', pagesArr);
-    const pagesAllArr = Array.from(Array(30), (x, i) => i);
-    const wordsPagesPromises = pagesAllArr.map((pageNum) => getWords({ group, page: pageNum }));
+    // const pagesAllArr = Array.from(Array(30), (x, i) => i);
+    const wordsPagesPromises = pagesArr.map((pageNum) => getWords({ group, page: pageNum }));
     const wordsPages = (await Promise.allSettled(wordsPagesPromises));
     const filteredPages = wordsPages
       .filter(({ status }) => status === 'fulfilled')

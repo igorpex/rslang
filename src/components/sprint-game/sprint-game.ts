@@ -56,6 +56,8 @@ class SprintGame extends Component {
 
   soundCloseContainer: Component;
 
+  private finishCallback: Function | undefined;
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['sprint-game']);
 
@@ -129,6 +131,7 @@ class SprintGame extends Component {
   public start(finishCallback: Function) {
     // console.log('Words to play:', this.words);
     // Prepare words
+    this.finishCallback = finishCallback;
     const len = this.words!.length;
     this.correctIndexes = this.chooseCorrect(len);
     this.sprintWords = this.generateMixCorrectAndIncorrect();
@@ -175,12 +178,12 @@ class SprintGame extends Component {
     // this.updateWordStatistics('right', this.sprintWords![this.activeWordIndex]);
     await updateWordStatistics('sprint', 'right', this.sprintWords![this.activeWordIndex]);
 
-    setTimeout(this.createCard.bind(this), 400);
     if (this.beepSoundEnabled) {
       const audio = new Audio('./audio/audioRightAnswer.mp3');
-      audio.volume = 0.5;
+      audio.volume = 0.3;
       audio.play();
     }
+
     this.rightAnsweredWords.push(this.sprintWords![this.activeWordIndex]);
     this.activeWordIndex += 1;
 
@@ -199,6 +202,10 @@ class SprintGame extends Component {
     );
     this.sprintCounts.dots = Math.floor(this.sprintCounts.rightInTheRow % 4);
     this.sprintCounts.birds = (Math.floor(this.sprintCounts.rightInTheRow / 4)) + 1;
+
+    if (this.activeWordIndex === this.sprintWords!.length) {
+      this.timer!.finish(this.finishCallback!);
+    } else { this.createCard(); }
   }
 
   private async processWrongAnswer() {
@@ -206,7 +213,6 @@ class SprintGame extends Component {
     this.card?.element.classList.add('sprint__card_wrong-answer');
     // this.updateWordStatistics('wrong', this.sprintWords![this.activeWordIndex]);
     await updateWordStatistics('sprint', 'wrong', this.sprintWords![this.activeWordIndex]);
-    setTimeout(this.createCard.bind(this), 800);
     if (this.beepSoundEnabled) {
       const audio = new Audio('./audio/audioWrongAnswer.mp3');
       audio.play();
@@ -220,6 +226,12 @@ class SprintGame extends Component {
     this.sprintCounts.pointsPerCorrectAnswer = this.minPointsPerCorrectAnswer;
     this.sprintCounts.dots = 0; // rightInTheRow % 4
     this.sprintCounts.birds = 1; // rightInTheRow / 4 + 1;
+
+    if (this.activeWordIndex === this.sprintWords!.length) {
+      this.timer!.finish(this.finishCallback!);
+    } else {
+      this.createCard();
+    }
   }
 
   /**
@@ -277,9 +289,7 @@ class SprintGame extends Component {
   }
 
   private clear() {
-    this.timer!.clear();
-    this.element.innerHTML = '';
-    // this.content.element.innerHTML = '';
+    this.timer!.finish(this.finishCallback!);
   }
 }
 

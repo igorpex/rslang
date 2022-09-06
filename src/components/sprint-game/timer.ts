@@ -29,6 +29,11 @@ class Timer extends Component {
       }
     }, 1000);
   }
+
+  public finish(finishCallback: Function) {
+    clearInterval(this.x);
+    finishCallback();
+  }
 }
 
 export default Timer;
