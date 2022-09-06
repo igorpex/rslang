@@ -187,6 +187,9 @@ class Router {
     if ((currentRouteName !== '/games/sprint') && (currentRouteName !== '/games/audio-challenge')) {
       sessionStorage.removeItem('gameRef');
     }
+    if ((currentRouteName !== '/login') && (currentRouteName !== '/signup') && (currentRouteName !== '/signout')) {
+      sessionStorage.removeItem('authRef');
+    }
     const currentRoute = this.routes.find(
       (page) => page.name === currentRouteName,
     );
