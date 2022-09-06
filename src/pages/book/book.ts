@@ -145,6 +145,7 @@ class Book extends Component {
       const words = data[0].paginatedResults;
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, group, this.isAuth);
+      this.bookContainer.bookOptions.pagination.makeButtonDissabled();
     } else {
       this.bookContainer.bookOptions.pagination.makeButtonDissabled();
     }
