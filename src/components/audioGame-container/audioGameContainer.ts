@@ -15,6 +15,7 @@ import levelsIcon from '../../assets/svg/levels-icon.svg';
 import Auth from '../auth/auth/auth';
 import { authStorageKey } from '../../utils/config';
 import updateUserStatistics from '../shared/updateUserStatistics/updateUserStatistics';
+import getUserWordsToNPages from '../../api/api-related-services';
 
 class AudioGameContainer extends Component {
   updateGroup: (group: number) => void = () => {};
@@ -286,32 +287,9 @@ class AudioGameContainer extends Component {
   }
 
   async createArraysQuestionsWithoutEasy() {
-    let arrayOfPage = [];
-
-    for (let i = 0; i <= this.page; i += 1) {
-      arrayOfPage.push(i);
-    }
-    arrayOfPage = arrayOfPage.reverse();
-    const wordsPerPage = 20;
-
-    const arrPromises = arrayOfPage.map(
-      (item: number) => this.getAggregatedWords(this.filter.all, wordsPerPage, item, this.group),
-    );
-    const arr: Word[] = await Promise.all(arrPromises);
-
-    let questions = [];
-    questions.push(arr.flat());
-    questions = questions.flat();
-    this.words = questions.filter((item) => {
-      if (item.userWord !== null && item.userWord !== undefined) {
-        if (item.userWord.difficulty !== 'easy') {
-          return item;
-        }
-      } else {
-        return item;
-      }
-      return item;
-    });
+    const questions = await getUserWordsToNPages();
+    this.words = questions
+      .filter((word) => (!word.userWord || word.userWord.difficulty !== 'easy'));
 
     if (this.words.length > 20) {
       this.words = this.words.slice(0, 20);
