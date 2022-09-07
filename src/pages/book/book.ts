@@ -55,18 +55,30 @@ class Book extends Component {
     this.cross = (document.querySelector('.book-options__search-cross') as HTMLElement);
 
     this.input.addEventListener('input', () => {
+      const data = localStorage.getItem('userData')!;
       if (this.input.value.length !== 0) {
         this.cross.classList.add('active');
       } else {
         this.cross.classList.remove('active');
       }
-      this.checkAuthorization();
+
+      if (JSON.parse(data!).group !== 6) {
+        this.checkAuthorization();
+      } else {
+        this.getDifficultWords(JSON.parse(data!).group);
+      }
     });
 
     this.cross.addEventListener('click', () => {
+      const data = localStorage.getItem('userData')!;
       this.input.value = '';
       this.cross.classList.remove('active');
-      this.checkAuthorization();
+
+      if (JSON.parse(data!).group !== 6) {
+        this.checkAuthorization();
+      } else {
+        this.getDifficultWords(JSON.parse(data!).group);
+      }
     });
   }
 
@@ -142,7 +154,13 @@ class Book extends Component {
       const pageSearch = 0;
       const data = await
       this.getAggregatedWordsWithoutGroup(this.filter.hard, wordsPerPage, pageSearch);
-      const words = data[0].paginatedResults;
+      let words = data[0].paginatedResults;
+      if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
+        const { value } = document.querySelector('.book-options__search-input') as HTMLInputElement;
+        words = words.filter(
+          (item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value),
+        );
+      }
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, group, this.isAuth);
       this.bookContainer.bookOptions.pagination.makeButtonDissabled();
