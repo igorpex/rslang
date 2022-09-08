@@ -132,7 +132,14 @@ class StatisticsContainer extends Component {
         acc[el] = (acc[el] || 0) + 1;
         return acc;
       }, {});
-    return Object.entries(newWordsPerDays);
+
+    return Object.entries(newWordsPerDays)
+    // @ts-ignore
+      .sort((a, b) => {
+        if (a[0] < b[0]) { return -1; }
+        if (a[0] > b[0]) { return 1; }
+        return 1;
+      });
   };
 
   // new words for today
@@ -211,6 +218,12 @@ class StatisticsContainer extends Component {
 
   async getGamesStatToday(game: Game) {
     const auth = new Auth();
+    const emptyStat = {
+      successPercentToday: 0,
+      maxRightInARowToday: 0,
+      successCounterToday: 0,
+      failureCounterToday: 0,
+    };
     if (!auth.JwtHasExpired()) {
       const userAuthData = localStorage.getItem(authStorageKey);
       const { userId, token } = JSON.parse(userAuthData!);
@@ -218,34 +231,19 @@ class StatisticsContainer extends Component {
       const userStatisticsWStatus = await getUserStatisticsWithStatus({ id: userId, token });
       if (userStatisticsWStatus.status === 404) {
         console.log('no statistics for user yet');
-        return {
-          successPercentToday: 0,
-          maxRightInARowToday: 0,
-          successCounterToday: 0,
-          failureCounterToday: 0,
-        };
+        return emptyStat;
       }
       if (userStatisticsWStatus.status === 200) {
         const userStatistics = userStatisticsWStatus.data;
         const statisticsToday = userStatistics.optional[game].dateToday;
         const today = getDateNowString();
         if (statisticsToday !== today) {
-          return {
-            successPercentToday: 0,
-            maxRightInARowToday: 0,
-            successCounterToday: 0,
-            failureCounterToday: 0,
-          };
+          return emptyStat;
         }
 
         const { successCounterToday, failureCounterToday } = userStatistics.optional[game];
         if ((successCounterToday + failureCounterToday) === 0) {
-          return {
-            successPercentToday: 0,
-            maxRightInARowToday: 0,
-            successCounterToday: 0,
-            failureCounterToday: 0,
-          };
+          return emptyStat;
         }
 
         const successPercentToday = Math.round((successCounterToday
@@ -256,12 +254,7 @@ class StatisticsContainer extends Component {
         };
       }
     }
-    return {
-      successPercentToday: 0,
-      maxRightInARowToday: 0,
-      successCounterToday: 0,
-      failureCounterToday: 0,
-    };
+    return emptyStat;
   }
 
   buildPage() {
