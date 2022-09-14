@@ -129,20 +129,18 @@ class Book extends Component {
       const { group } = this;
 
       if (this.input.value.length !== 0) {
-        if (this.aggregatedInputWords.length !== 0) {
-          this.bookContainer.addSearchingWords(this.aggregatedInputWords, this.isAuth, this.input.value.toLowerCase());
-          return;
-        } else {
-          const dataObj = this.getUserData();
-          const id = dataObj.userId;
-          const { token } = dataObj;
-          wordsPerPage = 3600;
-          const agData = await getUserAllAggregatedWords({id, token, wordsPerPage});
-          const agWords = agData[0].paginatedResults;
-          this.aggregatedInputWords = agWords;
-          this.bookContainer.addSearchingWords(agWords, this.isAuth, this.input.value.toLowerCase());
-          return;
-        }
+        const dataObj = this.getUserData();
+        const id = dataObj.userId;
+        const { token } = dataObj;
+        wordsPerPage = 3600;
+        const page = 0;
+        const filter = {
+          $or: [{ word: { "$regex": `^${this.input.value}`, "$options": "i" } }],
+        };
+        const agData = await getUserAggregatedWordsWithoutGroup({id, page, wordsPerPage, filter, token});
+        const agWords = agData[0].paginatedResults;
+        this.bookContainer.addSearchingWords(agWords, this.isAuth, 'filtered');
+        return;
       }
       
       const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
