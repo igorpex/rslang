@@ -1,5 +1,5 @@
 import {
-  getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords,
+  getUserAggregatedWords, getUserAggregatedWordsWithoutGroup, getWords, getUserAllAggregatedWords,
 } from '../../api/api';
 import Auth from '../../components/auth/auth/auth';
 import BookContainer from '../../components/book-container/bookContainer';
@@ -32,6 +32,8 @@ class Book extends Component {
 
   cross: HTMLElement;
 
+  aggregatedInputWords: Word[];
+
   constructor(parentNode: HTMLElement) {
     super(parentNode, 'div', ['book']);
     this.isAuth = false;
@@ -50,18 +52,28 @@ class Book extends Component {
     this.updatePage();
 
     // search input functionality
+    this.aggregatedInputWords = [];
     this.input = document.querySelector('.book-options__search-input') as HTMLInputElement;
-    this.input.placeholder = 'Найти слово на странице...';
+    this.input.placeholder = 'Найти слово...';
     this.cross = (document.querySelector('.book-options__search-cross') as HTMLElement);
 
     this.input.addEventListener('input', () => {
       const data = localStorage.getItem('userData')!;
       if (this.input.value.length !== 0) {
+        (document.querySelector('.wrapper-level') as HTMLElement).style.pointerEvents = 'none';
+        (document.querySelector('.wrapper-level') as HTMLElement).style.opacity = '0.5';
+        this.bookContainer.bookOptions.pagination.makeButtonDissabled();
+        (document.querySelector('.book-options__game') as HTMLElement).style.pointerEvents = 'none';
+        (document.querySelector('.book-options__game') as HTMLElement).style.opacity = '0.5';
         this.cross.classList.add('active');
       } else {
+        (document.querySelector('.wrapper-level') as HTMLElement).style.pointerEvents = 'auto';
+        (document.querySelector('.wrapper-level') as HTMLElement).style.opacity = '1';
+        this.bookContainer.bookOptions.pagination.removeButtonDissabled();
+        (document.querySelector('.book-options__game') as HTMLElement).style.pointerEvents = 'auto';
+        (document.querySelector('.book-options__game') as HTMLElement).style.opacity = '1';
         this.cross.classList.remove('active');
       }
-
       if (JSON.parse(data!).group !== 6) {
         this.checkAuthorization();
       } else {
@@ -73,6 +85,11 @@ class Book extends Component {
       const data = localStorage.getItem('userData')!;
       this.input.value = '';
       this.cross.classList.remove('active');
+      (document.querySelector('.wrapper-level') as HTMLElement).style.pointerEvents = 'auto';
+        (document.querySelector('.wrapper-level') as HTMLElement).style.opacity = '1';
+      this.bookContainer.bookOptions.pagination.removeButtonDissabled();
+      (document.querySelector('.book-options__game') as HTMLElement).style.pointerEvents = 'auto';
+      (document.querySelector('.book-options__game') as HTMLElement).style.opacity = '1';
 
       if (JSON.parse(data!).group !== 6) {
         this.checkAuthorization();
@@ -100,23 +117,38 @@ class Book extends Component {
   }
 
   async createForAuthUser() {
+    this.input.placeholder = 'Найти слово...';
+    this.input.style.pointerEvents = 'auto';
+    this.input.style.opacity = '1';
     const isExpired = this.authorization.JwtHasExpired();
     if (isExpired === false) {
       this.bookContainer.clear();
 
-      const wordsPerPage = 20;
+      let wordsPerPage = 20;
       const { page } = this;
       const { group } = this;
 
+      if (this.input.value.length !== 0) {
+        if (this.aggregatedInputWords.length !== 0) {
+          this.bookContainer.addSearchingWords(this.aggregatedInputWords, this.isAuth, this.input.value.toLowerCase());
+          return;
+        } else {
+          const dataObj = this.getUserData();
+          const id = dataObj.userId;
+          const { token } = dataObj;
+          wordsPerPage = 3600;
+          const agData = await getUserAllAggregatedWords({id, token, wordsPerPage});
+          const agWords = agData[0].paginatedResults;
+          this.aggregatedInputWords = agWords;
+          this.bookContainer.addSearchingWords(agWords, this.isAuth, this.input.value.toLowerCase());
+          return;
+        }
+      }
+      
       const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
       let words = data[0].paginatedResults;
       this.checkIsAllWordsEasy(words);
-      if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
-        const { value } = document.querySelector('.book-options__search-input') as HTMLInputElement;
-        words = words.filter(
-          (item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value),
-        );
-      }
+      
 
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, this.group, this.isAuth);
@@ -132,21 +164,36 @@ class Book extends Component {
   }
 
   private async getCards(group: number, page: number, isAuth: boolean) {
+    this.input.placeholder = 'Найти слово...';
+    this.input.style.pointerEvents = 'auto';
+    this.input.style.opacity = '1';
+    if (this.input.value.length !== 0) {
+      if (this.input.value.toLowerCase().charCodeAt(0) > 96 && this.input.value.toLowerCase().charCodeAt(0) < 123) {
+        let data: any = await fetch(`https://rslang-be-igorpex.herokuapp.com/filteredWords?filter={"word":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+        data = {
+          items: await data.json(),
+        };
+        this.bookContainer.addSearchingWords(data.items, this.isAuth, 'filtered');
+      } else if(this.input.value.toLowerCase().charCodeAt(0) > 1071 && this.input.value.toLowerCase().charCodeAt(0) < 1104) {
+        let data: any = await fetch(`https://rslang-be-igorpex.herokuapp.com/filteredWords?filter={"wordTranslate":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+        data = {
+          items: await data.json(),
+        };
+        this.bookContainer.addSearchingWords(data.items, this.isAuth, 'filtered');
+      }
+      return;
+    }
+
     const data = await getWords({ group, page });
     if (data) {
       let cardsArr: Word[] = data.items;
-      if ((document.querySelector('.book-options__search-input') as HTMLInputElement).value.length !== 0) {
-        const { value } = document.querySelector('.book-options__search-input') as HTMLInputElement;
-        cardsArr = cardsArr.filter(
-          (item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value),
-        );
-      }
       this.saveInLocalStorage();
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
   }
 
   private async getDifficultWords(group: number) {
+    this.input.placeholder = 'Найти слово на странице...';
     const isExpired = this.authorization.JwtHasExpired();
     if (this.isAuth === true && isExpired === false) {
       this.bookContainer.clear();
@@ -236,6 +283,8 @@ class Book extends Component {
         } else if (this.isAuth === false) {
           this.bookContainer.mainContent.element.innerHTML = '';
           this.bookContainer.mainContent.element.innerHTML = 'Вы должны авторизоваться!';
+          this.input.style.pointerEvents = 'none';
+          this.input.style.opacity = '0.5';
         }
       }
     };
