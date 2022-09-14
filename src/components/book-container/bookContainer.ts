@@ -81,6 +81,32 @@ class BookContainer extends Component {
       return item;
     });
   }
+
+  async addSearchingWords(cards: Word[], isAuth: boolean, value: string) {
+    this.clear();
+
+    if (value !== 'filtered') {
+      cards = cards.filter((item: Word) => item.word.startsWith(value) || item.wordTranslate.startsWith(value));
+    }
+
+    this.isAuth = isAuth;
+    this.cards = cards.map((card: Word) => {
+      let isDifficult = false;
+      let isEasy = false;
+      if (card.userWord !== undefined) {
+        if (card.userWord.difficulty === 'easy') {
+          isEasy = true;
+        } else if (card.userWord.difficulty === 'hard') {
+          isDifficult = true;
+        }
+      }
+      const item = new BookItem(this.mainContent.element, card, isDifficult, isEasy);
+      if (isAuth) {
+        item.addButtons();
+      }
+      return item;
+    });
+  }
 }
 
 export default BookContainer;
