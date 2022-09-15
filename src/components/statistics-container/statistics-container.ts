@@ -123,10 +123,10 @@ class StatisticsContainer extends Component {
       .filter((userWord: UserWord) => userWord.optional.dateNew > 0)
       .map((userWord: UserWord) => {
         const date = new Date(userWord.optional.dateNew);
-        const year = date.getFullYear();
-        const month = date.getMonth(); // 0-11
-        const day = date.getDate();// 1-31;
-        return `${year}-${month + 1}-${day}`;
+        const year = `${date.getFullYear()}`;
+        const month = (`0${date.getMonth() + 1}`).slice(-2); // 0-11 + 1;
+        const day = (`0${date.getDate()}`).slice(-2);// 1-31;
+        return `${year}-${month}-${day}`;
       })
       .reduce((acc: { [index: string]: number }, el: string) => {
         acc[el] = (acc[el] || 0) + 1;
@@ -166,10 +166,10 @@ class StatisticsContainer extends Component {
       .filter((userWord: UserWord) => userWord.optional.dateEasy > 0)
       .map((userWord: UserWord) => {
         const date = new Date(userWord.optional.dateEasy);
-        const year = date.getFullYear();
-        const month = date.getMonth(); // 0-11
-        const day = date.getDate();// 1-31;
-        return `${year}-${month + 1}-${day}`;
+        const year = `${date.getFullYear()}`;
+        const month = (`0${date.getMonth() + 1}`).slice(-2); // 0-11 + 1;
+        const day = (`0${date.getDate()}`).slice(-2);// 1-31;
+        return `${year}-${month}-${day}`;
       })
       .reduce((acc: { [index: string]: number }, el: string) => {
         acc[el] = (acc[el] || 0) + 1;
