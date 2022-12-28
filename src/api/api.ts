@@ -7,7 +7,7 @@ import {
   UserWord,
 } from '../interfaces';
 
-export const baseUrl = 'https://rslang-be-igorpex.herokuapp.com';
+export const baseUrl = process.env.BACKEND_URL;
 const words = `${baseUrl}/words`;
 const users = `${baseUrl}/users`;
 const signin = `${baseUrl}/signin`;

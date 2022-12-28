@@ -86,7 +86,7 @@ class Book extends Component {
       this.input.value = '';
       this.cross.classList.remove('active');
       (document.querySelector('.wrapper-level') as HTMLElement).style.pointerEvents = 'auto';
-        (document.querySelector('.wrapper-level') as HTMLElement).style.opacity = '1';
+      (document.querySelector('.wrapper-level') as HTMLElement).style.opacity = '1';
       this.bookContainer.bookOptions.pagination.removeButtonDissabled();
       (document.querySelector('.book-options__game') as HTMLElement).style.pointerEvents = 'auto';
       (document.querySelector('.book-options__game') as HTMLElement).style.opacity = '1';
@@ -135,18 +135,19 @@ class Book extends Component {
         wordsPerPage = 3600;
         const page = 0;
         const filter = {
-          $or: [{ word: { "$regex": `^${this.input.value}`, "$options": "i" } }],
+          $or: [{ word: { $regex: `^${this.input.value}`, $options: 'i' } }],
         };
-        const agData = await getUserAggregatedWordsWithoutGroup({id, page, wordsPerPage, filter, token});
+        const agData = await getUserAggregatedWordsWithoutGroup({
+          id, page, wordsPerPage, filter, token,
+        });
         const agWords = agData[0].paginatedResults;
         this.bookContainer.addSearchingWords(agWords, this.isAuth, 'filtered');
         return;
       }
-      
+
       const data = await this.getAggregatedWords(this.filter.all, wordsPerPage, page, group);
-      let words = data[0].paginatedResults;
+      const words = data[0].paginatedResults;
       this.checkIsAllWordsEasy(words);
-      
 
       this.saveInLocalStorage();
       this.bookContainer.addWords(words, this.group, this.isAuth);
@@ -166,14 +167,18 @@ class Book extends Component {
     this.input.style.pointerEvents = 'auto';
     this.input.style.opacity = '1';
     if (this.input.value.length !== 0) {
+      // eslint-disable-next-line max-len
       if (this.input.value.toLowerCase().charCodeAt(0) > 96 && this.input.value.toLowerCase().charCodeAt(0) < 123) {
-        let data: any = await fetch(`https://rslang-be-igorpex.herokuapp.com/filteredWords?filter={"word":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let data: any = await fetch(`${process.env.BACKEND_URL}/filteredWords?filter={"word":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
         data = {
           items: await data.json(),
         };
         this.bookContainer.addSearchingWords(data.items, this.isAuth, 'filtered');
-      } else if(this.input.value.toLowerCase().charCodeAt(0) > 1071 && this.input.value.toLowerCase().charCodeAt(0) < 1104) {
-        let data: any = await fetch(`https://rslang-be-igorpex.herokuapp.com/filteredWords?filter={"wordTranslate":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+      // eslint-disable-next-line max-len
+      } else if (this.input.value.toLowerCase().charCodeAt(0) > 1071 && this.input.value.toLowerCase().charCodeAt(0) < 1104) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let data: any = await fetch(`${process.env.BACKEND_URL}filteredWords?filter={"wordTranslate":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
         data = {
           items: await data.json(),
         };
@@ -184,7 +189,7 @@ class Book extends Component {
 
     const data = await getWords({ group, page });
     if (data) {
-      let cardsArr: Word[] = data.items;
+      const cardsArr: Word[] = data.items;
       this.saveInLocalStorage();
       this.bookContainer.addWords(cardsArr, group, isAuth);
     }
