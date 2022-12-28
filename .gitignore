@@ -1,4 +1,6 @@
-.idea
+.git/
+.idea/
+
 # Logs
 logs
 *.log

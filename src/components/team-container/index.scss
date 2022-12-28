@@ -1,0 +1,91 @@
+.team-container {
+  padding: 40px;
+  background-color: rgb(255, 227, 156);
+  border: 1px solid rgb(255, 198, 156);
+  box-sizing: border-box;
+}
+
+.team__title {
+  margin-bottom: 20px;
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 4.8rem;
+}
+
+.team-content__cards {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px 0;
+  flex-wrap: wrap;
+}
+
+.team-content__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 0 20px;
+  width: 30%;
+  background: rgba(255, 244, 217, 1);
+  border: rgba(255, 198, 156, 1);
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  &-photo {
+    width: 100%;
+  }
+  
+  &-name {
+    font-size: 2.2rem;
+    font-weight: bold;
+    line-height: 2.7rem;
+  }
+  
+  &-position {
+    font-size: 1.6rem;
+    font-style: italic;
+    line-height: 1.9rem;
+  }
+  
+  &-contr {
+    flex-grow: 1;
+    max-width: 100%;
+    padding: 0 20px;
+    font-size: 1.8rem;
+    line-height: 2.5rem;
+    text-align: center;
+  }
+  
+  &-git-wrap {
+    display: flex;
+    align-items: center;
+    justify-self: flex-end;
+  }
+  
+  &-git-icon {
+    width: 5rem;
+    height: 5rem;
+    background-image: url('../../assets/svg/github.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  &-name {
+    font-size: 2.2rem;
+    line-height: 2.7rem;
+    text-decoration: underline;
+  }
+}
+
+@media(max-width: 1000px) {
+  .team-content__card {
+    width: 48%;
+  }
+}
+
+@media(max-width: 700px) {
+  .team-content__card {
+    width: 100%;
+  }
+}

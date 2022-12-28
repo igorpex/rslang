@@ -1,0 +1,95 @@
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1440px;
+}
+
+%flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer {
+  @extend %flex;
+  margin-top: 10px;
+  padding: 0 40px;
+  height: 90px;
+  background-color: rgb(255, 198, 156);
+  border: 1px solid black;
+  box-sizing: border-box;
+
+  &__rs-logo {
+    width: 100%;
+    max-width: 11.2rem;
+    height: 100%;
+    max-height: 4rem;
+    background-image: url('../../assets/svg/rs_school_js.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.5s;
+  }
+
+  &__rs-logo:hover {
+    box-shadow: 0px 7px 7px rgb(255, 227, 156);;
+  }
+
+  &__team-gh-links {
+    @extend %flex;
+    padding: 0 10px;
+    width: 100%;
+    max-width: 698px;
+  }
+
+  &__team-gh-link,
+  &__year {
+    font-size: 2rem;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.5s;
+  }
+
+  &__team-gh-link:hover {
+    text-decoration: underline;
+  }
+  
+  &__year {
+    font-weight: bold;
+  }
+}
+
+@media(max-width: 610px) {
+  .footer__team-gh-link,
+  .footer__year {
+    font-size: 1.5rem;
+  }
+}
+
+@media(max-width: 500px) {
+  .footer {
+    padding: 0 10px;
+  }
+}
+
+@media(max-width: 440px) {
+  .footer__team-gh-links {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+
+@media(max-width: 355px) {
+  .footer__team-gh-link,
+  .footer__year {
+    font-size: 1.2rem;
+  }
+}
+
+@media(max-width: 300px) {
+  .footer__team-gh-link,
+  .footer__year {
+    font-size: 1rem;
+  }
+}

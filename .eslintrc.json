@@ -1,0 +1,46 @@
+{
+    "plugins": [
+//        "prettier",
+        "import",
+        "@typescript-eslint"
+    ],
+    "extends": [
+//         "plugin:prettier/recommended",
+        "airbnb-base",
+        "airbnb-typescript/base"
+    ],
+    "parser": "@typescript-eslint/parser",
+
+    "parserOptions": {
+        "project": "./tsconfig.json",
+//        "ecmaVersion": 2020,
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "env": {
+        "es6": true,
+//        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "no-debugger": "off",
+        "no-console": 0,
+//        "import/extensions": [
+//            "error",
+//            "ignorePackages",
+//            {
+//                "js": "never",
+//                "jsx": "never",
+//                "ts": "never",
+//                "tsx": "never"
+//            }
+//        ],
+        "class-methods-use-this": "off",
+//        "no-explicit-any": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "quotes": [2, "single", "avoid-escape"]
+    }
+}

@@ -1,0 +1,635 @@
+%text {
+  font-size: 2.2rem;
+  line-height: 2.7rem;
+  color: rgb(255, 244, 217);
+}
+
+%box {
+  background-color: rgba(255, 244, 217, 1);
+  border: 1px solid rgba(255, 198, 156, 1);
+  box-sizing: border-box;
+}
+
+%flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#sprint__difficulty-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @extend %box;
+}
+
+#sprint__difficulty-btn:hover {
+  background-color: rgba(236, 226, 200, 0.5);
+}
+
+#sprint__difficulty-btn:active {
+  transform: translate(3px, 3px);
+}
+
+.sprint {
+  width: 100%;
+  padding: 40px;
+  background: #FFE39C;
+  border: 1px solid #FFC69C;
+  box-sizing: border-box;
+
+  &-entrance {
+    width: 100%;
+    padding: 40px;
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    font-weight: bold;
+    font-size: 10rem;
+    line-height: 12.1rem;
+    letter-spacing: 0.1em;
+    color: rgb(255, 244, 217);
+  }
+
+  &__description {
+    padding-top: 40px;
+  }
+
+  &__description,
+  &__difficulty-text {
+    @extend %text;
+  }
+
+  &__description2 {
+    padding-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 140px;
+    @extend %text;
+  }
+
+  &__difficulty-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__select {
+    position: relative;
+    width: 215px;
+    @extend %box;
+    cursor: pointer;
+    z-index: 0;
+
+    &-wrapper {
+      @extend %flex;
+      padding: 7px 10px;
+    }
+
+    &-img {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-image: url('../../assets/svg/levels-icon.svg');
+      background-repeat: no-repeat;
+    }
+
+    &-current-option {
+      font-size: 2.2rem;
+    }
+
+    &-arrow {
+      width: 2.5rem;
+      height: 2.5rem;
+      background-image: url('../../assets/svg/down-arrow.svg');
+      background-repeat: no-repeat;
+    }
+
+    &-options {
+      display: none;
+      position: absolute;
+      top: 41px;
+      left: -1px;
+      width: 215px;
+      @extend %box;
+    }
+
+    &-options.active {
+      display: block;
+    }
+
+    &-option {
+      text-align: center;
+      font-size: 2.2rem;
+      padding: 0.4rem 0;
+      transition: 0.5s;
+    }
+
+    &-option:hover {
+      background-color: #FFE39C;
+    }
+  }
+
+  &__difficulty-btn {
+    margin-top: 50px;
+    width: 350px;
+    height: 80px;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 48px;
+    letter-spacing: 0.15em;
+    @extend %box;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+
+  &__difficulty-btn:hover {
+    background-color: rgba(236, 226, 200, 0.5);
+  }
+
+  &__difficulty-btn:active {
+    transform: translate(3px, 3px);
+  }
+
+  &-game {
+    width: 100%;
+    padding: 40px;
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+
+    &__prepare {
+      width: 100%;
+      height: 75vh;
+      padding: 40px;
+      background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
+      background-position: top right;
+      border: 1px solid #FFC69C;
+      box-sizing: border-box;
+
+      &-title {
+        font-size: 4rem;
+        line-height: 48px;
+        text-align: center;
+        color: #FFF4D9;
+      }
+    }
+
+    &__top {
+      @extend %flex;
+    }
+
+    &__timer {
+      font-weight: 700;
+      font-size: 5rem;
+      line-height: 73px;
+      width: 5%;
+    }
+
+    &__title {
+      padding: 0 40px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 4rem;
+      line-height: 48px;
+      color: #FFF4D9;
+    }
+
+    &__sound-close-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    &__beep-sound-icon {
+      width: 4rem;
+      background-image: url('../../assets/svg/note-muted.svg');
+      background-size: 3rem;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    &__beep-sound-icon.sprint-game__beep-sound_active {
+      background-image: url('../../assets/svg/note-active.svg');
+      background-size: 2.4rem;
+    }
+
+    &__close-btn {
+      position: relative;
+      width: 4rem;
+      height: 4rem;
+      cursor: pointer;
+    }
+
+    &__close-btn:before,
+    &__close-btn:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: black;
+      transition: 0.5s;
+    }
+
+    &__close-btn::before {
+      top: 46%;
+      transform: rotate(45deg);
+    }
+
+    &__close-btn::after {
+      bottom: 47%;
+      transform: rotate(-45deg);
+    }
+
+    &__close-btn:hover:before {
+      transform: rotate(-45deg);
+    }
+
+    &__close-btn:hover:after {
+      transform: rotate(45deg);
+    }
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 0 auto;
+    padding: 3px;
+    width: 100%;
+    margin-top: 0;
+    border: 3px solid rgba(255, 244, 217, 0);
+
+    &-total-points {
+      font-size: 2.6rem;
+      color: #FFF4D9;
+      text-decoration: underline;
+    }
+
+    &-audio-btn {
+      width: 7rem;
+      height: 7rem;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    &-audio-btn:active {
+      transform: translate(3px, 3px);
+    }
+
+    &_right-answer{
+      border: #2fe928 2px solid;
+    }
+    &_wrong-answer {
+      border: #d34160 2px solid;
+    }
+
+    &-dots-container {
+      display: flex;
+      gap: 30px;
+    }
+
+    &-dot {
+      display: inline-block;
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(255, 244, 217, 0.5);
+      border: 2px solid #FFC69C;
+      border-radius: 50%;
+    }
+
+    &-dot_active {
+      background-color: #FFC69C;
+    }
+
+    &-per-answer-count {
+      height: 0rem;
+    }
+
+    &-birds-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 270px;
+      background-image: url('../../assets/img/branch.svg');
+      background-repeat: no-repeat;
+      background-position: bottom;
+    }
+
+    &-bird {
+      width: 24%;
+      height: 40px;
+      background-position: bottom;
+      background-repeat: no-repeat;
+      background-size: 40px auto;
+    }
+
+    &-bird-1 {
+      background-image: url('../../assets/img/bird1.png');
+    }
+
+    &-bird-2 {
+      background-image: url('../../assets/img/bird2.png');
+    }
+    &-bird-3 {
+      background-image: url('../../assets/img/bird3.png');
+    }
+    &-bird-4 {
+      background-image: url('../../assets/img/bird4.png');
+    }
+
+    &-bird-5 {
+      background-image: url('../../assets/img/bird1.png');
+    }
+
+    &-word {
+      font-size: 3rem;
+      font-weight: bold;
+      color: #FFF4D9;
+    }
+
+    &-translation {
+      font-style: italic;
+      font-size: 2.5rem;
+      font-weight: normal;
+      color: #FFF4D9;
+    }
+
+    &-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      font-size: 3rem;
+    }
+  }
+
+  &__right-btn,
+  &__wrong-btn {
+    width: 30%;
+    height: 60px;
+    font-size: 2.5rem;
+    color: black;
+    text-transform: capitalize;
+    border: 1px solid rgba(255, 198, 156, 1);
+    transition: 0.5s;
+  }
+
+  &__right-btn:hover,
+  &__wrong-btn:hover {
+    background-color: rgba(236, 226, 200, 0.5);
+  }
+
+  &__right-btn.active:disabled {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__wrong-btn.active:disabled {
+    opacity: 1;
+    transform: none;
+  }
+
+  &__right-btn {
+    background-color: rgba(255, 244, 217, 1);
+  }
+
+  &__wrong-btn {
+    background-color: rgba(255, 198, 156, 1);
+  }
+
+  &-results {
+    width: 100%;
+    height: 75vh;
+    padding: 40px;
+    background-image: linear-gradient( rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) ), url('../../assets/img/sprint-entrance.jpg');
+    background-position: top right;
+    border: 1px solid #FFC69C;
+    box-sizing: border-box;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      width: 50%;
+      height: 45vh;
+      padding: 40px;
+      background-color: rgba(255, 198, 156, 1);
+      margin: 0 auto;
+      overflow: auto;
+    }
+
+    &__answers {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 0.5rem;
+    }
+
+    &__title {
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+
+    &-word-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      width: 100px;
+    }
+
+    &__card-audio-btn {
+      width: 2.5rem;
+      height: 2.5rem;
+      cursor: pointer;
+      transition: 0.5s;
+    }
+
+    &__card-audio-btn:active {
+      transform: translate(3px, 3px);
+    }
+
+    &-word,
+    &-dash {
+      font-weight: bold;
+    }
+
+    &-translate {
+      font-style: italic;
+    }
+
+    &__buttons-container {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      width: 50%;
+    }
+
+    &__button {
+      margin-top: 3vh;
+      padding: 1rem;
+      width: 45%;
+      font-size: 2.8rem;
+      text-align: center;
+      color: black;
+      text-decoration: none;
+      @extend %box;
+      transition: 0.5s;
+    }
+
+    &__button:hover {
+      background-color: rgba(236, 226, 200, 0.5);
+    }
+
+    &__button:active {
+      transform: translate(3px, 3px);
+    }
+  }
+}
+
+@media (max-width: 1150px) {
+  .sprint-game__title {
+    font-size: 3rem;
+    line-height: 2.5rem;
+  }
+
+  .sprint-game__timer {
+    font-size: 4rem;
+  }
+
+  .sprint-game__beep-sound-icon
+  .sprint-game__beep-sound.sprint-game__beep-sound_active {
+    width: 1rem;
+  }
+
+  .sprint-game__close-btn {
+      width: 3rem;
+      height: 3rem;
+  }
+
+  .sprint-results__button {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 785px) {
+  .sprint-game__top {
+    flex-direction: column-reverse;
+  }
+
+  .sprint-game__sound-close-container {
+    align-self: flex-end;
+  }
+
+  .sprint-game__timer {
+    height: 50px;
+    font-size: 3rem;
+  }
+
+  .sprint__card-total-points {
+    font-size: 2rem;
+  }
+
+  .sprint__card-dot {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .sprint__card-audio-btn {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  p.sprint__card-per-answer-count {
+    color: #FFF4D9;
+  }
+
+  .sprint__title,
+  .sprint__difficulty-text,
+  .sprint__select,
+  .sprint__difficulty-btn {
+    text-align: center;
+  }
+
+  .sprint__wrong-btn,
+  .sprint__right-btn {
+    width: 100px;
+    height: 60px;
+    font-size: 1.4rem;
+  }
+
+  .sprint-results__container {
+    padding: 10px;
+    width: 340px;
+  }
+
+  .sprint-results__buttons-container {
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+  }
+}
+
+@media (max-width: 515px) {
+  .sprint {
+    padding: 40px 10px;
+  }
+
+  .sprint__title {
+    font-size: 5rem;
+  }
+
+  .sprint-game__title {
+    font-size: 2rem;
+  }
+
+  .sprint-game__prepare {
+    padding: 40px 10px;
+  }
+
+  .sprint-game__prepare-title {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .sprint__description,
+  .sprint__description2,
+  .sprint__difficulty-text {
+    font-size: 1.7rem;
+  }
+
+  .sprint__select-current-option,
+  .sprint__select-option.difficulty {
+    font-size: 1.8rem;
+  }
+
+  .sprint__difficulty-btn {
+    width: 215px;
+    height: 50px;
+    font-size: 4rem;
+    text-align: center;
+  }
+
+  .sprint-results {
+    padding: 40px 10px;
+  }
+
+  .sprint-results__container {
+    padding: 40px 10px;
+  }
+
+  .sprint-results__buttons-container {
+    width: 330px;
+  }
+
+  .sprint-results__container {
+    padding: 10px;
+    width: 280px;
+  }
+}
