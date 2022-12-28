@@ -6,7 +6,7 @@ import {
   UserStatistics,
   UserWord,
 } from '../interfaces';
-import { backendUrl } from '../utils/config.js';
+import { backendUrl } from '../utils/config';
 
 export const baseUrl = backendUrl;
 const words = `${baseUrl}/words`;

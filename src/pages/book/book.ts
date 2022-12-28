@@ -5,9 +5,8 @@ import Auth from '../../components/auth/auth/auth';
 import BookContainer from '../../components/book-container/bookContainer';
 import { IDataObj, Word } from '../../interfaces';
 import Component from '../../utils/component';
-import { authStorageKey } from '../../utils/config';
+import { authStorageKey, backendUrl } from '../../utils/config';
 import './book.scss';
-import { backendUrl } from '../../utils/config.js';
 
 class Book extends Component {
   bookContainer: BookContainer;
