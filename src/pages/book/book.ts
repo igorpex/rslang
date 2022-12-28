@@ -7,6 +7,7 @@ import { IDataObj, Word } from '../../interfaces';
 import Component from '../../utils/component';
 import { authStorageKey } from '../../utils/config';
 import './book.scss';
+import { backendUrl } from '../../utils/config.js';
 
 class Book extends Component {
   bookContainer: BookContainer;
@@ -170,7 +171,7 @@ class Book extends Component {
       // eslint-disable-next-line max-len
       if (this.input.value.toLowerCase().charCodeAt(0) > 96 && this.input.value.toLowerCase().charCodeAt(0) < 123) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let data: any = await fetch(`${process.env.BACKEND_URL}/filteredWords?filter={"word":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+        let data: any = await fetch(`${backendUrl}/filteredWords?filter={"word":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
         data = {
           items: await data.json(),
         };
@@ -178,7 +179,7 @@ class Book extends Component {
       // eslint-disable-next-line max-len
       } else if (this.input.value.toLowerCase().charCodeAt(0) > 1071 && this.input.value.toLowerCase().charCodeAt(0) < 1104) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let data: any = await fetch(`${process.env.BACKEND_URL}filteredWords?filter={"wordTranslate":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
+        let data: any = await fetch(`${backendUrl}filteredWords?filter={"wordTranslate":{"$regex":"^${this.input.value.toLowerCase()}","$options":"i"}}`);
         data = {
           items: await data.json(),
         };

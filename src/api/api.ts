@@ -6,8 +6,9 @@ import {
   UserStatistics,
   UserWord,
 } from '../interfaces';
+import { backendUrl } from '../utils/config.js';
 
-export const baseUrl = process.env.BACKEND_URL;
+export const baseUrl = backendUrl;
 const words = `${baseUrl}/words`;
 const users = `${baseUrl}/users`;
 const signin = `${baseUrl}/signin`;
