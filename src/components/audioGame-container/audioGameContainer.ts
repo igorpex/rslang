@@ -21,39 +21,23 @@ class AudioGameContainer extends Component {
   updateGroup: (group: number) => void = () => {};
 
   private title: Component;
-
   private content: Component;
-
-  select: Component;
-
-  levelTitle: Component;
-
-  selectTitle: Component;
-
-  game: Game | null;
-
   private group = 1;
-
   private page = 0;
-
   private randomPage = 0;
 
+  select: Component;
+  levelTitle: Component;
+  selectTitle: Component;
+  game: Game | null;
   arrayOfPage: number[];
-
   gameObject: GameObj;
-
   count = 0;
-
   words: Word[];
-
   allAnswers: Word[];
-
   arrayOfName: string[];
-
   refererType: String;
-
   isAuth: boolean;
-
   authorization: Auth;
 
   rows = {
@@ -81,7 +65,6 @@ class AudioGameContainer extends Component {
   };
 
   checkEnterEvent: boolean;
-
   staticsObjects: StatisticsObject[];
 
   constructor(parentNode: HTMLElement) {
